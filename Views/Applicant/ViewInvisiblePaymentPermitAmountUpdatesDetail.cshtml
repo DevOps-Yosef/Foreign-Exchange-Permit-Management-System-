@@ -1,0 +1,54 @@
+﻿@model IEnumerable<ZB_FEPMS.Models.tblApplicationAmount>
+
+<table id="datatable" class="table table-striped table-bordered">
+    <tr>
+        <th>Date</th>
+        <th>Amount</th>
+        <th>Amount In USD</th>
+        <th>Amount In Birr</th>
+        <th>Prepared By</th>
+        <th>Status</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.CreatedDate.ToString("D")</td>
+            <td>@item.Amount.Value.ToString("N2")</td>
+            <td>
+                @{
+                    if (item.AmountInUSD.HasValue)
+                    {
+                        @item.AmountInUSD.Value.ToString("N2");
+                    }
+                }
+            </td>
+            <td>
+                @{
+                    if (item.AmountInBirr.HasValue)
+                    {
+                        @item.AmountInBirr.Value.ToString("N2");
+                    }
+                }
+            </td>
+            <td>@ViewContext.Controller.getFullNameOfUserById(item.CreatedBy.ToString())</td>
+            <td>
+                @{
+                    if (item.tbl_lu_Status.name.Equals("Approved"))
+                    {
+                        <span class="label label-success">Approved</span>
+                    }
+                    else if (item.tbl_lu_Status.name.Equals("Rejected"))
+                    {
+                        <span class="label label-danger">Rejected</span>
+                    }
+                    else if (item.tbl_lu_Status.name.Equals("Pending"))
+                    {
+                        <span class="label label-default">Pending</span>
+                    }
+                }
+            </td>
+        </tr>
+    }
+</table>
+

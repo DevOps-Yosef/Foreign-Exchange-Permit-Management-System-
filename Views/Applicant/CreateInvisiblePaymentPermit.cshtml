@@ -1,0 +1,301 @@
+﻿@model ZB_FEPMS.Models.tblApplication
+@{
+    ViewBag.Title = "Invisible Payment Permit";
+    Layout = "~/Views/Shared/_FEPMSLayout.cshtml";
+}
+
+@if (TempData["sErrMsg"] != null)
+{
+    <div class="alert alert-danger alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>@TempData["sErrMsg"]</strong>
+    </div>
+}
+
+@using (Html.BeginForm("CreateInvisiblePaymentPermit", "Applicant", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">Create New Invisible Payment Permit</div>
+        <div class="panel-body">
+            @Html.HiddenFor(model => model.ApplicantName)
+            @Html.HiddenFor(model => model.CIFNumber)
+            @Html.HiddenFor(model => model.ApplicantId)
+
+            <div class="row">
+                <div class="row">
+                    @Html.Label("Applicant Name:", new { @Class = "control-label col-sm-2" })
+                    <div class="col-sm-7">
+                        <span class="label-underline-style">
+                            @Html.DisplayFor(model => model.ApplicantName)
+                        </span>
+                    </div>
+                    @Html.Label("CIF #:", new { @Class = "control-label col-sm-1" })
+                    <div class="col-sm-2">
+                        <span class="label-underline-style">
+                            @Html.DisplayFor(model => model.CIFNumber)
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Currency Type:<span class="required">*</span>
+                    </label>
+                    <div class="col-sm-3">
+                        @Html.DropDownList("CurrencyType", null, "--Currency Type--",
+                        new
+                        {
+                            @onchange = "fillCurrencyDetails()",
+                            @class = "form-control input-sm",
+                        })
+                        @Html.ValidationMessageFor(model => model.CurrencyType)
+                    </div>
+                    <label class="control-label col-sm-2">
+                        Amount:<span class="required">*</span>
+                    </label>
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => model.AmountValue,
+                       new { @class = "form-control input-sm", @onchange = "fillTheAmounts()" })
+                        @Html.ValidationMessageFor(model => model.AmountValue)
+                    </div>
+
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Rate:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-3">
+                        @Html.TextBoxFor(model => model.CurrencyRateValue,
+                       new { @class = "form-control input-sm", @readonly = "" })
+                        @Html.ValidationMessageFor(model => model.CurrencyRateValue)
+                    </div>
+                    <label class="control-label col-sm-2">
+                        In ETB:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => model.AmountInBirrValue,
+                       new { @class = "form-control input-sm", @readonly = "" })
+                        @Html.ValidationMessageFor(model => model.AmountInBirrValue)
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        USD Rate:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-3">
+                        @Html.TextBoxFor(model => model.USDRateValue,
+                       new { @class = "form-control input-sm", @readonly = "" })
+                        @Html.ValidationMessageFor(model => model.USDRateValue)
+                    </div>
+                    <label class="control-label col-sm-2">
+                        In USD:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => model.AmountInUSDValue,
+                       new { @class = "form-control input-sm", @readonly = "" })
+                        @Html.ValidationMessageFor(model => model.AmountInUSDValue)
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Beneficiary:<span class="required">*</span>
+                    </label>
+                    <div class="col-sm-9">
+                        @Html.TextAreaFor(model => model.Beneficiary, 4, 7,
+                       new { @class = "form-control input-sm" })
+                        @Html.ValidationMessageFor(model => model.Beneficiary)
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Permit Status:<span class="required">*</span>
+                    </label>
+                    <div class="col-sm-3">
+                        @Html.DropDownList("PermitStatusId", null, null,
+                       new { @class = "form-control input-sm" })
+                        @Html.ValidationMessageFor(model => model.PermitStatusId)
+                    </div>
+                    <label class="control-label col-sm-2">
+                        Approval Status:<span class="required">*</span>
+                    </label>
+                    <div class="col-sm-4">
+                        @Html.DropDownList("ApprovalStatus", null, "--Approval Status--",
+                        new
+                        {
+                            @class = "form-control input-sm",
+                        })
+                        @Html.ValidationMessageFor(model => model.ApprovalStatus)
+                    </div>
+                </div>
+
+                <div>
+
+                    <div class="row grid-row">
+                        <label class="control-label col-sm-2">
+                            NBE Approval Ref. #:<span class="required"></span>
+                        </label>
+                        <div class="col-sm-3">
+                            @Html.TextBoxFor(model => model.NBEApprovalRefNumber,
+                           new { @class = "form-control input-sm"})
+                            @Html.ValidationMessageFor(model => model.NBEApprovalRefNumber)
+                        </div>
+                        <label class="control-label col-sm-2">
+                            Own Source:<span class="required"></span>
+                        </label>
+                        <div class="col-sm-4">
+                            @Html.DropDownList("OwnSourceValue", null, "--Own Source--",
+                            new { @class = "form-control input-sm"})
+                            @Html.ValidationMessageFor(model => model.OwnSourceValue)
+                        </div>
+
+                    </div>
+
+                    <div class="row grid-row">
+                        <label class="control-label col-sm-2">
+                            Round:<span class="required"></span>
+                        </label>
+                        <div class="col-sm-3">
+                            @Html.TextBoxFor(model => model.QueueRound,
+                           new { @class = "form-control input-sm"})
+                            @Html.ValidationMessageFor(model => model.QueueRound)
+                        </div>
+                        <label class="control-label col-sm-2">
+                            Queue #:<span class="required"></span>
+                        </label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(model => model.QueueNumber,
+                           new { @class = "form-control input-sm"})
+                            @Html.ValidationMessageFor(model => model.QueueNumber)
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Purpose Of Payment:<span class="required">*</span>
+                    </label>
+                    <div class="col-sm-6">
+                        @Html.DropDownList("PurposeOfPayment", null, "--Purpose Of Payment--",
+                        new
+                             {
+                                 @class = "form-control input-sm",
+                                 @disabled = ""
+                             })
+                        @Html.ValidationMessageFor(model => model.PurposeOfPayment)
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="col-sm-offset-2 col-sm-1 left-text_align-style">
+                        @Html.CheckBoxFor(model => model.is_other)
+                        Other:
+                    </label>
+                    <div class="col-sm-5">
+                        @Html.TextBoxFor(model => model.PurposeOfPaymentUserFill,
+                       new { @class = "form-control input-sm", @disabled = "" })
+                        @Html.ValidationMessageFor(model => model.PurposeOfPaymentUserFill)
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-success fa fa-floppy-o">
+                            <span class="button-icon-margin">Save</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back To List", "Index", null, new { @class = "btn btn-default fa fa-backward" })
+</div>
+
+
+<script>
+
+    function fillCurrencyDetails() {
+        $("#CurrencyRateValue").val("");
+        $("#AmountInBirrValue").val("");
+        $("#USDRateValue").val("");
+        $("#AmountInUSDValue").val("");
+        $.ajax({
+            url: '@Url.Action("fillTheAmounts", "Applicant")',
+            type: 'POST',
+            datatype: 'application/json',
+            contentType: 'application/json',
+            data: JSON.stringify({ currencyType: $("#CurrencyType").val(), amount: $("#AmountValue").val() }),
+            success: function (result) {
+                var currencyDetails = JSON.parse(result);
+                $("#CurrencyRateValue").val(currencyDetails.CurrencyRate.toLocaleString('en-US', { maximumFractionDigits: 6 }));
+                $("#USDRateValue").val(currencyDetails.USDRate.toLocaleString('en-US', { maximumFractionDigits: 6 }));
+                $("#AmountInBirrValue").val(currencyDetails.AmountInBirr.toLocaleString('en-US', { maximumFractionDigits: 6 }));
+                $("#AmountInUSDValue").val(currencyDetails.AmountInUSD.toLocaleString('en-US', { maximumFractionDigits: 6 }));
+            },
+            error: function () {
+                alert("Whooaaa! Something went wrong..")
+            },
+        });
+    }
+
+    $(document).ready(function () {
+        var checkedProperty = $("#is_other").prop('checked');
+        if (checkedProperty) {
+            $("#PurposeOfPayment").prop("disabled", true);
+            $("#PurposeOfPaymentUserFill").prop("disabled", false);
+        }
+        else {
+            $("#PurposeOfPayment").prop("disabled", false);
+            $("#PurposeOfPaymentUserFill").prop("disabled", true);
+        }
+        $("#is_other").click(function () {
+            var checkedProperty = $("#is_other").prop('checked');
+            if (checkedProperty) {
+                $("#PurposeOfPayment").prop("disabled", true);
+                $("#PurposeOfPaymentUserFill").prop("disabled", false);
+            }
+            else {
+                $("#PurposeOfPayment").prop("disabled", false);
+                $("#PurposeOfPaymentUserFill").prop("disabled", true);
+            }
+        });
+    });
+
+    function fillTheAmounts() {
+        $("#AmountInBirrValue").val("");
+        $("#AmountInUSDValue").val("");
+        $.ajax({
+            url: '@Url.Action("fillTheAmounts", "Applicant")',
+            type: 'POST',
+            datatype: 'application/json',
+            contentType: 'application/json',
+            data: JSON.stringify({ currencyType: $("#CurrencyType").val(), amount: $("#AmountValue").val() }),
+            success: function (result) {
+                var rawAmount = $("#AmountValue").val().replace(/,/g, '');
+                var commaSepAmount = Number(rawAmount).toLocaleString('en-US', { maximumFractionDigits: 6 });
+                $("#AmountValue").val(commaSepAmount);
+                var currencyDetails = JSON.parse(result);
+                $("#AmountInBirrValue").val(currencyDetails.AmountInBirr.toLocaleString('en-US', { maximumFractionDigits: 6 }));
+                $("#AmountInUSDValue").val(currencyDetails.AmountInUSD.toLocaleString('en-US', { maximumFractionDigits: 6 }));
+            },
+            error: function ()
+            {
+                alert("Whooaaa! Something went wrong..")
+            },
+        })
+    }
+
+</script>
+
+

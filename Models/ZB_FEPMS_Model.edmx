@@ -1,0 +1,2320 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ZB_FEPMS_Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AccessLog">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="date" Type="datetime" />
+          <Property Name="user_full_name" Type="nvarchar" MaxLength="250" />
+          <Property Name="ip_address" Type="nvarchar" MaxLength="150" />
+          <Property Name="machine_name" Type="nvarchar" MaxLength="250" />
+          <Property Name="operation" Type="nvarchar" MaxLength="250" />
+          <Property Name="object_info" Type="nvarchar" MaxLength="250" />
+          <Property Name="browser_info" Type="text" />
+        </EntityType>
+        <EntityType Name="LNK_ROLE_PERMISSION">
+          <Key>
+            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="PermissionId" />
+          </Key>
+          <Property Name="RoleId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PermissionId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LNK_USER_ROLE">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="RoleId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Logins">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="nonce" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="user_name" Type="nvarchar" MaxLength="100" />
+          <Property Name="date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PERMISSIONS">
+          <Key>
+            <PropertyRef Name="PermissionId" />
+          </Key>
+          <Property Name="PermissionId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PermissionDescription" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ROLES">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RoleDescription" Type="nvarchar" MaxLength="250" />
+          <Property Name="LastModified" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SETTING">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="RATE_PERCENTAGE" Type="decimal" Precision="18" Scale="6" />
+        </EntityType>
+        <EntityType Name="tbl_lu_CountryOfOrigin">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="tbl_lu_Incoterm">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="tbl_lu_MethodOfPayment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="tbl_lu_PortOfDestination">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="tbl_lu_PortOfLoading">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="tbl_lu_ShipmentAllowedBy">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="tbl_lu_Status">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="tblApplicant">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CIFNumber" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="ApplicantName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Remark" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="tblApplication">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PermitNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ApplicantId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="PermitStatusId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PermitType" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="SerialNumberShelfId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PermitYear" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="CurrencyType" Type="nvarchar" MaxLength="10" />
+          <Property Name="CurrencyRate" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="RemainingAmount" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="USDRate" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="AmountInUSD" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="RemainingAmountInUSD" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="AmountInBirr" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="RemainingAmountInBirr" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="ApprovalStatus" Type="nvarchar" MaxLength="50" />
+          <Property Name="NBEApprovalRefNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="QueueRound" Type="nvarchar" MaxLength="50" />
+          <Property Name="QueueNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="OwnSourceValue" Type="nvarchar" MaxLength="50" />
+          <Property Name="PurposeOfPayment" Type="varchar(max)" Nullable="false" />
+          <Property Name="Beneficiary" Type="varchar(max)" Nullable="false" />
+          <Property Name="CreatedBy" Type="uniqueidentifier" />
+          <Property Name="CreatedDate" Type="date" />
+          <Property Name="IncreasedAmount" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="IncreasedAmountInUSD" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="IncreasedAmountInBirr" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="DecreasedAmount" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="DecreasedAmountInUSD" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="DecreasedAmountInBirr" Type="decimal" Precision="18" Scale="6" />
+        </EntityType>
+        <EntityType Name="tblApplicationAmount">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ApplicationId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ApprovalStatusId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CurrencyRate" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="AmountInUSD" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="AmountInBirr" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="USDRate" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="CreatedBy" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ApprovedBy" Type="uniqueidentifier" />
+          <Property Name="ApprovedDate" Type="datetime" />
+          <Property Name="Reason" Type="nvarchar(max)" />
+          <Property Name="Remark" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="tblItemPriority">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Priority" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="GroupBy" Type="nvarchar" MaxLength="300" />
+          <Property Name="Name" Type="nvarchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="tblMerchant">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="TinNumber" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="ImporterName" Type="nvarchar(max)" />
+          <Property Name="TradeName" Type="nvarchar(max)" />
+          <Property Name="NBENumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="MobileNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="EmailAddress" Type="nvarchar" MaxLength="254" />
+          <Property Name="Remark" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="tblPermit">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PermitNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MerchantId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="PermitStatusId" Type="uniqueidentifier" />
+          <Property Name="PermitType" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="SerialNumberShelfId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PermitYear" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="LPCONumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="CurrencyType" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="CurrencyRate" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="6" Nullable="false" />
+          <Property Name="AmountInBirr" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="AmountInUSD" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="RemainingAmount" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="RemainingAmountInUSD" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="RemainingAmountInBirr" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="USDRate" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="MethodOfPaymentId" Type="uniqueidentifier" />
+          <Property Name="NonPriorityItems" Type="varchar(max)" />
+          <Property Name="ApprovalStatus" Type="nvarchar" MaxLength="50" />
+          <Property Name="NBEApprovalRefNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="QueueRound" Type="nvarchar" MaxLength="50" />
+          <Property Name="QueueNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="OwnSourceValue" Type="nvarchar" MaxLength="50" />
+          <Property Name="IncreasedAmount" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="IncreasedAmountInUSD" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="IncreasedAmountInBirr" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="DecreasedAmount" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="DecreasedAmountInUSD" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="DecreasedAmountInBirr" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="CreatedBy" Type="uniqueidentifier" />
+          <Property Name="CreatedDate" Type="date" />
+        </EntityType>
+        <EntityType Name="tblPermitAmount">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PermitId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ApprovalStatusId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CreatedBy" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ApprovedBy" Type="uniqueidentifier" />
+          <Property Name="ApprovedDate" Type="datetime" />
+          <Property Name="Reason" Type="nvarchar(max)" />
+          <Property Name="Remark" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="tblPermitAmountDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PermitAmountId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="6" Nullable="false" />
+          <Property Name="USDRate" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="AmountInUSD" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="CurrencyRate" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="AmountInBirr" Type="decimal" Precision="18" Scale="6" />
+        </EntityType>
+        <EntityType Name="tblPermitCountryOfOrigin">
+          <Key>
+            <PropertyRef Name="PermitId" />
+            <PropertyRef Name="CountryOfOriginId" />
+          </Key>
+          <Property Name="PermitId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CountryOfOriginId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblPermitIncoterm">
+          <Key>
+            <PropertyRef Name="PermitId" />
+            <PropertyRef Name="IncotermId" />
+          </Key>
+          <Property Name="PermitId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IncotermId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblPermitItemPriority">
+          <Key>
+            <PropertyRef Name="PermitId" />
+            <PropertyRef Name="ItemPriorityId" />
+          </Key>
+          <Property Name="PermitId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ItemPriorityId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblPermitPortOfDestination">
+          <Key>
+            <PropertyRef Name="PermitId" />
+            <PropertyRef Name="PortOfDestinationId" />
+          </Key>
+          <Property Name="PermitId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PortOfDestinationId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblPermitPortOfLoading">
+          <Key>
+            <PropertyRef Name="PermitId" />
+            <PropertyRef Name="PortOfLoadingId" />
+          </Key>
+          <Property Name="PermitId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PortOfLoadingId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblPermitShipmentAllowedBy">
+          <Key>
+            <PropertyRef Name="PermitId" />
+            <PropertyRef Name="ShipmentAllowedById" />
+          </Key>
+          <Property Name="PermitId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ShipmentAllowedById" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblPOPermitAmountDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PermitAmountId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PermitId" Type="uniqueidentifier" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="6" Nullable="false" />
+          <Property Name="USDRate" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="AmountInUSD" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="CurrencyRate" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="AmountInBirr" Type="decimal" Precision="18" Scale="6" />
+        </EntityType>
+        <EntityType Name="tblPOPermitDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="POId" Type="uniqueidentifier" />
+          <Property Name="PermitId" Type="uniqueidentifier" />
+          <Property Name="AmountBeforePermit" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="AmountAfterPermit" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="AmountInUSDBeforePermit" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="AmountInUSDAfterPermit" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="AmountInBirrBeforePermit" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="AmountInBirrAfterPermit" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblPOPermitExpiry">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PermitId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ExpiryDate" Type="date" Nullable="false" />
+          <Property Name="IsExtension" Type="bit" />
+          <Property Name="ChargeCollected" Type="bit" />
+        </EntityType>
+        <EntityType Name="tblSerialNumberShelf">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="SerialNumberType" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="SerialNumberValue" Type="int" Nullable="false" />
+          <Property Name="IsLatest" Type="bit" Nullable="false" />
+          <Property Name="Year" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="USERS">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="LastModified" Type="datetime" />
+          <Property Name="Inactive" Type="bit" />
+          <Property Name="Firstname" Type="nvarchar" MaxLength="250" />
+          <Property Name="Lastname" Type="nvarchar" MaxLength="250" />
+          <Property Name="IDNo" Type="nvarchar" MaxLength="100" />
+          <Property Name="Title" Type="nvarchar" MaxLength="100" />
+          <Property Name="Initial" Type="nvarchar" MaxLength="100" />
+          <Property Name="EMail" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK_LNK_ROLE_PERMISSION_LNK_ROLE_PERMISSION">
+          <End Role="PERMISSIONS" Type="Self.PERMISSIONS" Multiplicity="1" />
+          <End Role="LNK_ROLE_PERMISSION" Type="Self.LNK_ROLE_PERMISSION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERMISSIONS">
+              <PropertyRef Name="PermissionId" />
+            </Principal>
+            <Dependent Role="LNK_ROLE_PERMISSION">
+              <PropertyRef Name="PermissionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LNK_ROLE_PERMISSION_ROLES">
+          <End Role="ROLES" Type="Self.ROLES" Multiplicity="1" />
+          <End Role="LNK_ROLE_PERMISSION" Type="Self.LNK_ROLE_PERMISSION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROLES">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="LNK_ROLE_PERMISSION">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LNK_USER_ROLE_ROLES">
+          <End Role="ROLES" Type="Self.ROLES" Multiplicity="1" />
+          <End Role="LNK_USER_ROLE" Type="Self.LNK_USER_ROLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROLES">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="LNK_USER_ROLE">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LNK_USER_ROLE_USERS">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="LNK_USER_ROLE" Type="Self.LNK_USER_ROLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="LNK_USER_ROLE">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MerchantPermitItemPriority_tblItemPriority">
+          <End Role="tblItemPriority" Type="Self.tblItemPriority" Multiplicity="1" />
+          <End Role="tblPermitItemPriority" Type="Self.tblPermitItemPriority" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblItemPriority">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblPermitItemPriority">
+              <PropertyRef Name="ItemPriorityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblApplication_tbl_lu_Status">
+          <End Role="tbl_lu_Status" Type="Self.tbl_lu_Status" Multiplicity="1" />
+          <End Role="tblApplication" Type="Self.tblApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_lu_Status">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblApplication">
+              <PropertyRef Name="PermitStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblApplication_tblApplicant">
+          <End Role="tblApplicant" Type="Self.tblApplicant" Multiplicity="1" />
+          <End Role="tblApplication" Type="Self.tblApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblApplicant">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblApplication">
+              <PropertyRef Name="ApplicantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblApplication_tblSerialNumberShelf">
+          <End Role="tblSerialNumberShelf" Type="Self.tblSerialNumberShelf" Multiplicity="1" />
+          <End Role="tblApplication" Type="Self.tblApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSerialNumberShelf">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblApplication">
+              <PropertyRef Name="SerialNumberShelfId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblApplication_USERS">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+          <End Role="tblApplication" Type="Self.tblApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tblApplication">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblApplicationAmount_tbl_lu_Status">
+          <End Role="tbl_lu_Status" Type="Self.tbl_lu_Status" Multiplicity="1" />
+          <End Role="tblApplicationAmount" Type="Self.tblApplicationAmount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_lu_Status">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblApplicationAmount">
+              <PropertyRef Name="ApprovalStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblApplicationAmount_tblApplication">
+          <End Role="tblApplication" Type="Self.tblApplication" Multiplicity="1" />
+          <End Role="tblApplicationAmount" Type="Self.tblApplicationAmount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblApplication">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblApplicationAmount">
+              <PropertyRef Name="ApplicationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblApplicationAmount_USERS">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="tblApplicationAmount" Type="Self.tblApplicationAmount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tblApplicationAmount">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblApplicationAmount_USERS1">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+          <End Role="tblApplicationAmount" Type="Self.tblApplicationAmount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tblApplicationAmount">
+              <PropertyRef Name="ApprovedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblMerchantPermit_tbl_lu_MethodOfPayment">
+          <End Role="tbl_lu_MethodOfPayment" Type="Self.tbl_lu_MethodOfPayment" Multiplicity="0..1" />
+          <End Role="tblPermit" Type="Self.tblPermit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_lu_MethodOfPayment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblPermit">
+              <PropertyRef Name="MethodOfPaymentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblMerchantPermit_tblMerchantPermit">
+          <End Role="tbl_lu_Status" Type="Self.tbl_lu_Status" Multiplicity="0..1" />
+          <End Role="tblPermit" Type="Self.tblPermit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_lu_Status">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblPermit">
+              <PropertyRef Name="PermitStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPermit_tblMerchant">
+          <End Role="tblMerchant" Type="Self.tblMerchant" Multiplicity="1" />
+          <End Role="tblPermit" Type="Self.tblPermit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblMerchant">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblPermit">
+              <PropertyRef Name="MerchantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPermit_tblSerialNumberShelf">
+          <End Role="tblSerialNumberShelf" Type="Self.tblSerialNumberShelf" Multiplicity="1" />
+          <End Role="tblPermit" Type="Self.tblPermit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSerialNumberShelf">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblPermit">
+              <PropertyRef Name="SerialNumberShelfId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPermit_USERS">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+          <End Role="tblPermit" Type="Self.tblPermit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tblPermit">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPermitAmount_tbl_lu_Status">
+          <End Role="tbl_lu_Status" Type="Self.tbl_lu_Status" Multiplicity="1" />
+          <End Role="tblPermitAmount" Type="Self.tblPermitAmount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_lu_Status">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblPermitAmount">
+              <PropertyRef Name="ApprovalStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPermitAmount_tblPermit">
+          <End Role="tblPermit" Type="Self.tblPermit" Multiplicity="1" />
+          <End Role="tblPermitAmount" Type="Self.tblPermitAmount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPermit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblPermitAmount">
+              <PropertyRef Name="PermitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPermitAmount_USERS">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="tblPermitAmount" Type="Self.tblPermitAmount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tblPermitAmount">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPermitAmount_USERS1">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+          <End Role="tblPermitAmount" Type="Self.tblPermitAmount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tblPermitAmount">
+              <PropertyRef Name="ApprovedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPermitAmountDetail_tblPermitAmount">
+          <End Role="tblPermitAmount" Type="Self.tblPermitAmount" Multiplicity="1" />
+          <End Role="tblPermitAmountDetail" Type="Self.tblPermitAmountDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPermitAmount">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblPermitAmountDetail">
+              <PropertyRef Name="PermitAmountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPermitCountryOfOrigin_tbl_lu_CountryOfOrigin">
+          <End Role="tbl_lu_CountryOfOrigin" Type="Self.tbl_lu_CountryOfOrigin" Multiplicity="1" />
+          <End Role="tblPermitCountryOfOrigin" Type="Self.tblPermitCountryOfOrigin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_lu_CountryOfOrigin">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblPermitCountryOfOrigin">
+              <PropertyRef Name="CountryOfOriginId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPermitCountryOfOrigin_tblPermit">
+          <End Role="tblPermit" Type="Self.tblPermit" Multiplicity="1" />
+          <End Role="tblPermitCountryOfOrigin" Type="Self.tblPermitCountryOfOrigin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPermit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblPermitCountryOfOrigin">
+              <PropertyRef Name="PermitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPermitIncoterm_tbl_lu_Incoterm">
+          <End Role="tbl_lu_Incoterm" Type="Self.tbl_lu_Incoterm" Multiplicity="1" />
+          <End Role="tblPermitIncoterm" Type="Self.tblPermitIncoterm" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_lu_Incoterm">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblPermitIncoterm">
+              <PropertyRef Name="IncotermId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPermitIncoterm_tblPermit">
+          <End Role="tblPermit" Type="Self.tblPermit" Multiplicity="1" />
+          <End Role="tblPermitIncoterm" Type="Self.tblPermitIncoterm" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPermit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblPermitIncoterm">
+              <PropertyRef Name="PermitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPermitItemPriority_tblPermit">
+          <End Role="tblPermit" Type="Self.tblPermit" Multiplicity="1" />
+          <End Role="tblPermitItemPriority" Type="Self.tblPermitItemPriority" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPermit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblPermitItemPriority">
+              <PropertyRef Name="PermitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPermitPortOfDestination_tbl_lu_PortOfDestination">
+          <End Role="tbl_lu_PortOfDestination" Type="Self.tbl_lu_PortOfDestination" Multiplicity="1" />
+          <End Role="tblPermitPortOfDestination" Type="Self.tblPermitPortOfDestination" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_lu_PortOfDestination">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblPermitPortOfDestination">
+              <PropertyRef Name="PortOfDestinationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPermitPortOfDestination_tblPermit">
+          <End Role="tblPermit" Type="Self.tblPermit" Multiplicity="1" />
+          <End Role="tblPermitPortOfDestination" Type="Self.tblPermitPortOfDestination" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPermit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblPermitPortOfDestination">
+              <PropertyRef Name="PermitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPermitPortOfLoading_tbl_lu_PortOfLoading">
+          <End Role="tbl_lu_PortOfLoading" Type="Self.tbl_lu_PortOfLoading" Multiplicity="1" />
+          <End Role="tblPermitPortOfLoading" Type="Self.tblPermitPortOfLoading" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_lu_PortOfLoading">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblPermitPortOfLoading">
+              <PropertyRef Name="PortOfLoadingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPermitPortOfLoading_tblPermit">
+          <End Role="tblPermit" Type="Self.tblPermit" Multiplicity="1" />
+          <End Role="tblPermitPortOfLoading" Type="Self.tblPermitPortOfLoading" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPermit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblPermitPortOfLoading">
+              <PropertyRef Name="PermitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPermitShipmentAllowedBy_tbl_lu_ShipmentAllowedBy">
+          <End Role="tbl_lu_ShipmentAllowedBy" Type="Self.tbl_lu_ShipmentAllowedBy" Multiplicity="1" />
+          <End Role="tblPermitShipmentAllowedBy" Type="Self.tblPermitShipmentAllowedBy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_lu_ShipmentAllowedBy">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblPermitShipmentAllowedBy">
+              <PropertyRef Name="ShipmentAllowedById" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPermitShipmentAllowedBy_tblPermit">
+          <End Role="tblPermit" Type="Self.tblPermit" Multiplicity="1" />
+          <End Role="tblPermitShipmentAllowedBy" Type="Self.tblPermitShipmentAllowedBy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPermit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblPermitShipmentAllowedBy">
+              <PropertyRef Name="PermitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPOPermitAmountDetail_tblPermit">
+          <End Role="tblPermit" Type="Self.tblPermit" Multiplicity="0..1" />
+          <End Role="tblPOPermitAmountDetail" Type="Self.tblPOPermitAmountDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPermit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblPOPermitAmountDetail">
+              <PropertyRef Name="PermitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPOPermitAmountDetail_tblPermitAmount">
+          <End Role="tblPermitAmount" Type="Self.tblPermitAmount" Multiplicity="1" />
+          <End Role="tblPOPermitAmountDetail" Type="Self.tblPOPermitAmountDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPermitAmount">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblPOPermitAmountDetail">
+              <PropertyRef Name="PermitAmountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPOPermitDetail_tblPermit">
+          <End Role="tblPermit" Type="Self.tblPermit" Multiplicity="0..1" />
+          <End Role="tblPOPermitDetail" Type="Self.tblPOPermitDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPermit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblPOPermitDetail">
+              <PropertyRef Name="POId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPOPermitDetail_tblPermit1">
+          <End Role="tblPermit" Type="Self.tblPermit" Multiplicity="0..1" />
+          <End Role="tblPOPermitDetail" Type="Self.tblPOPermitDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPermit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblPOPermitDetail">
+              <PropertyRef Name="PermitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPOPermitExpiry_tblPermit">
+          <End Role="tblPermit" Type="Self.tblPermit" Multiplicity="1" />
+          <End Role="tblPOPermitExpiry" Type="Self.tblPOPermitExpiry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPermit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblPOPermitExpiry">
+              <PropertyRef Name="PermitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ZB_FEPMS_ModelStoreContainer">
+          <EntitySet Name="AccessLog" EntityType="Self.AccessLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LNK_ROLE_PERMISSION" EntityType="Self.LNK_ROLE_PERMISSION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LNK_USER_ROLE" EntityType="Self.LNK_USER_ROLE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Logins" EntityType="Self.Logins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PERMISSIONS" EntityType="Self.PERMISSIONS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ROLES" EntityType="Self.ROLES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SETTING" EntityType="Self.SETTING" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_lu_CountryOfOrigin" EntityType="Self.tbl_lu_CountryOfOrigin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_lu_Incoterm" EntityType="Self.tbl_lu_Incoterm" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_lu_MethodOfPayment" EntityType="Self.tbl_lu_MethodOfPayment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_lu_PortOfDestination" EntityType="Self.tbl_lu_PortOfDestination" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_lu_PortOfLoading" EntityType="Self.tbl_lu_PortOfLoading" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_lu_ShipmentAllowedBy" EntityType="Self.tbl_lu_ShipmentAllowedBy" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_lu_Status" EntityType="Self.tbl_lu_Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblApplicant" EntityType="Self.tblApplicant" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblApplication" EntityType="Self.tblApplication" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblApplicationAmount" EntityType="Self.tblApplicationAmount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblItemPriority" EntityType="Self.tblItemPriority" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblMerchant" EntityType="Self.tblMerchant" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblPermit" EntityType="Self.tblPermit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblPermitAmount" EntityType="Self.tblPermitAmount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblPermitAmountDetail" EntityType="Self.tblPermitAmountDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblPermitCountryOfOrigin" EntityType="Self.tblPermitCountryOfOrigin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblPermitIncoterm" EntityType="Self.tblPermitIncoterm" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblPermitItemPriority" EntityType="Self.tblPermitItemPriority" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblPermitPortOfDestination" EntityType="Self.tblPermitPortOfDestination" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblPermitPortOfLoading" EntityType="Self.tblPermitPortOfLoading" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblPermitShipmentAllowedBy" EntityType="Self.tblPermitShipmentAllowedBy" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblPOPermitAmountDetail" EntityType="Self.tblPOPermitAmountDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblPOPermitDetail" EntityType="Self.tblPOPermitDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblPOPermitExpiry" EntityType="Self.tblPOPermitExpiry" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblSerialNumberShelf" EntityType="Self.tblSerialNumberShelf" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USERS" EntityType="Self.USERS" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_LNK_ROLE_PERMISSION_LNK_ROLE_PERMISSION" Association="Self.FK_LNK_ROLE_PERMISSION_LNK_ROLE_PERMISSION">
+            <End Role="PERMISSIONS" EntitySet="PERMISSIONS" />
+            <End Role="LNK_ROLE_PERMISSION" EntitySet="LNK_ROLE_PERMISSION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LNK_ROLE_PERMISSION_ROLES" Association="Self.FK_LNK_ROLE_PERMISSION_ROLES">
+            <End Role="ROLES" EntitySet="ROLES" />
+            <End Role="LNK_ROLE_PERMISSION" EntitySet="LNK_ROLE_PERMISSION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LNK_USER_ROLE_ROLES" Association="Self.FK_LNK_USER_ROLE_ROLES">
+            <End Role="ROLES" EntitySet="ROLES" />
+            <End Role="LNK_USER_ROLE" EntitySet="LNK_USER_ROLE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LNK_USER_ROLE_USERS" Association="Self.FK_LNK_USER_ROLE_USERS">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="LNK_USER_ROLE" EntitySet="LNK_USER_ROLE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MerchantPermitItemPriority_tblItemPriority" Association="Self.FK_MerchantPermitItemPriority_tblItemPriority">
+            <End Role="tblItemPriority" EntitySet="tblItemPriority" />
+            <End Role="tblPermitItemPriority" EntitySet="tblPermitItemPriority" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblApplication_tbl_lu_Status" Association="Self.FK_tblApplication_tbl_lu_Status">
+            <End Role="tbl_lu_Status" EntitySet="tbl_lu_Status" />
+            <End Role="tblApplication" EntitySet="tblApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblApplication_tblApplicant" Association="Self.FK_tblApplication_tblApplicant">
+            <End Role="tblApplicant" EntitySet="tblApplicant" />
+            <End Role="tblApplication" EntitySet="tblApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblApplication_tblSerialNumberShelf" Association="Self.FK_tblApplication_tblSerialNumberShelf">
+            <End Role="tblSerialNumberShelf" EntitySet="tblSerialNumberShelf" />
+            <End Role="tblApplication" EntitySet="tblApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblApplication_USERS" Association="Self.FK_tblApplication_USERS">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="tblApplication" EntitySet="tblApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblApplicationAmount_tbl_lu_Status" Association="Self.FK_tblApplicationAmount_tbl_lu_Status">
+            <End Role="tbl_lu_Status" EntitySet="tbl_lu_Status" />
+            <End Role="tblApplicationAmount" EntitySet="tblApplicationAmount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblApplicationAmount_tblApplication" Association="Self.FK_tblApplicationAmount_tblApplication">
+            <End Role="tblApplication" EntitySet="tblApplication" />
+            <End Role="tblApplicationAmount" EntitySet="tblApplicationAmount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblApplicationAmount_USERS" Association="Self.FK_tblApplicationAmount_USERS">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="tblApplicationAmount" EntitySet="tblApplicationAmount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblApplicationAmount_USERS1" Association="Self.FK_tblApplicationAmount_USERS1">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="tblApplicationAmount" EntitySet="tblApplicationAmount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblMerchantPermit_tbl_lu_MethodOfPayment" Association="Self.FK_tblMerchantPermit_tbl_lu_MethodOfPayment">
+            <End Role="tbl_lu_MethodOfPayment" EntitySet="tbl_lu_MethodOfPayment" />
+            <End Role="tblPermit" EntitySet="tblPermit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblMerchantPermit_tblMerchantPermit" Association="Self.FK_tblMerchantPermit_tblMerchantPermit">
+            <End Role="tbl_lu_Status" EntitySet="tbl_lu_Status" />
+            <End Role="tblPermit" EntitySet="tblPermit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPermit_tblMerchant" Association="Self.FK_tblPermit_tblMerchant">
+            <End Role="tblMerchant" EntitySet="tblMerchant" />
+            <End Role="tblPermit" EntitySet="tblPermit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPermit_tblSerialNumberShelf" Association="Self.FK_tblPermit_tblSerialNumberShelf">
+            <End Role="tblSerialNumberShelf" EntitySet="tblSerialNumberShelf" />
+            <End Role="tblPermit" EntitySet="tblPermit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPermit_USERS" Association="Self.FK_tblPermit_USERS">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="tblPermit" EntitySet="tblPermit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPermitAmount_tbl_lu_Status" Association="Self.FK_tblPermitAmount_tbl_lu_Status">
+            <End Role="tbl_lu_Status" EntitySet="tbl_lu_Status" />
+            <End Role="tblPermitAmount" EntitySet="tblPermitAmount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPermitAmount_tblPermit" Association="Self.FK_tblPermitAmount_tblPermit">
+            <End Role="tblPermit" EntitySet="tblPermit" />
+            <End Role="tblPermitAmount" EntitySet="tblPermitAmount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPermitAmount_USERS" Association="Self.FK_tblPermitAmount_USERS">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="tblPermitAmount" EntitySet="tblPermitAmount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPermitAmount_USERS1" Association="Self.FK_tblPermitAmount_USERS1">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="tblPermitAmount" EntitySet="tblPermitAmount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPermitAmountDetail_tblPermitAmount" Association="Self.FK_tblPermitAmountDetail_tblPermitAmount">
+            <End Role="tblPermitAmount" EntitySet="tblPermitAmount" />
+            <End Role="tblPermitAmountDetail" EntitySet="tblPermitAmountDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPermitCountryOfOrigin_tbl_lu_CountryOfOrigin" Association="Self.FK_tblPermitCountryOfOrigin_tbl_lu_CountryOfOrigin">
+            <End Role="tbl_lu_CountryOfOrigin" EntitySet="tbl_lu_CountryOfOrigin" />
+            <End Role="tblPermitCountryOfOrigin" EntitySet="tblPermitCountryOfOrigin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPermitCountryOfOrigin_tblPermit" Association="Self.FK_tblPermitCountryOfOrigin_tblPermit">
+            <End Role="tblPermit" EntitySet="tblPermit" />
+            <End Role="tblPermitCountryOfOrigin" EntitySet="tblPermitCountryOfOrigin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPermitIncoterm_tbl_lu_Incoterm" Association="Self.FK_tblPermitIncoterm_tbl_lu_Incoterm">
+            <End Role="tbl_lu_Incoterm" EntitySet="tbl_lu_Incoterm" />
+            <End Role="tblPermitIncoterm" EntitySet="tblPermitIncoterm" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPermitIncoterm_tblPermit" Association="Self.FK_tblPermitIncoterm_tblPermit">
+            <End Role="tblPermit" EntitySet="tblPermit" />
+            <End Role="tblPermitIncoterm" EntitySet="tblPermitIncoterm" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPermitItemPriority_tblPermit" Association="Self.FK_tblPermitItemPriority_tblPermit">
+            <End Role="tblPermit" EntitySet="tblPermit" />
+            <End Role="tblPermitItemPriority" EntitySet="tblPermitItemPriority" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPermitPortOfDestination_tbl_lu_PortOfDestination" Association="Self.FK_tblPermitPortOfDestination_tbl_lu_PortOfDestination">
+            <End Role="tbl_lu_PortOfDestination" EntitySet="tbl_lu_PortOfDestination" />
+            <End Role="tblPermitPortOfDestination" EntitySet="tblPermitPortOfDestination" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPermitPortOfDestination_tblPermit" Association="Self.FK_tblPermitPortOfDestination_tblPermit">
+            <End Role="tblPermit" EntitySet="tblPermit" />
+            <End Role="tblPermitPortOfDestination" EntitySet="tblPermitPortOfDestination" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPermitPortOfLoading_tbl_lu_PortOfLoading" Association="Self.FK_tblPermitPortOfLoading_tbl_lu_PortOfLoading">
+            <End Role="tbl_lu_PortOfLoading" EntitySet="tbl_lu_PortOfLoading" />
+            <End Role="tblPermitPortOfLoading" EntitySet="tblPermitPortOfLoading" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPermitPortOfLoading_tblPermit" Association="Self.FK_tblPermitPortOfLoading_tblPermit">
+            <End Role="tblPermit" EntitySet="tblPermit" />
+            <End Role="tblPermitPortOfLoading" EntitySet="tblPermitPortOfLoading" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPermitShipmentAllowedBy_tbl_lu_ShipmentAllowedBy" Association="Self.FK_tblPermitShipmentAllowedBy_tbl_lu_ShipmentAllowedBy">
+            <End Role="tbl_lu_ShipmentAllowedBy" EntitySet="tbl_lu_ShipmentAllowedBy" />
+            <End Role="tblPermitShipmentAllowedBy" EntitySet="tblPermitShipmentAllowedBy" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPermitShipmentAllowedBy_tblPermit" Association="Self.FK_tblPermitShipmentAllowedBy_tblPermit">
+            <End Role="tblPermit" EntitySet="tblPermit" />
+            <End Role="tblPermitShipmentAllowedBy" EntitySet="tblPermitShipmentAllowedBy" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPOPermitAmountDetail_tblPermit" Association="Self.FK_tblPOPermitAmountDetail_tblPermit">
+            <End Role="tblPermit" EntitySet="tblPermit" />
+            <End Role="tblPOPermitAmountDetail" EntitySet="tblPOPermitAmountDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPOPermitAmountDetail_tblPermitAmount" Association="Self.FK_tblPOPermitAmountDetail_tblPermitAmount">
+            <End Role="tblPermitAmount" EntitySet="tblPermitAmount" />
+            <End Role="tblPOPermitAmountDetail" EntitySet="tblPOPermitAmountDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPOPermitDetail_tblPermit" Association="Self.FK_tblPOPermitDetail_tblPermit">
+            <End Role="tblPermit" EntitySet="tblPermit" />
+            <End Role="tblPOPermitDetail" EntitySet="tblPOPermitDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPOPermitDetail_tblPermit1" Association="Self.FK_tblPOPermitDetail_tblPermit1">
+            <End Role="tblPermit" EntitySet="tblPermit" />
+            <End Role="tblPOPermitDetail" EntitySet="tblPOPermitDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPOPermitExpiry_tblPermit" Association="Self.FK_tblPOPermitExpiry_tblPermit">
+            <End Role="tblPermit" EntitySet="tblPermit" />
+            <End Role="tblPOPermitExpiry" EntitySet="tblPOPermitExpiry" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ZB_FEPMS_Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AccessLog">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+          <Property Name="user_full_name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ip_address" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="machine_name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="operation" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="object_info" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="browser_info" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="nonce" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="user_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="PERMISSION">
+          <Key>
+            <PropertyRef Name="PermissionId" />
+          </Key>
+          <Property Name="PermissionId" Type="Guid" Nullable="false" />
+          <Property Name="PermissionDescription" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="ROLES" Relationship="Self.LNK_ROLE_PERMISSION" FromRole="PERMISSIONS" ToRole="ROLES" />
+        </EntityType>
+        <EntityType Name="ROLE">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Guid" Nullable="false" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RoleDescription" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="LastModified" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="PERMISSIONS" Relationship="Self.LNK_ROLE_PERMISSION" FromRole="ROLES" ToRole="PERMISSIONS" />
+          <NavigationProperty Name="USERS" Relationship="Self.LNK_USER_ROLE" FromRole="ROLES" ToRole="USERS" />
+        </EntityType>
+        <EntityType Name="SETTING">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="RATE_PERCENTAGE" Type="Decimal" Precision="18" Scale="6" />
+        </EntityType>
+        <EntityType Name="tbl_lu_CountryOfOrigin">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblPermits" Relationship="Self.tblPermitCountryOfOrigin" FromRole="tbl_lu_CountryOfOrigin" ToRole="tblPermit" />
+        </EntityType>
+        <EntityType Name="tbl_lu_Incoterm">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblPermits" Relationship="Self.tblPermitIncoterm" FromRole="tbl_lu_Incoterm" ToRole="tblPermit" />
+        </EntityType>
+        <EntityType Name="tbl_lu_MethodOfPayment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblPermits" Relationship="Self.FK_tblMerchantPermit_tbl_lu_MethodOfPayment" FromRole="tbl_lu_MethodOfPayment" ToRole="tblPermit" />
+        </EntityType>
+        <EntityType Name="tbl_lu_PortOfDestination">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblPermits" Relationship="Self.tblPermitPortOfDestination" FromRole="tbl_lu_PortOfDestination" ToRole="tblPermit" />
+        </EntityType>
+        <EntityType Name="tbl_lu_PortOfLoading">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblPermits" Relationship="Self.tblPermitPortOfLoading" FromRole="tbl_lu_PortOfLoading" ToRole="tblPermit" />
+        </EntityType>
+        <EntityType Name="tbl_lu_ShipmentAllowedBy">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblPermits" Relationship="Self.tblPermitShipmentAllowedBy" FromRole="tbl_lu_ShipmentAllowedBy" ToRole="tblPermit" />
+        </EntityType>
+        <EntityType Name="tbl_lu_Status">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblApplications" Relationship="Self.FK_tblApplication_tbl_lu_Status" FromRole="tbl_lu_Status" ToRole="tblApplication" />
+          <NavigationProperty Name="tblApplicationAmounts" Relationship="Self.FK_tblApplicationAmount_tbl_lu_Status" FromRole="tbl_lu_Status" ToRole="tblApplicationAmount" />
+          <NavigationProperty Name="tblPermits" Relationship="Self.FK_tblMerchantPermit_tblMerchantPermit" FromRole="tbl_lu_Status" ToRole="tblPermit" />
+          <NavigationProperty Name="tblPermitAmounts" Relationship="Self.FK_tblPermitAmount_tbl_lu_Status" FromRole="tbl_lu_Status" ToRole="tblPermitAmount" />
+        </EntityType>
+        <EntityType Name="tblApplicant">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="CIFNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ApplicantName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblApplications" Relationship="Self.FK_tblApplication_tblApplicant" FromRole="tblApplicant" ToRole="tblApplication" />
+        </EntityType>
+        <EntityType Name="tblApplication">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="PermitNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ApplicantId" Type="Guid" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PermitStatusId" Type="Guid" Nullable="false" />
+          <Property Name="PermitType" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SerialNumberShelfId" Type="Guid" Nullable="false" />
+          <Property Name="PermitYear" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CurrencyType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="CurrencyRate" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="RemainingAmount" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="USDRate" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="AmountInUSD" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="RemainingAmountInUSD" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="AmountInBirr" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="RemainingAmountInBirr" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="ApprovalStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NBEApprovalRefNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="QueueRound" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="QueueNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OwnSourceValue" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PurposeOfPayment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Beneficiary" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedBy" Type="Guid" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
+          <Property Name="IncreasedAmount" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="IncreasedAmountInUSD" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="IncreasedAmountInBirr" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="DecreasedAmount" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="DecreasedAmountInUSD" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="DecreasedAmountInBirr" Type="Decimal" Precision="18" Scale="6" />
+          <NavigationProperty Name="tbl_lu_Status" Relationship="Self.FK_tblApplication_tbl_lu_Status" FromRole="tblApplication" ToRole="tbl_lu_Status" />
+          <NavigationProperty Name="tblApplicant" Relationship="Self.FK_tblApplication_tblApplicant" FromRole="tblApplication" ToRole="tblApplicant" />
+          <NavigationProperty Name="tblSerialNumberShelf" Relationship="Self.FK_tblApplication_tblSerialNumberShelf" FromRole="tblApplication" ToRole="tblSerialNumberShelf" />
+          <NavigationProperty Name="USER" Relationship="Self.FK_tblApplication_USERS" FromRole="tblApplication" ToRole="USERS" />
+          <NavigationProperty Name="tblApplicationAmounts" Relationship="Self.FK_tblApplicationAmount_tblApplication" FromRole="tblApplication" ToRole="tblApplicationAmount" />
+        </EntityType>
+        <EntityType Name="tblApplicationAmount">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="ApplicationId" Type="Guid" Nullable="false" />
+          <Property Name="ApprovalStatusId" Type="Guid" Nullable="false" />
+          <Property Name="CurrencyRate" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="AmountInUSD" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="AmountInBirr" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="USDRate" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="CreatedBy" Type="Guid" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ApprovedBy" Type="Guid" />
+          <Property Name="ApprovedDate" Type="DateTime" Precision="3" />
+          <Property Name="Reason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tbl_lu_Status" Relationship="Self.FK_tblApplicationAmount_tbl_lu_Status" FromRole="tblApplicationAmount" ToRole="tbl_lu_Status" />
+          <NavigationProperty Name="tblApplication" Relationship="Self.FK_tblApplicationAmount_tblApplication" FromRole="tblApplicationAmount" ToRole="tblApplication" />
+          <NavigationProperty Name="USER" Relationship="Self.FK_tblApplicationAmount_USERS" FromRole="tblApplicationAmount" ToRole="USERS" />
+          <NavigationProperty Name="USER1" Relationship="Self.FK_tblApplicationAmount_USERS1" FromRole="tblApplicationAmount" ToRole="USERS" />
+        </EntityType>
+        <EntityType Name="tblItemPriority">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Priority" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="GroupBy" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblPermits" Relationship="Self.tblPermitItemPriority" FromRole="tblItemPriority" ToRole="tblPermit" />
+        </EntityType>
+        <EntityType Name="tblMerchant">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="TinNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ImporterName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TradeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NBENumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EmailAddress" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
+          <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblPermits" Relationship="Self.FK_tblPermit_tblMerchant" FromRole="tblMerchant" ToRole="tblPermit" />
+        </EntityType>
+        <EntityType Name="tblPermit">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="PermitNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MerchantId" Type="Guid" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="PermitStatusId" Type="Guid" />
+          <Property Name="PermitType" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SerialNumberShelfId" Type="Guid" Nullable="false" />
+          <Property Name="PermitYear" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LPCONumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CurrencyType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CurrencyRate" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="6" Nullable="false" />
+          <Property Name="AmountInBirr" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="AmountInUSD" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="RemainingAmount" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="RemainingAmountInUSD" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="RemainingAmountInBirr" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="USDRate" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="MethodOfPaymentId" Type="Guid" />
+          <Property Name="NonPriorityItems" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ApprovalStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NBEApprovalRefNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="QueueRound" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="QueueNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OwnSourceValue" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IncreasedAmount" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="IncreasedAmountInUSD" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="IncreasedAmountInBirr" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="DecreasedAmount" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="DecreasedAmountInUSD" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="DecreasedAmountInBirr" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="CreatedBy" Type="Guid" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="tbl_lu_MethodOfPayment" Relationship="Self.FK_tblMerchantPermit_tbl_lu_MethodOfPayment" FromRole="tblPermit" ToRole="tbl_lu_MethodOfPayment" />
+          <NavigationProperty Name="tbl_lu_Status" Relationship="Self.FK_tblMerchantPermit_tblMerchantPermit" FromRole="tblPermit" ToRole="tbl_lu_Status" />
+          <NavigationProperty Name="tblMerchant" Relationship="Self.FK_tblPermit_tblMerchant" FromRole="tblPermit" ToRole="tblMerchant" />
+          <NavigationProperty Name="tblSerialNumberShelf" Relationship="Self.FK_tblPermit_tblSerialNumberShelf" FromRole="tblPermit" ToRole="tblSerialNumberShelf" />
+          <NavigationProperty Name="USER" Relationship="Self.FK_tblPermit_USERS" FromRole="tblPermit" ToRole="USERS" />
+          <NavigationProperty Name="tblPermitAmounts" Relationship="Self.FK_tblPermitAmount_tblPermit" FromRole="tblPermit" ToRole="tblPermitAmount" />
+          <NavigationProperty Name="tblPOPermitAmountDetails" Relationship="Self.FK_tblPOPermitAmountDetail_tblPermit" FromRole="tblPermit" ToRole="tblPOPermitAmountDetail" />
+          <NavigationProperty Name="tblPOPermitDetails" Relationship="Self.FK_tblPOPermitDetail_tblPermit" FromRole="tblPermit" ToRole="tblPOPermitDetail" />
+          <NavigationProperty Name="tblPOPermitDetails1" Relationship="Self.FK_tblPOPermitDetail_tblPermit1" FromRole="tblPermit" ToRole="tblPOPermitDetail" />
+          <NavigationProperty Name="tblPOPermitExpiries" Relationship="Self.FK_tblPOPermitExpiry_tblPermit" FromRole="tblPermit" ToRole="tblPOPermitExpiry" />
+          <NavigationProperty Name="tbl_lu_CountryOfOrigin" Relationship="Self.tblPermitCountryOfOrigin" FromRole="tblPermit" ToRole="tbl_lu_CountryOfOrigin" />
+          <NavigationProperty Name="tbl_lu_Incoterm" Relationship="Self.tblPermitIncoterm" FromRole="tblPermit" ToRole="tbl_lu_Incoterm" />
+          <NavigationProperty Name="tblItemPriorities" Relationship="Self.tblPermitItemPriority" FromRole="tblPermit" ToRole="tblItemPriority" />
+          <NavigationProperty Name="tbl_lu_PortOfDestination" Relationship="Self.tblPermitPortOfDestination" FromRole="tblPermit" ToRole="tbl_lu_PortOfDestination" />
+          <NavigationProperty Name="tbl_lu_PortOfLoading" Relationship="Self.tblPermitPortOfLoading" FromRole="tblPermit" ToRole="tbl_lu_PortOfLoading" />
+          <NavigationProperty Name="tbl_lu_ShipmentAllowedBy" Relationship="Self.tblPermitShipmentAllowedBy" FromRole="tblPermit" ToRole="tbl_lu_ShipmentAllowedBy" />
+        </EntityType>
+        <EntityType Name="tblPermitAmount">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="PermitId" Type="Guid" Nullable="false" />
+          <Property Name="ApprovalStatusId" Type="Guid" Nullable="false" />
+          <Property Name="CreatedBy" Type="Guid" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ApprovedBy" Type="Guid" />
+          <Property Name="ApprovedDate" Type="DateTime" Precision="3" />
+          <Property Name="Reason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tbl_lu_Status" Relationship="Self.FK_tblPermitAmount_tbl_lu_Status" FromRole="tblPermitAmount" ToRole="tbl_lu_Status" />
+          <NavigationProperty Name="tblPermit" Relationship="Self.FK_tblPermitAmount_tblPermit" FromRole="tblPermitAmount" ToRole="tblPermit" />
+          <NavigationProperty Name="USER" Relationship="Self.FK_tblPermitAmount_USERS" FromRole="tblPermitAmount" ToRole="USERS" />
+          <NavigationProperty Name="USER1" Relationship="Self.FK_tblPermitAmount_USERS1" FromRole="tblPermitAmount" ToRole="USERS" />
+          <NavigationProperty Name="tblPermitAmountDetails" Relationship="Self.FK_tblPermitAmountDetail_tblPermitAmount" FromRole="tblPermitAmount" ToRole="tblPermitAmountDetail" />
+          <NavigationProperty Name="tblPOPermitAmountDetails" Relationship="Self.FK_tblPOPermitAmountDetail_tblPermitAmount" FromRole="tblPermitAmount" ToRole="tblPOPermitAmountDetail" />
+        </EntityType>
+        <EntityType Name="tblPermitAmountDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="PermitAmountId" Type="Guid" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="6" Nullable="false" />
+          <Property Name="USDRate" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="AmountInUSD" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="CurrencyRate" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="AmountInBirr" Type="Decimal" Precision="18" Scale="6" />
+          <NavigationProperty Name="tblPermitAmount" Relationship="Self.FK_tblPermitAmountDetail_tblPermitAmount" FromRole="tblPermitAmountDetail" ToRole="tblPermitAmount" />
+        </EntityType>
+        <EntityType Name="tblPOPermitAmountDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="PermitAmountId" Type="Guid" Nullable="false" />
+          <Property Name="PermitId" Type="Guid" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="6" Nullable="false" />
+          <Property Name="USDRate" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="AmountInUSD" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="CurrencyRate" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="AmountInBirr" Type="Decimal" Precision="18" Scale="6" />
+          <NavigationProperty Name="tblPermit" Relationship="Self.FK_tblPOPermitAmountDetail_tblPermit" FromRole="tblPOPermitAmountDetail" ToRole="tblPermit" />
+          <NavigationProperty Name="tblPermitAmount" Relationship="Self.FK_tblPOPermitAmountDetail_tblPermitAmount" FromRole="tblPOPermitAmountDetail" ToRole="tblPermitAmount" />
+        </EntityType>
+        <EntityType Name="tblPOPermitDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="POId" Type="Guid" />
+          <Property Name="PermitId" Type="Guid" />
+          <Property Name="AmountBeforePermit" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="AmountAfterPermit" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="AmountInUSDBeforePermit" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="AmountInUSDAfterPermit" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="AmountInBirrBeforePermit" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="AmountInBirrAfterPermit" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tblPermit" Relationship="Self.FK_tblPOPermitDetail_tblPermit" FromRole="tblPOPermitDetail" ToRole="tblPermit" />
+          <NavigationProperty Name="tblPermit1" Relationship="Self.FK_tblPOPermitDetail_tblPermit1" FromRole="tblPOPermitDetail" ToRole="tblPermit" />
+        </EntityType>
+        <EntityType Name="tblPOPermitExpiry">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="PermitId" Type="Guid" Nullable="false" />
+          <Property Name="ExpiryDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="IsExtension" Type="Boolean" />
+          <Property Name="ChargeCollected" Type="Boolean" />
+          <NavigationProperty Name="tblPermit" Relationship="Self.FK_tblPOPermitExpiry_tblPermit" FromRole="tblPOPermitExpiry" ToRole="tblPermit" />
+        </EntityType>
+        <EntityType Name="tblSerialNumberShelf">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="SerialNumberType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SerialNumberValue" Type="Int32" Nullable="false" />
+          <Property Name="IsLatest" Type="Boolean" Nullable="false" />
+          <Property Name="Year" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tblApplications" Relationship="Self.FK_tblApplication_tblSerialNumberShelf" FromRole="tblSerialNumberShelf" ToRole="tblApplication" />
+          <NavigationProperty Name="tblPermits" Relationship="Self.FK_tblPermit_tblSerialNumberShelf" FromRole="tblSerialNumberShelf" ToRole="tblPermit" />
+        </EntityType>
+        <EntityType Name="USER">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastModified" Type="DateTime" Precision="3" />
+          <Property Name="Inactive" Type="Boolean" />
+          <Property Name="Firstname" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Lastname" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="IDNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Initial" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EMail" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblApplications" Relationship="Self.FK_tblApplication_USERS" FromRole="USERS" ToRole="tblApplication" />
+          <NavigationProperty Name="tblApplicationAmounts" Relationship="Self.FK_tblApplicationAmount_USERS" FromRole="USERS" ToRole="tblApplicationAmount" />
+          <NavigationProperty Name="tblApplicationAmounts1" Relationship="Self.FK_tblApplicationAmount_USERS1" FromRole="USERS" ToRole="tblApplicationAmount" />
+          <NavigationProperty Name="tblPermits" Relationship="Self.FK_tblPermit_USERS" FromRole="USERS" ToRole="tblPermit" />
+          <NavigationProperty Name="tblPermitAmounts" Relationship="Self.FK_tblPermitAmount_USERS" FromRole="USERS" ToRole="tblPermitAmount" />
+          <NavigationProperty Name="tblPermitAmounts1" Relationship="Self.FK_tblPermitAmount_USERS1" FromRole="USERS" ToRole="tblPermitAmount" />
+          <NavigationProperty Name="ROLES" Relationship="Self.LNK_USER_ROLE" FromRole="USERS" ToRole="ROLES" />
+        </EntityType>
+        <Association Name="FK_tblMerchantPermit_tbl_lu_MethodOfPayment">
+          <End Role="tbl_lu_MethodOfPayment" Type="Self.tbl_lu_MethodOfPayment" Multiplicity="0..1" />
+          <End Role="tblPermit" Type="Self.tblPermit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_lu_MethodOfPayment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblPermit">
+              <PropertyRef Name="MethodOfPaymentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblApplication_tbl_lu_Status">
+          <End Role="tbl_lu_Status" Type="Self.tbl_lu_Status" Multiplicity="1" />
+          <End Role="tblApplication" Type="Self.tblApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_lu_Status">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblApplication">
+              <PropertyRef Name="PermitStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblApplicationAmount_tbl_lu_Status">
+          <End Role="tbl_lu_Status" Type="Self.tbl_lu_Status" Multiplicity="1" />
+          <End Role="tblApplicationAmount" Type="Self.tblApplicationAmount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_lu_Status">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblApplicationAmount">
+              <PropertyRef Name="ApprovalStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblMerchantPermit_tblMerchantPermit">
+          <End Role="tbl_lu_Status" Type="Self.tbl_lu_Status" Multiplicity="0..1" />
+          <End Role="tblPermit" Type="Self.tblPermit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_lu_Status">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblPermit">
+              <PropertyRef Name="PermitStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPermitAmount_tbl_lu_Status">
+          <End Role="tbl_lu_Status" Type="Self.tbl_lu_Status" Multiplicity="1" />
+          <End Role="tblPermitAmount" Type="Self.tblPermitAmount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_lu_Status">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblPermitAmount">
+              <PropertyRef Name="ApprovalStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblApplication_tblApplicant">
+          <End Role="tblApplicant" Type="Self.tblApplicant" Multiplicity="1" />
+          <End Role="tblApplication" Type="Self.tblApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblApplicant">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblApplication">
+              <PropertyRef Name="ApplicantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblApplication_tblSerialNumberShelf">
+          <End Role="tblSerialNumberShelf" Type="Self.tblSerialNumberShelf" Multiplicity="1" />
+          <End Role="tblApplication" Type="Self.tblApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSerialNumberShelf">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblApplication">
+              <PropertyRef Name="SerialNumberShelfId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblApplication_USERS">
+          <End Role="USERS" Type="Self.USER" Multiplicity="0..1" />
+          <End Role="tblApplication" Type="Self.tblApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tblApplication">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblApplicationAmount_tblApplication">
+          <End Role="tblApplication" Type="Self.tblApplication" Multiplicity="1" />
+          <End Role="tblApplicationAmount" Type="Self.tblApplicationAmount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblApplication">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblApplicationAmount">
+              <PropertyRef Name="ApplicationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblApplicationAmount_USERS">
+          <End Role="USERS" Type="Self.USER" Multiplicity="1" />
+          <End Role="tblApplicationAmount" Type="Self.tblApplicationAmount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tblApplicationAmount">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblApplicationAmount_USERS1">
+          <End Role="USERS" Type="Self.USER" Multiplicity="0..1" />
+          <End Role="tblApplicationAmount" Type="Self.tblApplicationAmount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tblApplicationAmount">
+              <PropertyRef Name="ApprovedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPermit_tblMerchant">
+          <End Role="tblMerchant" Type="Self.tblMerchant" Multiplicity="1" />
+          <End Role="tblPermit" Type="Self.tblPermit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblMerchant">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblPermit">
+              <PropertyRef Name="MerchantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPermit_tblSerialNumberShelf">
+          <End Role="tblSerialNumberShelf" Type="Self.tblSerialNumberShelf" Multiplicity="1" />
+          <End Role="tblPermit" Type="Self.tblPermit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSerialNumberShelf">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblPermit">
+              <PropertyRef Name="SerialNumberShelfId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPermit_USERS">
+          <End Role="USERS" Type="Self.USER" Multiplicity="0..1" />
+          <End Role="tblPermit" Type="Self.tblPermit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tblPermit">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPermitAmount_tblPermit">
+          <End Role="tblPermit" Type="Self.tblPermit" Multiplicity="1" />
+          <End Role="tblPermitAmount" Type="Self.tblPermitAmount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPermit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblPermitAmount">
+              <PropertyRef Name="PermitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPOPermitAmountDetail_tblPermit">
+          <End Role="tblPermit" Type="Self.tblPermit" Multiplicity="0..1" />
+          <End Role="tblPOPermitAmountDetail" Type="Self.tblPOPermitAmountDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPermit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblPOPermitAmountDetail">
+              <PropertyRef Name="PermitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPOPermitDetail_tblPermit">
+          <End Role="tblPermit" Type="Self.tblPermit" Multiplicity="0..1" />
+          <End Role="tblPOPermitDetail" Type="Self.tblPOPermitDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPermit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblPOPermitDetail">
+              <PropertyRef Name="POId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPOPermitDetail_tblPermit1">
+          <End Role="tblPermit" Type="Self.tblPermit" Multiplicity="0..1" />
+          <End Role="tblPOPermitDetail" Type="Self.tblPOPermitDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPermit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblPOPermitDetail">
+              <PropertyRef Name="PermitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPOPermitExpiry_tblPermit">
+          <End Role="tblPermit" Type="Self.tblPermit" Multiplicity="1" />
+          <End Role="tblPOPermitExpiry" Type="Self.tblPOPermitExpiry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPermit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblPOPermitExpiry">
+              <PropertyRef Name="PermitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPermitAmount_USERS">
+          <End Role="USERS" Type="Self.USER" Multiplicity="1" />
+          <End Role="tblPermitAmount" Type="Self.tblPermitAmount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tblPermitAmount">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPermitAmount_USERS1">
+          <End Role="USERS" Type="Self.USER" Multiplicity="0..1" />
+          <End Role="tblPermitAmount" Type="Self.tblPermitAmount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tblPermitAmount">
+              <PropertyRef Name="ApprovedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPermitAmountDetail_tblPermitAmount">
+          <End Role="tblPermitAmount" Type="Self.tblPermitAmount" Multiplicity="1" />
+          <End Role="tblPermitAmountDetail" Type="Self.tblPermitAmountDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPermitAmount">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblPermitAmountDetail">
+              <PropertyRef Name="PermitAmountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPOPermitAmountDetail_tblPermitAmount">
+          <End Role="tblPermitAmount" Type="Self.tblPermitAmount" Multiplicity="1" />
+          <End Role="tblPOPermitAmountDetail" Type="Self.tblPOPermitAmountDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPermitAmount">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblPOPermitAmountDetail">
+              <PropertyRef Name="PermitAmountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="LNK_ROLE_PERMISSION">
+          <End Role="PERMISSIONS" Type="Self.PERMISSION" Multiplicity="*" />
+          <End Role="ROLES" Type="Self.ROLE" Multiplicity="*" />
+        </Association>
+        <Association Name="LNK_USER_ROLE">
+          <End Role="ROLES" Type="Self.ROLE" Multiplicity="*" />
+          <End Role="USERS" Type="Self.USER" Multiplicity="*" />
+        </Association>
+        <Association Name="tblPermitCountryOfOrigin">
+          <End Role="tbl_lu_CountryOfOrigin" Type="Self.tbl_lu_CountryOfOrigin" Multiplicity="*" />
+          <End Role="tblPermit" Type="Self.tblPermit" Multiplicity="*" />
+        </Association>
+        <Association Name="tblPermitIncoterm">
+          <End Role="tbl_lu_Incoterm" Type="Self.tbl_lu_Incoterm" Multiplicity="*" />
+          <End Role="tblPermit" Type="Self.tblPermit" Multiplicity="*" />
+        </Association>
+        <Association Name="tblPermitItemPriority">
+          <End Role="tblItemPriority" Type="Self.tblItemPriority" Multiplicity="*" />
+          <End Role="tblPermit" Type="Self.tblPermit" Multiplicity="*" />
+        </Association>
+        <Association Name="tblPermitPortOfDestination">
+          <End Role="tbl_lu_PortOfDestination" Type="Self.tbl_lu_PortOfDestination" Multiplicity="*" />
+          <End Role="tblPermit" Type="Self.tblPermit" Multiplicity="*" />
+        </Association>
+        <Association Name="tblPermitPortOfLoading">
+          <End Role="tbl_lu_PortOfLoading" Type="Self.tbl_lu_PortOfLoading" Multiplicity="*" />
+          <End Role="tblPermit" Type="Self.tblPermit" Multiplicity="*" />
+        </Association>
+        <Association Name="tblPermitShipmentAllowedBy">
+          <End Role="tbl_lu_ShipmentAllowedBy" Type="Self.tbl_lu_ShipmentAllowedBy" Multiplicity="*" />
+          <End Role="tblPermit" Type="Self.tblPermit" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AccessLogs" EntityType="Self.AccessLog" />
+          <EntitySet Name="Logins" EntityType="Self.Login" />
+          <EntitySet Name="PERMISSIONS" EntityType="Self.PERMISSION" />
+          <EntitySet Name="ROLES" EntityType="Self.ROLE" />
+          <EntitySet Name="SETTINGs" EntityType="Self.SETTING" />
+          <EntitySet Name="tbl_lu_CountryOfOrigin" EntityType="Self.tbl_lu_CountryOfOrigin" />
+          <EntitySet Name="tbl_lu_Incoterm" EntityType="Self.tbl_lu_Incoterm" />
+          <EntitySet Name="tbl_lu_MethodOfPayment" EntityType="Self.tbl_lu_MethodOfPayment" />
+          <EntitySet Name="tbl_lu_PortOfDestination" EntityType="Self.tbl_lu_PortOfDestination" />
+          <EntitySet Name="tbl_lu_PortOfLoading" EntityType="Self.tbl_lu_PortOfLoading" />
+          <EntitySet Name="tbl_lu_ShipmentAllowedBy" EntityType="Self.tbl_lu_ShipmentAllowedBy" />
+          <EntitySet Name="tbl_lu_Status" EntityType="Self.tbl_lu_Status" />
+          <EntitySet Name="tblApplicants" EntityType="Self.tblApplicant" />
+          <EntitySet Name="tblApplications" EntityType="Self.tblApplication" />
+          <EntitySet Name="tblApplicationAmounts" EntityType="Self.tblApplicationAmount" />
+          <EntitySet Name="tblItemPriorities" EntityType="Self.tblItemPriority" />
+          <EntitySet Name="tblMerchants" EntityType="Self.tblMerchant" />
+          <EntitySet Name="tblPermits" EntityType="Self.tblPermit" />
+          <EntitySet Name="tblPermitAmounts" EntityType="Self.tblPermitAmount" />
+          <EntitySet Name="tblPermitAmountDetails" EntityType="Self.tblPermitAmountDetail" />
+          <EntitySet Name="tblPOPermitAmountDetails" EntityType="Self.tblPOPermitAmountDetail" />
+          <EntitySet Name="tblPOPermitDetails" EntityType="Self.tblPOPermitDetail" />
+          <EntitySet Name="tblPOPermitExpiries" EntityType="Self.tblPOPermitExpiry" />
+          <EntitySet Name="tblSerialNumberShelves" EntityType="Self.tblSerialNumberShelf" />
+          <EntitySet Name="USERS" EntityType="Self.USER" />
+          <AssociationSet Name="FK_tblMerchantPermit_tbl_lu_MethodOfPayment" Association="Self.FK_tblMerchantPermit_tbl_lu_MethodOfPayment">
+            <End Role="tbl_lu_MethodOfPayment" EntitySet="tbl_lu_MethodOfPayment" />
+            <End Role="tblPermit" EntitySet="tblPermits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblApplication_tbl_lu_Status" Association="Self.FK_tblApplication_tbl_lu_Status">
+            <End Role="tbl_lu_Status" EntitySet="tbl_lu_Status" />
+            <End Role="tblApplication" EntitySet="tblApplications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblApplicationAmount_tbl_lu_Status" Association="Self.FK_tblApplicationAmount_tbl_lu_Status">
+            <End Role="tbl_lu_Status" EntitySet="tbl_lu_Status" />
+            <End Role="tblApplicationAmount" EntitySet="tblApplicationAmounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblMerchantPermit_tblMerchantPermit" Association="Self.FK_tblMerchantPermit_tblMerchantPermit">
+            <End Role="tbl_lu_Status" EntitySet="tbl_lu_Status" />
+            <End Role="tblPermit" EntitySet="tblPermits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPermitAmount_tbl_lu_Status" Association="Self.FK_tblPermitAmount_tbl_lu_Status">
+            <End Role="tbl_lu_Status" EntitySet="tbl_lu_Status" />
+            <End Role="tblPermitAmount" EntitySet="tblPermitAmounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblApplication_tblApplicant" Association="Self.FK_tblApplication_tblApplicant">
+            <End Role="tblApplicant" EntitySet="tblApplicants" />
+            <End Role="tblApplication" EntitySet="tblApplications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblApplication_tblSerialNumberShelf" Association="Self.FK_tblApplication_tblSerialNumberShelf">
+            <End Role="tblSerialNumberShelf" EntitySet="tblSerialNumberShelves" />
+            <End Role="tblApplication" EntitySet="tblApplications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblApplication_USERS" Association="Self.FK_tblApplication_USERS">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="tblApplication" EntitySet="tblApplications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblApplicationAmount_tblApplication" Association="Self.FK_tblApplicationAmount_tblApplication">
+            <End Role="tblApplication" EntitySet="tblApplications" />
+            <End Role="tblApplicationAmount" EntitySet="tblApplicationAmounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblApplicationAmount_USERS" Association="Self.FK_tblApplicationAmount_USERS">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="tblApplicationAmount" EntitySet="tblApplicationAmounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblApplicationAmount_USERS1" Association="Self.FK_tblApplicationAmount_USERS1">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="tblApplicationAmount" EntitySet="tblApplicationAmounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPermit_tblMerchant" Association="Self.FK_tblPermit_tblMerchant">
+            <End Role="tblMerchant" EntitySet="tblMerchants" />
+            <End Role="tblPermit" EntitySet="tblPermits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPermit_tblSerialNumberShelf" Association="Self.FK_tblPermit_tblSerialNumberShelf">
+            <End Role="tblSerialNumberShelf" EntitySet="tblSerialNumberShelves" />
+            <End Role="tblPermit" EntitySet="tblPermits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPermit_USERS" Association="Self.FK_tblPermit_USERS">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="tblPermit" EntitySet="tblPermits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPermitAmount_tblPermit" Association="Self.FK_tblPermitAmount_tblPermit">
+            <End Role="tblPermit" EntitySet="tblPermits" />
+            <End Role="tblPermitAmount" EntitySet="tblPermitAmounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPOPermitAmountDetail_tblPermit" Association="Self.FK_tblPOPermitAmountDetail_tblPermit">
+            <End Role="tblPermit" EntitySet="tblPermits" />
+            <End Role="tblPOPermitAmountDetail" EntitySet="tblPOPermitAmountDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPOPermitDetail_tblPermit" Association="Self.FK_tblPOPermitDetail_tblPermit">
+            <End Role="tblPermit" EntitySet="tblPermits" />
+            <End Role="tblPOPermitDetail" EntitySet="tblPOPermitDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPOPermitDetail_tblPermit1" Association="Self.FK_tblPOPermitDetail_tblPermit1">
+            <End Role="tblPermit" EntitySet="tblPermits" />
+            <End Role="tblPOPermitDetail" EntitySet="tblPOPermitDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPOPermitExpiry_tblPermit" Association="Self.FK_tblPOPermitExpiry_tblPermit">
+            <End Role="tblPermit" EntitySet="tblPermits" />
+            <End Role="tblPOPermitExpiry" EntitySet="tblPOPermitExpiries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPermitAmount_USERS" Association="Self.FK_tblPermitAmount_USERS">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="tblPermitAmount" EntitySet="tblPermitAmounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPermitAmount_USERS1" Association="Self.FK_tblPermitAmount_USERS1">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="tblPermitAmount" EntitySet="tblPermitAmounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPermitAmountDetail_tblPermitAmount" Association="Self.FK_tblPermitAmountDetail_tblPermitAmount">
+            <End Role="tblPermitAmount" EntitySet="tblPermitAmounts" />
+            <End Role="tblPermitAmountDetail" EntitySet="tblPermitAmountDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPOPermitAmountDetail_tblPermitAmount" Association="Self.FK_tblPOPermitAmountDetail_tblPermitAmount">
+            <End Role="tblPermitAmount" EntitySet="tblPermitAmounts" />
+            <End Role="tblPOPermitAmountDetail" EntitySet="tblPOPermitAmountDetails" />
+          </AssociationSet>
+          <AssociationSet Name="LNK_ROLE_PERMISSION" Association="Self.LNK_ROLE_PERMISSION">
+            <End Role="PERMISSIONS" EntitySet="PERMISSIONS" />
+            <End Role="ROLES" EntitySet="ROLES" />
+          </AssociationSet>
+          <AssociationSet Name="LNK_USER_ROLE" Association="Self.LNK_USER_ROLE">
+            <End Role="ROLES" EntitySet="ROLES" />
+            <End Role="USERS" EntitySet="USERS" />
+          </AssociationSet>
+          <AssociationSet Name="tblPermitCountryOfOrigin" Association="Self.tblPermitCountryOfOrigin">
+            <End Role="tbl_lu_CountryOfOrigin" EntitySet="tbl_lu_CountryOfOrigin" />
+            <End Role="tblPermit" EntitySet="tblPermits" />
+          </AssociationSet>
+          <AssociationSet Name="tblPermitIncoterm" Association="Self.tblPermitIncoterm">
+            <End Role="tbl_lu_Incoterm" EntitySet="tbl_lu_Incoterm" />
+            <End Role="tblPermit" EntitySet="tblPermits" />
+          </AssociationSet>
+          <AssociationSet Name="tblPermitItemPriority" Association="Self.tblPermitItemPriority">
+            <End Role="tblItemPriority" EntitySet="tblItemPriorities" />
+            <End Role="tblPermit" EntitySet="tblPermits" />
+          </AssociationSet>
+          <AssociationSet Name="tblPermitPortOfDestination" Association="Self.tblPermitPortOfDestination">
+            <End Role="tbl_lu_PortOfDestination" EntitySet="tbl_lu_PortOfDestination" />
+            <End Role="tblPermit" EntitySet="tblPermits" />
+          </AssociationSet>
+          <AssociationSet Name="tblPermitPortOfLoading" Association="Self.tblPermitPortOfLoading">
+            <End Role="tbl_lu_PortOfLoading" EntitySet="tbl_lu_PortOfLoading" />
+            <End Role="tblPermit" EntitySet="tblPermits" />
+          </AssociationSet>
+          <AssociationSet Name="tblPermitShipmentAllowedBy" Association="Self.tblPermitShipmentAllowedBy">
+            <End Role="tbl_lu_ShipmentAllowedBy" EntitySet="tbl_lu_ShipmentAllowedBy" />
+            <End Role="tblPermit" EntitySet="tblPermits" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ZB_FEPMS_ModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="AccessLogs">
+            <EntityTypeMapping TypeName="ZB_FEPMS_Model.AccessLog">
+              <MappingFragment StoreEntitySet="AccessLog">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="user_full_name" ColumnName="user_full_name" />
+                <ScalarProperty Name="ip_address" ColumnName="ip_address" />
+                <ScalarProperty Name="machine_name" ColumnName="machine_name" />
+                <ScalarProperty Name="operation" ColumnName="operation" />
+                <ScalarProperty Name="object_info" ColumnName="object_info" />
+                <ScalarProperty Name="browser_info" ColumnName="browser_info" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logins">
+            <EntityTypeMapping TypeName="ZB_FEPMS_Model.Login">
+              <MappingFragment StoreEntitySet="Logins">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nonce" ColumnName="nonce" />
+                <ScalarProperty Name="user_name" ColumnName="user_name" />
+                <ScalarProperty Name="date" ColumnName="date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PERMISSIONS">
+            <EntityTypeMapping TypeName="ZB_FEPMS_Model.PERMISSION">
+              <MappingFragment StoreEntitySet="PERMISSIONS">
+                <ScalarProperty Name="PermissionId" ColumnName="PermissionId" />
+                <ScalarProperty Name="PermissionDescription" ColumnName="PermissionDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ROLES">
+            <EntityTypeMapping TypeName="ZB_FEPMS_Model.ROLE">
+              <MappingFragment StoreEntitySet="ROLES">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RoleDescription" ColumnName="RoleDescription" />
+                <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SETTINGs">
+            <EntityTypeMapping TypeName="ZB_FEPMS_Model.SETTING">
+              <MappingFragment StoreEntitySet="SETTING">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="RATE_PERCENTAGE" ColumnName="RATE_PERCENTAGE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_lu_CountryOfOrigin">
+            <EntityTypeMapping TypeName="ZB_FEPMS_Model.tbl_lu_CountryOfOrigin">
+              <MappingFragment StoreEntitySet="tbl_lu_CountryOfOrigin">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_lu_Incoterm">
+            <EntityTypeMapping TypeName="ZB_FEPMS_Model.tbl_lu_Incoterm">
+              <MappingFragment StoreEntitySet="tbl_lu_Incoterm">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_lu_MethodOfPayment">
+            <EntityTypeMapping TypeName="ZB_FEPMS_Model.tbl_lu_MethodOfPayment">
+              <MappingFragment StoreEntitySet="tbl_lu_MethodOfPayment">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_lu_PortOfDestination">
+            <EntityTypeMapping TypeName="ZB_FEPMS_Model.tbl_lu_PortOfDestination">
+              <MappingFragment StoreEntitySet="tbl_lu_PortOfDestination">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_lu_PortOfLoading">
+            <EntityTypeMapping TypeName="ZB_FEPMS_Model.tbl_lu_PortOfLoading">
+              <MappingFragment StoreEntitySet="tbl_lu_PortOfLoading">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_lu_ShipmentAllowedBy">
+            <EntityTypeMapping TypeName="ZB_FEPMS_Model.tbl_lu_ShipmentAllowedBy">
+              <MappingFragment StoreEntitySet="tbl_lu_ShipmentAllowedBy">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_lu_Status">
+            <EntityTypeMapping TypeName="ZB_FEPMS_Model.tbl_lu_Status">
+              <MappingFragment StoreEntitySet="tbl_lu_Status">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblApplicants">
+            <EntityTypeMapping TypeName="ZB_FEPMS_Model.tblApplicant">
+              <MappingFragment StoreEntitySet="tblApplicant">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CIFNumber" ColumnName="CIFNumber" />
+                <ScalarProperty Name="ApplicantName" ColumnName="ApplicantName" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblApplications">
+            <EntityTypeMapping TypeName="ZB_FEPMS_Model.tblApplication">
+              <MappingFragment StoreEntitySet="tblApplication">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PermitNumber" ColumnName="PermitNumber" />
+                <ScalarProperty Name="ApplicantId" ColumnName="ApplicantId" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="PermitStatusId" ColumnName="PermitStatusId" />
+                <ScalarProperty Name="PermitType" ColumnName="PermitType" />
+                <ScalarProperty Name="SerialNumberShelfId" ColumnName="SerialNumberShelfId" />
+                <ScalarProperty Name="PermitYear" ColumnName="PermitYear" />
+                <ScalarProperty Name="CurrencyType" ColumnName="CurrencyType" />
+                <ScalarProperty Name="CurrencyRate" ColumnName="CurrencyRate" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="RemainingAmount" ColumnName="RemainingAmount" />
+                <ScalarProperty Name="USDRate" ColumnName="USDRate" />
+                <ScalarProperty Name="AmountInUSD" ColumnName="AmountInUSD" />
+                <ScalarProperty Name="RemainingAmountInUSD" ColumnName="RemainingAmountInUSD" />
+                <ScalarProperty Name="AmountInBirr" ColumnName="AmountInBirr" />
+                <ScalarProperty Name="RemainingAmountInBirr" ColumnName="RemainingAmountInBirr" />
+                <ScalarProperty Name="ApprovalStatus" ColumnName="ApprovalStatus" />
+                <ScalarProperty Name="NBEApprovalRefNumber" ColumnName="NBEApprovalRefNumber" />
+                <ScalarProperty Name="QueueRound" ColumnName="QueueRound" />
+                <ScalarProperty Name="QueueNumber" ColumnName="QueueNumber" />
+                <ScalarProperty Name="OwnSourceValue" ColumnName="OwnSourceValue" />
+                <ScalarProperty Name="PurposeOfPayment" ColumnName="PurposeOfPayment" />
+                <ScalarProperty Name="Beneficiary" ColumnName="Beneficiary" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IncreasedAmount" ColumnName="IncreasedAmount" />
+                <ScalarProperty Name="IncreasedAmountInUSD" ColumnName="IncreasedAmountInUSD" />
+                <ScalarProperty Name="IncreasedAmountInBirr" ColumnName="IncreasedAmountInBirr" />
+                <ScalarProperty Name="DecreasedAmount" ColumnName="DecreasedAmount" />
+                <ScalarProperty Name="DecreasedAmountInUSD" ColumnName="DecreasedAmountInUSD" />
+                <ScalarProperty Name="DecreasedAmountInBirr" ColumnName="DecreasedAmountInBirr" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblApplicationAmounts">
+            <EntityTypeMapping TypeName="ZB_FEPMS_Model.tblApplicationAmount">
+              <MappingFragment StoreEntitySet="tblApplicationAmount">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+                <ScalarProperty Name="ApprovalStatusId" ColumnName="ApprovalStatusId" />
+                <ScalarProperty Name="CurrencyRate" ColumnName="CurrencyRate" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="AmountInUSD" ColumnName="AmountInUSD" />
+                <ScalarProperty Name="AmountInBirr" ColumnName="AmountInBirr" />
+                <ScalarProperty Name="USDRate" ColumnName="USDRate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ApprovedBy" ColumnName="ApprovedBy" />
+                <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblItemPriorities">
+            <EntityTypeMapping TypeName="ZB_FEPMS_Model.tblItemPriority">
+              <MappingFragment StoreEntitySet="tblItemPriority">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Priority" ColumnName="Priority" />
+                <ScalarProperty Name="GroupBy" ColumnName="GroupBy" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblMerchants">
+            <EntityTypeMapping TypeName="ZB_FEPMS_Model.tblMerchant">
+              <MappingFragment StoreEntitySet="tblMerchant">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TinNumber" ColumnName="TinNumber" />
+                <ScalarProperty Name="ImporterName" ColumnName="ImporterName" />
+                <ScalarProperty Name="TradeName" ColumnName="TradeName" />
+                <ScalarProperty Name="NBENumber" ColumnName="NBENumber" />
+                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblPermits">
+            <EntityTypeMapping TypeName="ZB_FEPMS_Model.tblPermit">
+              <MappingFragment StoreEntitySet="tblPermit">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PermitNumber" ColumnName="PermitNumber" />
+                <ScalarProperty Name="MerchantId" ColumnName="MerchantId" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="PermitStatusId" ColumnName="PermitStatusId" />
+                <ScalarProperty Name="PermitType" ColumnName="PermitType" />
+                <ScalarProperty Name="SerialNumberShelfId" ColumnName="SerialNumberShelfId" />
+                <ScalarProperty Name="PermitYear" ColumnName="PermitYear" />
+                <ScalarProperty Name="LPCONumber" ColumnName="LPCONumber" />
+                <ScalarProperty Name="CurrencyType" ColumnName="CurrencyType" />
+                <ScalarProperty Name="CurrencyRate" ColumnName="CurrencyRate" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="AmountInBirr" ColumnName="AmountInBirr" />
+                <ScalarProperty Name="AmountInUSD" ColumnName="AmountInUSD" />
+                <ScalarProperty Name="RemainingAmount" ColumnName="RemainingAmount" />
+                <ScalarProperty Name="RemainingAmountInUSD" ColumnName="RemainingAmountInUSD" />
+                <ScalarProperty Name="RemainingAmountInBirr" ColumnName="RemainingAmountInBirr" />
+                <ScalarProperty Name="USDRate" ColumnName="USDRate" />
+                <ScalarProperty Name="MethodOfPaymentId" ColumnName="MethodOfPaymentId" />
+                <ScalarProperty Name="NonPriorityItems" ColumnName="NonPriorityItems" />
+                <ScalarProperty Name="ApprovalStatus" ColumnName="ApprovalStatus" />
+                <ScalarProperty Name="NBEApprovalRefNumber" ColumnName="NBEApprovalRefNumber" />
+                <ScalarProperty Name="QueueRound" ColumnName="QueueRound" />
+                <ScalarProperty Name="QueueNumber" ColumnName="QueueNumber" />
+                <ScalarProperty Name="OwnSourceValue" ColumnName="OwnSourceValue" />
+                <ScalarProperty Name="IncreasedAmount" ColumnName="IncreasedAmount" />
+                <ScalarProperty Name="IncreasedAmountInUSD" ColumnName="IncreasedAmountInUSD" />
+                <ScalarProperty Name="IncreasedAmountInBirr" ColumnName="IncreasedAmountInBirr" />
+                <ScalarProperty Name="DecreasedAmount" ColumnName="DecreasedAmount" />
+                <ScalarProperty Name="DecreasedAmountInUSD" ColumnName="DecreasedAmountInUSD" />
+                <ScalarProperty Name="DecreasedAmountInBirr" ColumnName="DecreasedAmountInBirr" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblPermitAmounts">
+            <EntityTypeMapping TypeName="ZB_FEPMS_Model.tblPermitAmount">
+              <MappingFragment StoreEntitySet="tblPermitAmount">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PermitId" ColumnName="PermitId" />
+                <ScalarProperty Name="ApprovalStatusId" ColumnName="ApprovalStatusId" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ApprovedBy" ColumnName="ApprovedBy" />
+                <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblPermitAmountDetails">
+            <EntityTypeMapping TypeName="ZB_FEPMS_Model.tblPermitAmountDetail">
+              <MappingFragment StoreEntitySet="tblPermitAmountDetail">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PermitAmountId" ColumnName="PermitAmountId" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="USDRate" ColumnName="USDRate" />
+                <ScalarProperty Name="AmountInUSD" ColumnName="AmountInUSD" />
+                <ScalarProperty Name="CurrencyRate" ColumnName="CurrencyRate" />
+                <ScalarProperty Name="AmountInBirr" ColumnName="AmountInBirr" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblPOPermitAmountDetails">
+            <EntityTypeMapping TypeName="ZB_FEPMS_Model.tblPOPermitAmountDetail">
+              <MappingFragment StoreEntitySet="tblPOPermitAmountDetail">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PermitAmountId" ColumnName="PermitAmountId" />
+                <ScalarProperty Name="PermitId" ColumnName="PermitId" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="USDRate" ColumnName="USDRate" />
+                <ScalarProperty Name="AmountInUSD" ColumnName="AmountInUSD" />
+                <ScalarProperty Name="CurrencyRate" ColumnName="CurrencyRate" />
+                <ScalarProperty Name="AmountInBirr" ColumnName="AmountInBirr" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblPOPermitDetails">
+            <EntityTypeMapping TypeName="ZB_FEPMS_Model.tblPOPermitDetail">
+              <MappingFragment StoreEntitySet="tblPOPermitDetail">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="POId" ColumnName="POId" />
+                <ScalarProperty Name="PermitId" ColumnName="PermitId" />
+                <ScalarProperty Name="AmountBeforePermit" ColumnName="AmountBeforePermit" />
+                <ScalarProperty Name="AmountAfterPermit" ColumnName="AmountAfterPermit" />
+                <ScalarProperty Name="AmountInUSDBeforePermit" ColumnName="AmountInUSDBeforePermit" />
+                <ScalarProperty Name="AmountInUSDAfterPermit" ColumnName="AmountInUSDAfterPermit" />
+                <ScalarProperty Name="AmountInBirrBeforePermit" ColumnName="AmountInBirrBeforePermit" />
+                <ScalarProperty Name="AmountInBirrAfterPermit" ColumnName="AmountInBirrAfterPermit" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblPOPermitExpiries">
+            <EntityTypeMapping TypeName="ZB_FEPMS_Model.tblPOPermitExpiry">
+              <MappingFragment StoreEntitySet="tblPOPermitExpiry">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PermitId" ColumnName="PermitId" />
+                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+                <ScalarProperty Name="IsExtension" ColumnName="IsExtension" />
+                <ScalarProperty Name="ChargeCollected" ColumnName="ChargeCollected" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblSerialNumberShelves">
+            <EntityTypeMapping TypeName="ZB_FEPMS_Model.tblSerialNumberShelf">
+              <MappingFragment StoreEntitySet="tblSerialNumberShelf">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SerialNumberType" ColumnName="SerialNumberType" />
+                <ScalarProperty Name="SerialNumberValue" ColumnName="SerialNumberValue" />
+                <ScalarProperty Name="IsLatest" ColumnName="IsLatest" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USERS">
+            <EntityTypeMapping TypeName="ZB_FEPMS_Model.USER">
+              <MappingFragment StoreEntitySet="USERS">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+                <ScalarProperty Name="Inactive" ColumnName="Inactive" />
+                <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+                <ScalarProperty Name="Lastname" ColumnName="Lastname" />
+                <ScalarProperty Name="IDNo" ColumnName="IDNo" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Initial" ColumnName="Initial" />
+                <ScalarProperty Name="EMail" ColumnName="EMail" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="LNK_ROLE_PERMISSION" TypeName="ZB_FEPMS_Model.LNK_ROLE_PERMISSION" StoreEntitySet="LNK_ROLE_PERMISSION">
+            <EndProperty Name="PERMISSIONS">
+              <ScalarProperty Name="PermissionId" ColumnName="PermissionId" />
+            </EndProperty>
+            <EndProperty Name="ROLES">
+              <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="LNK_USER_ROLE" TypeName="ZB_FEPMS_Model.LNK_USER_ROLE" StoreEntitySet="LNK_USER_ROLE">
+            <EndProperty Name="ROLES">
+              <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="USERS">
+              <ScalarProperty Name="UserId" ColumnName="UserId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="tblPermitCountryOfOrigin" TypeName="ZB_FEPMS_Model.tblPermitCountryOfOrigin" StoreEntitySet="tblPermitCountryOfOrigin">
+            <EndProperty Name="tbl_lu_CountryOfOrigin">
+              <ScalarProperty Name="Id" ColumnName="CountryOfOriginId" />
+            </EndProperty>
+            <EndProperty Name="tblPermit">
+              <ScalarProperty Name="Id" ColumnName="PermitId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="tblPermitIncoterm" TypeName="ZB_FEPMS_Model.tblPermitIncoterm" StoreEntitySet="tblPermitIncoterm">
+            <EndProperty Name="tbl_lu_Incoterm">
+              <ScalarProperty Name="Id" ColumnName="IncotermId" />
+            </EndProperty>
+            <EndProperty Name="tblPermit">
+              <ScalarProperty Name="Id" ColumnName="PermitId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="tblPermitItemPriority" TypeName="ZB_FEPMS_Model.tblPermitItemPriority" StoreEntitySet="tblPermitItemPriority">
+            <EndProperty Name="tblItemPriority">
+              <ScalarProperty Name="Id" ColumnName="ItemPriorityId" />
+            </EndProperty>
+            <EndProperty Name="tblPermit">
+              <ScalarProperty Name="Id" ColumnName="PermitId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="tblPermitPortOfDestination" TypeName="ZB_FEPMS_Model.tblPermitPortOfDestination" StoreEntitySet="tblPermitPortOfDestination">
+            <EndProperty Name="tbl_lu_PortOfDestination">
+              <ScalarProperty Name="Id" ColumnName="PortOfDestinationId" />
+            </EndProperty>
+            <EndProperty Name="tblPermit">
+              <ScalarProperty Name="Id" ColumnName="PermitId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="tblPermitPortOfLoading" TypeName="ZB_FEPMS_Model.tblPermitPortOfLoading" StoreEntitySet="tblPermitPortOfLoading">
+            <EndProperty Name="tbl_lu_PortOfLoading">
+              <ScalarProperty Name="Id" ColumnName="PortOfLoadingId" />
+            </EndProperty>
+            <EndProperty Name="tblPermit">
+              <ScalarProperty Name="Id" ColumnName="PermitId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="tblPermitShipmentAllowedBy" TypeName="ZB_FEPMS_Model.tblPermitShipmentAllowedBy" StoreEntitySet="tblPermitShipmentAllowedBy">
+            <EndProperty Name="tbl_lu_ShipmentAllowedBy">
+              <ScalarProperty Name="Id" ColumnName="ShipmentAllowedById" />
+            </EndProperty>
+            <EndProperty Name="tblPermit">
+              <ScalarProperty Name="Id" ColumnName="PermitId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

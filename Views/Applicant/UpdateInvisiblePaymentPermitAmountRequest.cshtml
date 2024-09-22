@@ -1,0 +1,332 @@
+﻿@model ZB_FEPMS.Models.tblApplicationAmount
+@{
+    ViewBag.Title = "Invisible Payment Permit";
+    Layout = "~/Views/Shared/_FEPMSLayout.cshtml";
+}
+
+@if (TempData["sErrMsg"] != null)
+{
+    <div class="alert alert-danger alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>@TempData["sErrMsg"]</strong>
+    </div>
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">Update Invisible Payment Permit Amount</div>
+        <div class="panel-body">
+            @Html.HiddenFor(model => model.tblApplication.CurrencyType, new { @id = "CurrencyType" })
+            @Html.HiddenFor(model => model.ApplicationId)
+            @Html.HiddenFor(model => model.ApplicantId)
+
+            <div class="row">
+                <div class="row">
+                    @Html.Label("Permit #:", new { @Class = "control-label col-sm-2" })
+                    <div class="col-sm-9">
+                        <span class="label-permit-number-style">
+                            @Model.tblApplication.PermitNumber
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    @Html.Label("Applicant Name:", new { @Class = "control-label col-sm-2" })
+                    <div class="col-sm-9">
+                        <span class="label-underline-style">
+                            @Html.DisplayFor(model => model.tblApplication.tblApplicant.ApplicantName)
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    @Html.Label("CIF #:", new { @Class = "control-label col-sm-2" })
+                    <div class="col-sm-9">
+                        <span class="label-underline-style">
+                            @Html.DisplayFor(model => model.tblApplication.tblApplicant.CIFNumber)
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    @Html.Label("Current Amount:", new { @Class = "control-label col-sm-2" })
+                    <div class="col-sm-9">
+                        <span class="label-underline-style">
+                            @{
+                                if (Model.tblApplication.RemainingAmount.HasValue)
+                                {
+                                    @Model.tblApplication.RemainingAmount.Value.ToString("N2");
+                                }
+                            }
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Beneficiary:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-9">
+                        <span class="label-underline-style">
+                            @Model.tblApplication.Beneficiary
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Purpose Of Payment:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-9">
+                        <span class="label-underline-style">
+                            @Model.tblApplication.PurposeOfPayment
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Permit Status:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-3">
+                        <span class="label-underline-style">
+                            @Model.tblApplication.tbl_lu_Status.name
+                        </span>
+                    </div>
+                    <label class="control-label col-sm-2">
+                        Approval Status:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-4">
+                        <span class="label-underline-style">
+                            @Html.DisplayFor(model => model.tblApplication.ApprovalStatus)
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        NBE Approval Ref. #:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-3">
+                        <span class="label-underline-style">
+                            @Html.DisplayFor(model => model.tblApplication.NBEApprovalRefNumber)
+                        </span>
+                    </div>
+                    <label class="control-label col-sm-2">
+                        Own Source:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-4">
+                        <span class="label-underline-style">
+                            @Html.DisplayFor(model => model.tblApplication.OwnSourceValue)
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Round:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-3">
+                        <span class="label-underline-style">
+                            @Html.DisplayFor(model => model.tblApplication.QueueRound)
+                        </span>
+                    </div>
+                    <label class="control-label col-sm-2">
+                        Queue #:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-4">
+                        <span class="label-underline-style">
+                            @Html.DisplayFor(model => model.tblApplication.QueueNumber)
+                        </span>
+                    </div>
+                </div>
+
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Current Updates:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-10">
+                        <table id="datatable" class="table table-striped table-bordered">
+                            <tr>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Amount In USD</th>
+                                <th>Amount In Birr</th>
+                                <th>Prepared By</th>
+                                <th>Reason</th>
+                                <th>Status</th>
+                            </tr>
+
+                            @foreach (var item in Model.tblApplication.tblApplicationAmounts)
+                            {
+                                <tr>
+                                    <td>@item.CreatedDate.ToString("D")</td>
+                                    <td>@item.Amount.Value.ToString("N2")</td>
+                                    <td>
+                                        @{
+                                            if (item.AmountInUSD.HasValue)
+                                            {
+                                                @item.AmountInUSD.Value.ToString("N2");
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
+                                            if (item.AmountInBirr.HasValue)
+                                            {
+                                                @item.AmountInBirr.Value.ToString("N2");
+                                            }
+                                        }
+                                    </td>
+                                    <td>@ViewContext.Controller.getFullNameOfUserById(item.CreatedBy.ToString())</td>
+                                    <td>@item.Reason</td>
+                                    <td>
+                                        @{
+                                            if (item.tbl_lu_Status.name.Equals("Approved"))
+                                            {
+                                                <span class="label label-success">Approved</span>
+                                            }
+                                            else if (item.tbl_lu_Status.name.Equals("Rejected"))
+                                            {
+                                                <a class="InvisiblePermitPermitAmountUpdateRejectionComment btn btn-sm btn-danger"
+                                                   href="javascript:void(0);" data-id="@item.Id">
+                                                    <i class="glyphicon glyphicon-comment"></i>
+                                                    Comment
+                                                </a>
+                                            }
+                                            else if (item.tbl_lu_Status.name.Equals("Pending"))
+                                            {
+                                                <span class="label label-default">Pending</span>
+                                            }
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Currency Type:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-3">
+                        <span class="label-underline-style">
+                            @Html.DisplayFor(model => model.tblApplication.CurrencyType)
+                        </span>
+                    </div>
+                    <label class="control-label col-sm-2">
+                        Amount:<span class="required">*</span>
+                    </label>
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => model.AmountValue,
+                       new { @class = "form-control input-sm", @onchange = "fillTheAmounts()" })
+                        @Html.ValidationMessageFor(model => model.AmountValue)
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Rate:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-3">
+                        @Html.TextBoxFor(model => model.CurrencyRateValue,
+                       new { @class = "form-control input-sm", @readonly = "" })
+                        @Html.ValidationMessageFor(model => model.CurrencyRateValue)
+                    </div>
+                    <label class="control-label col-sm-2">
+                        In ETB:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => model.AmountInBirrValue,
+                       new { @class = "form-control input-sm", @readonly = "" })
+                        @Html.ValidationMessageFor(model => model.AmountInBirrValue)
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        USD Rate:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-3">
+                        @Html.TextBoxFor(model => model.USDRateValue,
+                       new { @class = "form-control input-sm", @readonly = "" })
+                        @Html.ValidationMessageFor(model => model.USDRateValue)
+                    </div>
+                    <label class="control-label col-sm-2">
+                        In USD:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => model.AmountInUSDValue,
+                       new { @class = "form-control input-sm", @readonly = "" })
+                        @Html.ValidationMessageFor(model => model.AmountInUSDValue)
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Reason:<span class="required">*</span>
+                    </label>
+                    <div class="col-sm-9">
+                        @Html.TextAreaFor(model => model.Reason, new { @class = "form-control input-sm" })
+                        @Html.ValidationMessageFor(model => model.Reason)
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn fa fa-paper-plane btn-success">
+                            <span class="button-icon-margin">Submit For Approval</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back To List", "InvisiblePaymentPermits", new { applicantId = Model.ApplicantId }, new { @class = "btn btn-default fa fa-backward" })
+</div>
+
+<script>
+
+    function fillTheAmounts() {
+        $("#CurrencyRateValue").val("");
+        $("#AmountInBirrValue").val("");
+        $("#USDRateValue").val("");
+        $("#AmountInUSDValue").val("");
+        $.ajax({
+            url: '@Url.Action("fillTheAmounts", "Applicant")',
+            type: 'POST',
+            datatype: 'application/json',
+            contentType: 'application/json',
+            data: JSON.stringify({ currencyType: $("#CurrencyType").val(), amount: $("#AmountValue").val() }),
+            success: function (result) {
+                var rawAmount = $("#AmountValue").val().replace(/,/g, '');
+                var commaSepAmount = Number(rawAmount).toLocaleString('en-US', { maximumFractionDigits: 6 });
+                $("#AmountValue").val(commaSepAmount);
+                var currencyDetails = JSON.parse(result);
+                $("#CurrencyRateValue").val(currencyDetails.CurrencyRate.toLocaleString('en-US', { maximumFractionDigits: 6 }));
+                $("#AmountInBirrValue").val(currencyDetails.AmountInBirr.toLocaleString('en-US', { maximumFractionDigits: 6 }));
+                $("#USDRateValue").val(currencyDetails.USDRate.toLocaleString('en-US', { maximumFractionDigits: 6 }));
+                $("#AmountInUSDValue").val(currencyDetails.AmountInUSD.toLocaleString('en-US', { maximumFractionDigits: 6 }));
+            },
+            error: function ()
+            {
+                alert("Whooaaa! Something went wrong..")
+            },
+        })
+    }
+
+</script>
+
+

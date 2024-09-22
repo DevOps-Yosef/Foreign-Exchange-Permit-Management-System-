@@ -1,0 +1,112 @@
+﻿@model ZB_FEPMS.Models.NBEReportForm
+@{
+    ViewBag.Title = "NBE Report";
+    Layout = "~/Views/Shared/_FEPMSLayout.cshtml";
+}
+
+@if (TempData["sErrMsg"] != null)
+{
+    <div class="alert alert-danger alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>@TempData["sErrMsg"]</strong>
+    </div>
+}
+else if (TempData["successMsg"] != null)
+{
+    <div class="alert alert-success alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>@TempData["successMsg"]</strong>
+    </div>
+}
+
+@using (Html.BeginForm("NBEReport", "PermitReport", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">NBE Report</div>
+        <div class="panel-body">
+
+            <div class="col-sm-12">
+
+                <div class="row">
+                    <label class="control-label col-sm-2">
+                        Method Of Payment:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-4">
+                        @Html.DropDownList("MethodOfPaymentId", null, "--Method Of Payment--",
+                       new { @class = "form-control input-sm" })
+                        @Html.ValidationMessageFor(model => model.MethodOfPaymentId)
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Currency Type:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-4">
+                        @Html.DropDownList("CurrencyType", null, "--Currency Type--",
+                        new
+                        {
+                            @class = "form-control input-sm",
+                        })
+                        @Html.ValidationMessageFor(model => model.CurrencyType)
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Date From:<span class="required">*</span>
+                    </label>
+                    <div class="col-sm-4">
+                        <div class="input-group date">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            @Html.TextBoxFor(model => model.dateFrom, null,
+                           new
+                           {
+                               @class = "form-control input-sm pull-right datepicker",
+                               @id = "fromDatePicker"
+                           })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.dateFrom)
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Date To:<span class="required">*</span>
+                    </label>
+                    <div class="col-sm-4">
+                        <div class="input-group date">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            @Html.TextBoxFor(model => model.dateTo, null, 
+                           new 
+                           { 
+                               @class = "form-control input-sm pull-right datepicker", 
+                               @id = "toDatePicker" 
+                           })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.dateTo)
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <div class="col-sm-offset-2 col-sm-4">
+                        <button type="submit" class="btn btn-primary fa fa-file-excel-o">
+                            <span class="button-icon-margin">Get Report</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+}
+
+

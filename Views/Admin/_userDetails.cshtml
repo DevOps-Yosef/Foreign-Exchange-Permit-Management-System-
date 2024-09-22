@@ -1,0 +1,58 @@
+﻿@model ZB_FEPMS.Models.USER
+@{if (Model != null)
+  {     
+    <div id="expanderContent">
+        <table style='width: 100%'>
+            <tr>
+                <td style='width: 10%; font-weight: bold' class='userTable'>
+                    Username:
+                </td>
+                <td style='width: 28%' class='userTable'>
+                    @Model.Username
+                </td>
+                <td style='width: 8%; font-weight: bold' class='userTable'>
+                    Surname:
+                </td>
+                <td style='width: 20%' class='userTable'>
+                    @Model.Lastname
+                </td>                
+                <td style='font-weight: bold;width: 10%' class='userTable'>
+                    Initial:
+                </td>
+                <td class='userTable'>
+                    @Model.Initial
+                </td>
+            </tr>
+            <tr>
+                <td style='font-weight: bold' class='userTable'>
+                    Email:
+                </td>
+                <td class='userTable'>
+                    @Model.EMail
+                </td>
+                <td style='width: 10%; font-weight: bold' class='userTable'>
+                    Firstname:
+                </td>
+                <td style='width: 30%' class='userTable'>
+                    @Model.Firstname
+                </td>
+                <td style='font-weight: bold' class='userTable'>
+                    Inactive:
+                </td>
+                <td class='userTable'>
+                    @Model.Inactive
+                </td>                
+            </tr>
+            <tr>                
+                <td style='font-weight: bold' class='userTable'>
+                    Title:
+                </td>
+                <td class='userTable'>
+                    @Model.Title
+                </td>                
+               <td></td>
+            </tr>
+        </table>
+    </div>
+  }
+}

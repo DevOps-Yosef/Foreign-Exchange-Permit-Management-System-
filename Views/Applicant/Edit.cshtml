@@ -1,0 +1,68 @@
+﻿@model ZB_FEPMS.Models.tblApplicant
+
+@{
+    ViewBag.Title = "Applicant";
+    Layout = "~/Views/Shared/_FEPMSLayout.cshtml";
+}
+
+@if (TempData["sErrMsg"] != null)
+{
+    <div class="alert alert-danger alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>@TempData["sErrMsg"]</strong>
+    </div>
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">Edit Applicant</div>
+        <div class="panel-body">
+            @Html.HiddenFor(model => model.OldCIFNumber)
+            <div class="row">
+                <label class="control-label col-sm-2">
+                    Applicant Name:<span class="required">*</span>
+                </label>
+                <div class="col-sm-10">
+                    @Html.TextAreaFor(model => model.ApplicantName, 4, 7, new { @class = "form-control input-sm" })
+                    @Html.ValidationMessageFor(model => model.ApplicantName)
+                </div>
+            </div>
+
+            <div class="row grid-row">
+                <label class="control-label col-sm-2">
+                    CIF #:<span class="required">*</span>
+                </label>
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(model => model.CIFNumber,
+                   new { @class = "form-control input-sm" })
+                    @Html.ValidationMessageFor(model => model.CIFNumber)
+                </div>
+            </div>
+
+            <div class="row grid-row">
+                <label class="control-label col-sm-2">
+                    Remark:<span class="required"></span>
+                </label>
+                <div class="col-sm-10">
+                    @Html.TextAreaFor(model => model.Remark, 4, 7, new { @class = "form-control input-sm" })
+                    @Html.ValidationMessageFor(model => model.Remark)
+                </div>
+            </div>
+
+
+            <div class="row grid-row">
+                <div class="col-sm-offset-2 col-sm-4">
+                    <button type="submit" class="btn btn-success fa fa-save"><span class="button-icon-margin">Save</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back To List", "Index", null, new { @class = "btn btn-default fa fa-backward" })
+</div>

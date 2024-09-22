@@ -1,0 +1,42 @@
+﻿@model ZB_FEPMS.Models.PERMISSION
+
+@{if (Model.ROLES.Count == 0)
+{
+    <h2><font color="red">No Associated Roles...</font></h2>
+    <br />
+}
+else
+{
+    <table id="PermissionTable" style="width: 65%">
+        <thead>
+        <th style="width:40%">
+            Role
+        </th>
+        <th>
+            Role Description
+        </th>
+        <th>
+            Action
+        </th>
+        </thead>
+        @foreach (ZB_FEPMS.Models.ROLE role in Model.ROLES.OrderBy(u => u.RoleDescription))
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(role.RoleName, "RoleDetails", new { id = role.RoleId })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => role.RoleDescription)
+                </td>
+                <td>
+                    <center>
+                        <a href="@Url.Action("DeletePermission", "Admin", new { id = role.RoleId, permissionId = Model.PermissionId })" class="deleteRole" permissionid=@Model.PermissionId roleid=@role.RoleId>
+                            <img src="@Url.Content("~/Content/images/bin.png")" alt="Delete Permission" />
+                        </a>
+                    </center>
+                </td>
+            </tr>
+        }
+    </table>
+    <br />
+}}

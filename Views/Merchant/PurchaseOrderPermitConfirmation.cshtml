@@ -1,0 +1,250 @@
+﻿@model ZB_FEPMS.Models.tblPermit
+@{
+    ViewBag.Title = "Purchase Order Permit Confirmation";
+    Layout = "~/Views/Shared/_FEPMSLayout.cshtml";
+}
+
+<div class="panel panel-primary">
+
+    <div class="panel-heading">Purchase Order Permit Confirmation</div>
+    <div class="panel-body">
+
+        <div id="PurchaseOrderPermitConfirmation">
+
+            <table style="width:100%">
+
+                <tr>
+                    <td style="font-weight:bold; text-align: center"><img src="~/Content/images/logo.jpg" /></td>
+                </tr>
+
+                <tr>
+                    <td style="font-weight:bold; text-align: center; text-decoration:underline">
+                        Zemen Bank S.C.
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="font-weight: bold; text-align: center; text-decoration: underline">Trade Service Department</td>
+                </tr>
+
+                <tr>
+                    <td style="font-weight: bold; text-align: center; text-decoration: underline">
+                        Purchase Order
+                    </td>
+                </tr>
+
+            </table>
+
+
+
+
+            <table style="width: 100%; margin-top: 15px">
+
+                <tr>
+                    <td style="padding: 7px 0px 7px 0px;">PO #</td>
+                    <td style="text-decoration: underline">@Model.PermitNumber</td>
+                </tr>
+
+                <tr>
+                    <td style="padding: 7px 0px 7px 0px;">Date</td>
+                    <td style="text-decoration: underline">
+                        @Model.Date.Value.ToString("D")
+                    </td>
+                    <td style="padding-left: 5px">NBE #</td>
+                    <td style="text-decoration: underline">@Model.tblMerchant.NBENumber</td>
+                </tr>
+
+                <tr>
+                    <td style="padding: 7px 0px 7px 0px;">Importer Name</td>
+                    <td style="text-decoration:underline" colspan="3">@Model.tblMerchant.ImporterName</td>
+                </tr>
+
+                <tr>
+                    <td style="padding: 7px 0px 7px 0px;">Tin #</td>
+                    <td style="text-decoration: underline">@Model.tblMerchant.TinNumber</td>
+                    <td style="padding: 7px 0px 7px 0px;">Amount</td>
+                    <td style="text-decoration: underline">@Model.RemainingAmount.Value.ToString("N2") (@Model.CurrencyType)</td>
+                </tr>
+
+                <tr>
+                    <td style="padding: 7px 0px 7px 0px;">Port Of Loading</td>
+                    <td style="text-decoration: underline">
+                        @{
+                            if (Model.tbl_lu_PortOfLoading != null)
+                            {
+                                <span>@string.Join(", ", Model.tbl_lu_PortOfLoading.Select(tlpod => tlpod.name).ToList())</span>
+                            }
+                        }
+                    </td>
+                    <td style="padding: 7px 0px 7px 0px;">Port Of Destination</td>
+                    <td style="text-decoration: underline">
+                        @{
+                            if (Model.tbl_lu_PortOfDestination != null)
+                            {
+                                <span>@string.Join(", ", Model.tbl_lu_PortOfDestination.Select(tlpod => tlpod.name).ToList())</span>
+                            }
+                        }
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="padding: 7px 0px 7px 0px;">Ship. Allowed By</td>
+                    <td style="text-decoration: underline">
+                        @{
+                            if (Model.tbl_lu_ShipmentAllowedBy != null)
+                            {
+                                <span>@string.Join(", ", Model.tbl_lu_ShipmentAllowedBy.Select(tlpod => tlpod.name).ToList())</span>
+                            }
+                        }
+                    </td>
+                    <td style="padding: 7px 0px 7px 0px;">Incoterm</td>
+                    <td style="text-decoration: underline">
+                        @{
+                            if (Model.tbl_lu_Incoterm != null)
+                            {
+                                <span>@string.Join(", ", Model.tbl_lu_Incoterm.Select(tli => tli.name).ToList())</span>
+                            }
+                        }
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="padding: 7px 0px 7px 0px;">LPCO #</td>
+                    <td style="text-decoration: underline">
+                        @Model.LPCONumber
+                    </td>
+                    <td style="padding: 7px 0px 7px 0px;">Country Of Origin</td>
+                    <td style="text-decoration: underline">
+                        @{
+                            if (Model.tbl_lu_CountryOfOrigin != null)
+                            {
+                                <span>@string.Join(", ", Model.tbl_lu_CountryOfOrigin.Select(tlpod => tlpod.name).ToList())</span>
+                            }
+                        }
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="padding: 7px 0px 7px 0px;">Permit Status</td>
+                    <td style="text-decoration: underline">
+                        @Model.tbl_lu_Status.name
+                    </td>
+                    <td style="padding: 7px 0px 7px 0px;">Approval Status</td>
+                    <td style="text-decoration: underline">
+                        @Model.ApprovalStatus
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="padding: 7px 0px 7px 0px;">NBE Approval Ref. #</td>
+                    <td style="text-decoration: underline">
+                        @Model.NBEApprovalRefNumber
+                    </td>
+                    <td style="padding: 7px 0px 7px 0px;">Own Source</td>
+                    <td style="text-decoration: underline">
+                        @Model.OwnSourceValue
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="padding: 7px 0px 7px 0px;">Round</td>
+                    <td style="text-decoration: underline">
+                        @Model.QueueRound
+                    </td>
+                    <td style="padding: 7px 0px 7px 0px;">Queue #</td>
+                    <td style="text-decoration: underline">
+                        @Model.QueueNumber
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="padding: 7px 0px 7px 0px;">First Priority</td>
+                    <td style="text-decoration: underline" colspan="3">
+                        @{
+                            foreach (var item in Model.tblItemPriorities.Where(tip => tip.Priority.Equals("First Priority")))
+                            {
+                                string itemName = string.IsNullOrEmpty(@item.Name)
+                                    ? @item.GroupBy
+                                    : @item.GroupBy + "-" + @item.Name;
+                                <span>@itemName</span><br />
+                            }
+                        }
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="padding: 7px 0px 7px 0px;">Second Priority</td>
+                    <td style="text-decoration: underline" colspan="3">
+                        @{
+                            foreach (var item in Model.tblItemPriorities.Where(tip => tip.Priority.Equals("Second Priority")))
+                            {
+                                string itemName = string.IsNullOrEmpty(@item.Name)
+                                    ? @item.GroupBy
+                                    : @item.GroupBy + "-" + @item.Name;
+                                <span>@itemName</span><br />
+                            }
+                        }
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="padding: 7px 0px 7px 0px;">Third Priority</td>
+                    <td style="text-decoration: underline" colspan="3">
+                        @{
+                            foreach (var item in Model.tblItemPriorities.Where(tip => tip.Priority.Equals("Third Priority")))
+                            {
+                                string itemName = string.IsNullOrEmpty(@item.Name)
+                                    ? @item.GroupBy
+                                    : @item.GroupBy + "-" + @item.Name;
+                                <span>@itemName</span><br />
+                            }
+                        }
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="padding: 7px 0px 7px 0px;">Non-Priority Items</td>
+                    <td style="text-decoration: underline" colspan="3">
+                        @Model.NonPriorityItems
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="padding: 7px 0px 7px 0px;">Prepared By</td>
+                    <td style="text-decoration: underline">
+                        @ViewContext.Controller.getFullNameOfUserById(Model.CreatedBy.ToString())
+                    </td>
+                </tr>
+
+            </table>
+
+        </div>
+    </div>
+</div>
+
+<button class="btn btn-primary" onclick="JavaScript:printPartOfPage('PurchaseOrderPermitConfirmation');">
+    <i class="fa fa-print"></i>Print
+</button>
+
+<br />
+<br />
+
+<div>
+    @Html.ActionLink("Back To List", "Index", null, new { @class = "btn btn-default fa fa-backward" })
+</div>
+
+<script language="javascript">
+    function printPartOfPage(elementId) {
+        var printContent = document.getElementById(elementId);
+        var printWindow = window.open(' ');
+        printWindow.document.write('<html><head><title>Purchase Order Permit Confirmation </title></head><body>');
+        printWindow.document.write(printContent.innerHTML);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.focus();
+        printWindow.print();
+        printWindow.close();
+    }
+</script>
+
+

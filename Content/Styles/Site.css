@@ -1,0 +1,333 @@
+﻿/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+.badge-style {
+    font-size: 20px !important;
+    color: #fdf866 !important;
+    background-color: #2A3F54 !important;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.required {
+    color: red !important;
+}
+
+.margin-zero-top-bottom-style {
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+}
+
+.applicant-name-style {
+    border: solid 1px !important;
+    border-radius: 3px !important;
+    padding: 5px !important;
+    margin: 5px !important;
+}
+
+.panel-primary {
+    border-color: #000 !important;
+}
+
+    .panel-primary > .panel-heading {
+        color: #fff !important;
+        background-color: #FF0000 !important;
+        border-color: #000 !important;
+        font-size: 18px !important;
+    }
+
+input-sm {
+    font-size: 13px !important;
+}
+
+.form-control {
+    border-radius: 3px !important;
+    font-size: 13px !important;
+}
+
+body {
+    background: #fff !important;
+}
+
+#menu_toggle {
+    color: #FF0000 !important;
+}
+
+.grid-row {
+    margin-top: 20px !important;
+}
+
+.margin-bottom-ten-pixels {
+    margin-bottom: 10px !important;
+}
+
+.margin-bottom-thirty-pixels {
+    margin-bottom: 30px !important;
+}
+
+.margin-top-ten-pixels {
+    margin-top: 10px !important;
+}
+
+.profile_info {
+    float: none !important;
+}
+
+.button-icon-margin {
+    margin-left: 2px !important;
+}
+
+.row-form-style {
+    border: 1px groove #ddd !important;
+    padding: 0 1.4em 1.4em 1.4em !important;
+    margin-bottom: 10px !important;
+}
+
+.fifteen-pixels-font-size {
+    font-size: 15px !important;
+}
+
+.fa {
+    font-size: 14px !important;
+}
+
+label {
+    text-align: right !important;
+}
+
+.left-text_align-style {
+    text-align: left !important;
+}
+
+
+.id-display-style {
+    font-family: monospace !important;
+    font-size: 14px !important;
+    color: blue !important;
+    font-weight: bold !important;
+}
+
+.id-display-style-secondary {
+    font-family: monospace !important;
+    font-size: 14px !important;
+    color: red !important;
+    font-weight: bold !important;
+}
+
+
+.label-underline-style {
+    border-bottom: 3px solid #2A3F54 !important;
+    font-weight: bold !important;
+}
+
+.label-permit-number-style {
+    border-bottom: 3px solid #2A3F54 !important;
+    font-weight: bold !important;
+    color: blue !important;
+}
+
+.table-permit-number-style {
+    font-weight: bold !important;
+    color: blue !important;
+}
+
+
+.badge {
+    margin-left: 4px !important;
+}
+
+.carousel-image-style {
+    max-height: 393px !important;
+}
+
+.carousel-header-text-style {
+    font-weight: bold !important;
+    font-size: 34px !important;
+}
+
+.dashboard-text-style {
+    font-weight: bold !important;
+    padding: 15px !important;
+    margin-bottom: 20px !important;
+    border: 1px solid transparent !important;
+    border-radius: 4px !important;
+    color: #8a6d3b !important;
+    background-color: #fcf8e3 !important;
+    border-color: #faebcc !important;
+    line-height: 2em !important;
+}
+
+.dashboard-alert-bell-style {
+    color: red !important;
+    font-size: 2em !important;
+}
+
+.button-icon-margin-two {
+    margin-left: 5px !important;
+}
+
+.nav-sm ul.nav.child_menu {
+    background: #FF0000 !important;
+}
+
+
+.blue-bold-text {
+    color: blue !important;
+    font-weight: bold !important;
+}
+
+label.checkbox {
+    text-align: left !important;
+    margin-left: 20px !important;
+}
+
+.select-all-column-style {
+    color: blue !important;
+    padding-left: 20px !important;
+}
+
+.padding-left-zero-style {
+    padding-left: 0px !important;
+}
+
+
+.approval-add-button-style {
+    margin-left: 2px !important;
+    padding-right: 17px !important;
+    padding-left: 5px !important;
+}
+
+.margin-left-zero-pixels {
+    margin-left: 0px !important;
+}
+
+
+.top-row-style {
+    border: solid 1px #aaa !important;
+    border-radius: 3px !important;
+    margin-bottom: 10px !important;
+    padding-top: 6px !important;
+    padding-left: 6px !important;
+}
+
+.active-side-menu-li-style {
+    border-right: 5px solid #1ABB9C !important;
+}
+
+.table-header-column-style-2 {
+    white-space: nowrap !important;
+}
+
+.alert-danger-style {
+    font-weight: bold !important;
+    padding: 15px !important;
+    margin-bottom: 20px !important;
+    border: 1px solid transparent !important;
+    border-radius: 4px !important;
+    color: #a94442 !important;
+    background-color: #f2dede !important;
+    border-color: #ebccd1 !important;
+}
+
+
+.logout-button-style {
+    width: 100% !important;
+    padding: 12px 20px !important;
+    border: none !important;
+}
+
+.hundred-percent-width-style {
+    width: 100% !important;
+}
+
+.custom-select {
+    display: inline-block;
+    width: 100%;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem 1.75rem .375rem .75rem;
+    /*font-size: 1rem;*/
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    vertical-align: middle;
+    background: #fff url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'><path fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/></svg>") no-repeat right .75rem center/8px 10px;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.multiselect-container > .multiselect-filter {
+    position: sticky;
+    top: 0px;
+    z-index: 1;
+    align-items: center !important;
+    display: flex !important;
+}
+
+
+.dropdown-item {
+    display: block;
+    width: 100%;
+    padding: .25rem 1.5rem;
+    clear: both;
+    font-size: 13px !important;
+    text-align: inherit;
+    white-space: nowrap;
+    background-color: #fff;
+    border: 0;
+}
+
+.form-check-input {
+    position: absolute !important;
+    margin-top: .3rem !important;
+    margin-left: -2rem !important;
+}
+
+.form-check .form-check-label {
+    font-weight: normal !important;
+}
+
+/*#########################################*/
+.multiselect-container .multiselect-option .form-check-label {
+    font-weight: bold !important;
+}
+
+/*#########################################*/
+.padding-thirty-five-pixel-style {
+    padding-right: 35px !important;
+    padding-left: 35px !important;
+}
+
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+    background-color: wheat;
+    opacity: 1;
+}
+
+.no-wrap {
+    white-space: nowrap !important;
+}
+
+
+

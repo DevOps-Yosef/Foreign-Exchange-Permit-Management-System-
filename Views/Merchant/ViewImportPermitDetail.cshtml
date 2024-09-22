@@ -1,0 +1,146 @@
+﻿@model ZB_FEPMS.Models.tblPermitAmount
+
+@if (Model.tblPermitAmountDetails.Count() > 0)
+{
+    <div class="row grid-row">
+        @Html.Label("Importer Name:", new { @Class = "control-label col-sm-2" })
+        <div class="col-sm-3">
+            <span class="label-underline-style">
+                @Model.tblPermit.tblMerchant.ImporterName
+            </span>
+        </div>
+        @Html.Label("Tin #:", new { @Class = "control-label col-sm-2" })
+        <div class="col-sm-4">
+            <span class="label-underline-style">
+                @Model.tblPermit.tblMerchant.TinNumber
+            </span>
+        </div>
+    </div>
+
+    <div class="row grid-row">
+        @Html.Label("NBE #:", new { @Class = "control-label col-sm-2" })
+        <div class="col-sm-3">
+            <span class="label-underline-style">
+                @Model.tblPermit.tblMerchant.NBENumber
+            </span>
+        </div>
+        @Html.Label("Date:", new { @Class = "control-label col-sm-2" })
+        <div class="col-sm-4">
+            <span class="label-underline-style">
+                @Model.CreatedDate.ToString("D")
+            </span>
+        </div>
+    </div>
+
+    <div class="row grid-row">
+        @Html.Label("Amount In USD:", new { @Class = "control-label col-sm-2" })
+        <div class="col-sm-3">
+            <span class="label-underline-style">
+                @Model.tblPOPermitAmountDetails.Sum(tpopad => tpopad.AmountInUSD).Value.ToString("N2")
+            </span>
+        </div>
+        @Html.Label("Amount In Birr:", new { @Class = "control-label col-sm-2" })
+        <div class="col-sm-4">
+            <span class="label-underline-style">
+                @Model.tblPOPermitAmountDetails.Sum(tpopad => tpopad.AmountInBirr).Value.ToString("N2")
+            </span>
+        </div>
+    </div>
+
+    <div class="row grid-row">
+        @Html.Label("Prepared By:", new { @Class = "control-label col-sm-2" })
+        <div class="col-sm-3">
+            <span class="label-underline-style">
+                @ViewContext.Controller.getFullNameOfUserById(@Model.CreatedBy.ToString())
+            </span>
+        </div>
+    </div>
+
+    <div class="row grid-row">
+        @Html.Label("Reason:", new { @Class = "control-label col-sm-2" })
+        <div class="col-sm-3">
+            <span class="label-underline-style">
+                @Model.Reason
+            </span>
+        </div>
+    </div>
+}
+else
+{
+    foreach (var itemPermitAmountDetail in Model.tblPermitAmountDetails)
+    {
+        <div class="row grid-row">
+            @Html.Label("Importer Name:", new { @Class = "control-label col-sm-2" })
+            <div class="col-sm-3">
+                <span class="label-underline-style">
+                    @Model.tblPermit.tblMerchant.ImporterName
+                </span>
+            </div>
+            @Html.Label("Tin #:", new { @Class = "control-label col-sm-2" })
+            <div class="col-sm-4">
+                <span class="label-underline-style">
+                    @Model.tblPermit.tblMerchant.TinNumber
+                </span>
+            </div>
+        </div>
+
+        <div class="row grid-row">
+            @Html.Label("NBE #:", new { @Class = "control-label col-sm-2" })
+            <div class="col-sm-3">
+                <span class="label-underline-style">
+                    @Model.tblPermit.tblMerchant.NBENumber
+                </span>
+            </div>
+            @Html.Label("Date:", new { @Class = "control-label col-sm-2" })
+            <div class="col-sm-4">
+                <span class="label-underline-style">
+                    @Model.CreatedDate.ToString("D")
+                </span>
+            </div>
+        </div>
+
+        <div class="row grid-row">
+            @Html.Label("Amount In USD:", new { @Class = "control-label col-sm-2" })
+            <div class="col-sm-3">
+                <span class="label-underline-style">
+                    @{
+                        if (itemPermitAmountDetail.AmountInUSD.HasValue)
+                        {
+                            @itemPermitAmountDetail.AmountInUSD.Value.ToString("N2");
+                        }
+                    }
+                </span>
+            </div>
+            @Html.Label("Amount In Birr:", new { @Class = "control-label col-sm-2" })
+            <div class="col-sm-4">
+                <span class="label-underline-style">
+                    @{
+                        if (itemPermitAmountDetail.AmountInBirr.HasValue)
+                        {
+                            @itemPermitAmountDetail.AmountInBirr.Value.ToString("N2");
+                        }
+                    }
+                </span>
+            </div>
+        </div>
+
+        <div class="row grid-row">
+            @Html.Label("Prepared By:", new { @Class = "control-label col-sm-2" })
+            <div class="col-sm-3">
+                <span class="label-underline-style">
+                    @ViewContext.Controller.getFullNameOfUserById(@Model.CreatedBy.ToString())
+                </span>
+            </div>
+        </div>
+
+        <div class="row grid-row">
+            @Html.Label("Reason:", new { @Class = "control-label col-sm-2" })
+            <div class="col-sm-3">
+                <span class="label-underline-style">
+                    @Model.Reason
+                </span>
+            </div>
+        </div>
+    }
+}
+

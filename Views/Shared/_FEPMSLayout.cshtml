@@ -1,0 +1,1098 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="icon" type="image/x-icon" href="@Url.Content("~/favicon.ico")">
+
+    <style>
+        .field-validation-error {
+            color: #b94a48;
+        }
+
+        .field-validation-valid {
+            display: none;
+        }
+
+        input.input-validation-error {
+            border: 1px solid #b94a48;
+        }
+
+        input[type="checkbox"].input-validation-error {
+            border: 0 none;
+        }
+
+        .validation-summary-errors {
+            color: #b94a48;
+        }
+
+        .validation-summary-valid {
+            display: none;
+        }
+    </style>
+
+    <style>
+        #container {
+            min-width: 310px;
+            max-width: 800px;
+            height: 400px;
+            margin: 0 auto;
+        }
+    </style>
+
+    <style>
+        /*!
+            // 3. Loader
+            // --------------------------------------------------*/
+        .loader {
+            top: 0;
+            left: 0;
+            position: fixed;
+            opacity: 0.8;
+            z-index: 10000000;
+            background: Black;
+            height: 100%;
+            width: 100%;
+            margin: auto;
+        }
+
+        .strip-holder {
+            top: 50%;
+            -webkit-transform: translateY(-50%);
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+            left: 50%;
+            margin-left: -50px;
+            position: relative;
+        }
+
+        .strip-1,
+        .strip-2,
+        .strip-3 {
+            width: 20px;
+            height: 20px;
+            background: #0072bc;
+            position: relative;
+            -webkit-animation: stripMove 2s ease infinite alternate;
+            animation: stripMove 2s ease infinite alternate;
+            -moz-animation: stripMove 2s ease infinite alternate;
+        }
+
+        .strip-2 {
+            -webkit-animation-duration: 2.1s;
+            animation-duration: 2.1s;
+            background-color: #23a8ff;
+        }
+
+        .strip-3 {
+            -webkit-animation-duration: 2.2s;
+            animation-duration: 2.2s;
+            background-color: #89d1ff;
+        }
+
+        @@-webkit-keyframes stripMove {
+            0% {
+                transform: translate3d(0px, 0px, 0px);
+                -webkit-transform: translate3d(0px, 0px, 0px);
+                -moz-transform: translate3d(0px, 0px, 0px);
+            }
+
+            50% {
+                transform: translate3d(0px, 0px, 0px);
+                -webkit-transform: translate3d(0px, 0px, 0px);
+                -moz-transform: translate3d(0px, 0px, 0px);
+                transform: scale(4, 1);
+                -webkit-transform: scale(4, 1);
+                -moz-transform: scale(4, 1);
+            }
+
+            100% {
+                transform: translate3d(-50px, 0px, 0px);
+                -webkit-transform: translate3d(-50px, 0px, 0px);
+                -moz-transform: translate3d(-50px, 0px, 0px);
+            }
+        }
+
+        @@-moz-keyframes stripMove {
+            0% {
+                transform: translate3d(-50px, 0px, 0px);
+                -webkit-transform: translate3d(-50px, 0px, 0px);
+                -moz-transform: translate3d(-50px, 0px, 0px);
+            }
+
+            50% {
+                transform: translate3d(0px, 0px, 0px);
+                -webkit-transform: translate3d(0px, 0px, 0px);
+                -moz-transform: translate3d(0px, 0px, 0px);
+                transform: scale(4, 1);
+                -webkit-transform: scale(4, 1);
+                -moz-transform: scale(4, 1);
+            }
+
+            100% {
+                transform: translate3d(50px, 0px, 0px);
+                -webkit-transform: translate3d(50px, 0px, 0px);
+                -moz-transform: translate3d(50px, 0px, 0px);
+            }
+        }
+
+        @@keyframes stripMove {
+            0% {
+                transform: translate3d(-50px, 0px, 0px);
+                -webkit-transform: translate3d(-50px, 0px, 0px);
+                -moz-transform: translate3d(-50px, 0px, 0px);
+            }
+
+            50% {
+                transform: translate3d(0px, 0px, 0px);
+                -webkit-transform: translate3d(0px, 0px, 0px);
+                -moz-transform: translate3d(0px, 0px, 0px);
+                transform: scale(4, 1);
+                -webkit-transform: scale(4, 1);
+                -moz-transform: scale(4, 1);
+            }
+
+            100% {
+                transform: translate3d(50px, 0px, 0px);
+                -webkit-transform: translate3d(50px, 0px, 0px);
+                -moz-transform: translate3d(50px, 0px, 0px);
+            }
+        }
+    </style>
+
+    @Styles.Render("~/bundles/my-styles-bundle")
+    @Scripts.Render("~/bundles/my-scripts-bundle")
+
+</head>
+
+<body class="@ViewContext.Controller.getNavType()">
+    <div class="container body">
+        <div class="main_container">
+            <div class="col-md-3 left_col">
+                <div class="left_col scroll-view">
+                    <div class="clearfix"></div>
+                    <!-- menu profile quick info -->
+                    <div class="profile clearfix">
+                        <div class="profile_pic">
+                            <img src="@Url.Content("~/images/user.png")" alt="Profile Image" class="img-circle profile_img">
+                        </div>
+                        <div class="profile_info">
+                            @{
+                                if (ViewContext.Controller.HasLoggedIn())
+                                {
+                                    <span>Welcome,</span>
+                                    <h2 style="color:white;font-size:13px;font-family:Verdana;text-transform:capitalize"> @ViewContext.Controller.getUserName()</h2>
+                                }
+                            }
+                        </div>
+                    </div>
+                    <!-- /menu profile quick info -->
+                    <br />
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
+                            <ul class="nav side-menu">
+                                <li>
+                                    <a href="@Url.Action("Index", "Home")">
+                                        <i class="fa fa-home"></i>Home<span class="fa"></span>
+                                    </a>
+                                </li>
+
+                                @if (ViewContext.Controller.HasRole("Officer")
+                                    || ViewContext.Controller.HasRole("Manager"))
+                                {
+                                    <li class="active">
+                                        <a><i class="fa fa-amazon"></i> Merchant <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu" style="display: block;">
+                                            <li>
+                                                <a href="@Url.Action("Index", "Merchant")">
+                                                    Import Permit
+                                                </a>
+                                            </li>
+                                            @if (ViewContext.Controller.HasRole("Manager"))
+                                            {
+                                                <li>
+                                                    <a href="@Url.Action("UpdatePurchaseOrderPermitAmount_Auth", "Merchant")">
+                                                        PO Amount Approval <span class="badge badge-style">
+                                                            <label id="POUpdateAmountRequestCount" />
+                                                        </span>
+                                                    </a>
+                                                </li>
+
+                                                <li>
+                                                    <a href="@Url.Action("UpdateImportPermitAmount_Auth", "Merchant")">
+                                                        Import Amount Approval<span class="badge badge-style">
+                                                            <label id="ImportPermitUpdateAmountRequestCount" />
+                                                        </span>
+                                                    </a>
+                                                </li>
+
+                                            }
+                                        </ul>
+                                    </li>
+                                    <li class="active">
+                                        <a><i class="fa fa-money"></i> Applicant <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu" style="display: block;">
+                                            <li>
+                                                <a href="@Url.Action("Index", "Applicant")">
+                                                    Invisible Payment
+                                                </a>
+                                            </li>
+                                            @if (ViewContext.Controller.HasRole("Manager"))
+                                            {
+                                                <li>
+                                                    <a href="@Url.Action("UpdateInvisiblePaymentPermitAmount_Auth", "Applicant")">
+                                                        Permit Amount Approval<span class="badge badge-style">
+                                                            <label id="InvisiblePaymentUpdateAmountRequestCount" />
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                            }
+                                        </ul>
+
+                                    </li>
+                                }
+
+                                @if (ViewContext.Controller.HasRole("Officer")
+                                    || ViewContext.Controller.HasRole("Manager"))
+                                {
+                                    <li>
+                                        <a><i class="fa fa-book"></i> Report <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li>
+                                                <a href="@Url.Action("NBEReport", "PermitReport")">
+                                                    NBE Report
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="@Url.Action("PurchaseOrderPermitMasterReport", "PermitReport")">
+                                                    Purchase Order Master Report
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="@Url.Action("ImportPermitMasterReport", "PermitReport")">
+                                                    Import Permit Master Report
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="@Url.Action("InvisiblePaymentMasterReport", "PermitReport")">
+                                                    Invisible Payment Master Report
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                }
+
+                                @if (ViewContext.Controller.HasRole("Officer"))
+                                {
+                                    <li>
+                                        <a><i class="fa fa-address-book"></i> Miscellaneous <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li>
+                                                <a href="@Url.Action("Index", "CountryOfOrigin")">
+                                                    Country Of Origin
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="@Url.Action("Index", "MethodOfPayment")">
+                                                    Method Of Payment
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="@Url.Action("Index", "Incoterm")">
+                                                    Incoterm
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="@Url.Action("Index", "PortOfDestination")">
+                                                    Port Of Destination
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="@Url.Action("Index", "PortOfLoading")">
+                                                    Port Of Loading
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="@Url.Action("Index", "ShipmentAllowedBy")">
+                                                    Shipment Allowed By
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="@Url.Action("Index", "Status")">
+                                                    Status
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="@Url.Action("Index", "ItemPriority")">
+                                                    Item Priority
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                }
+
+                                @if (ViewContext.Controller.HasRole("Settings"))
+                                {
+                                    <li>
+                                        <a><i class="glyphicon glyphicon-cog"></i> Settings<span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+
+                                            <li>
+                                                <a href="@Url.Action("AccessLogList", "Admin")">
+                                                    Access Log
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="@Url.Action("Index", "Admin")">
+                                                    User List
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="@Url.Action("RoleIndex", "Admin")">
+                                                    Roles
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="@Url.Action("PermissionIndex", "Admin")">
+                                                    Permissions
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                }
+
+                            </ul>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- top navigation -->
+            <div class="top_nav">
+                <div class="nav_menu">
+
+                    <nav>
+                        <div class="nav toggle">
+                            <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                        </div>
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="">
+                                <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    @ViewContext.Controller.getUserName()
+                                    <span class=" fa fa-angle-down"></span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-usermenu pull-right">
+                                    <li><a href="https://auth.zemenbank.com/auth/realms/zemen/account" target="_blank" class="fa fa-user">SSO Profile</a></li>
+                                    <li><a href="~/Foreign Exchange Permit Management System User Guide.pdf" target="_blank" class="fa fa-book">User Guide</a></li>
+                                    <li>
+                                        @using (Html.BeginForm("Logout", "Home", FormMethod.Get))
+                                        {
+                                            <button class="fa fa-sign-out logout-button-style" type="submit">Logout</button>
+                                        }
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- /top navigation -->
+            <!-- page content -->
+            <div class="right_col" role="main">
+
+                <div class="loader" id="AjaxLoader" style="display:none;">
+                    <div class="strip-holder">
+                        <div class="strip-1"></div>
+                        <div class="strip-2"></div>
+                        <div class="strip-3"></div>
+                    </div>
+                </div>
+                <div class="x_content">
+                    @if (TempData["UserMessage"] != null)
+                    {
+                        var message = (ZB_FEPMS.Models.MessageVM)TempData["UserMessage"];
+                        <div class="alert @message.CssClassName">
+                            <strong>@message.Title</strong>
+                            @message.Message
+                        </div>
+                    }
+                    @RenderBody()
+
+                </div>
+
+            </div>
+
+
+
+            <!-- footer content -->
+            <footer>
+                <div class="pull-right">
+                    <strong>ZB-FEPMS</strong>,<a href="www.zemenbank.com"> Zemen Bank S.C</a>
+                </div>
+                <div class="clearfix"></div>
+            </footer>
+            <!-- /footer content -->
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/custom")
+
+    @RenderSection("scripts", required: false)
+
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">View</h4>
+                </div>
+                <div id='myModalContent'></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function ManagerDashboardDetails() {
+            $.ajax({
+                url: '@Url.Action("ManagerDashboardDetails", "DashBoards")',
+                type: 'POST',
+                datatype: 'application/json',
+                contentType: 'application/json',
+                success: function (result) {
+                    var managerDashboardDetails = JSON.parse(result);
+                    var POUpdateAmountRequestCount = document.getElementById("POUpdateAmountRequestCount");
+                    var ImportPermitUpdateAmountRequestCount = document.getElementById("ImportPermitUpdateAmountRequestCount");
+                    var InvisiblePaymentUpdateAmountRequestCount = document.getElementById("InvisiblePaymentUpdateAmountRequestCount");
+                    if (managerDashboardDetails.POUpdateAmountRequestCount != 0) {
+                        POUpdateAmountRequestCount.innerHTML = managerDashboardDetails.POUpdateAmountRequestCount;
+                    }
+                    else {
+                        POUpdateAmountRequestCount.innerHTML = "";
+                    }
+                    if (managerDashboardDetails.ImportPermitUpdateAmountRequestCount != 0) {
+                        ImportPermitUpdateAmountRequestCount.innerHTML = managerDashboardDetails.ImportPermitUpdateAmountRequestCount;
+                    }
+                    else {
+                        ImportPermitUpdateAmountRequestCount.innerHTML = "";
+                    }
+                    if (managerDashboardDetails.InvisiblePaymentUpdateAmountRequestCount != 0) {
+                        InvisiblePaymentUpdateAmountRequestCount.innerHTML = managerDashboardDetails.InvisiblePaymentUpdateAmountRequestCount;
+                    }
+                    else {
+                        InvisiblePaymentUpdateAmountRequestCount.innerHTML = "";
+                    }
+                },
+                error: function ()
+                {
+                    //alert("Whooaaa! Something went wrong..");
+                },
+            })
+        }
+    </script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            ManagerDashboardDetails();
+            $('.selectedPortOfLoadingListBox').multiselect({
+                includeSelectAllOption: true,
+                buttonWidth: '100%',
+                enableCaseInsensitiveFiltering: true,
+                buttonTextAlignment: 'left',
+                nonSelectedText: '--Port Of Loading--',
+            });
+
+            $('.selectedPortOfDestinationListBox').multiselect({
+                includeSelectAllOption: true,
+                buttonWidth: '100%',
+                enableCaseInsensitiveFiltering: true,
+                buttonTextAlignment: 'left',
+                nonSelectedText: '--Port Of Destination--',
+            });
+
+            $('.selectedShipmentAllowedByListBox').multiselect({
+                includeSelectAllOption: true,
+                buttonWidth: '100%',
+                enableCaseInsensitiveFiltering: true,
+                buttonTextAlignment: 'left',
+                nonSelectedText: '--Shipment Allowed By--',
+            });
+
+            $('.selectedIncotermListBox').multiselect({
+                includeSelectAllOption: true,
+                buttonWidth: '100%',
+                enableCaseInsensitiveFiltering: true,
+                buttonTextAlignment: 'left',
+                nonSelectedText: '--Incoterm--',
+            });
+
+            $('.countryOfOriginListBox').multiselect({
+                includeSelectAllOption: true,
+                buttonWidth: '100%',
+                enableCaseInsensitiveFiltering: true,
+                buttonTextAlignment: 'left',
+                nonSelectedText: '--Country Of Origin--',
+            });
+
+            $('.selectedPurchaseOrdersListBox').multiselect({
+                includeSelectAllOption: true,
+                buttonWidth: '100%',
+                enableCaseInsensitiveFiltering: true,
+                buttonTextAlignment: 'left',
+                nonSelectedText: '--Purchase Orders--',
+            });
+
+            $('.firstPriorityListBox').multiselect({
+                includeSelectAllOption: true,
+                buttonWidth: '100%',
+                enableCaseInsensitiveFiltering: true,
+                buttonTextAlignment: 'left',
+                nonSelectedText: '--First Priority--',
+            });
+
+            $('.firstPrioritySubLevelsListBox').multiselect({
+                includeSelectAllOption: true,
+                buttonWidth: '100%',
+                enableCaseInsensitiveFiltering: true,
+                buttonTextAlignment: 'left',
+                //    nonSelectedText: '--First Priority--',
+            });
+
+
+            $('.secondPriorityListBox').multiselect({
+                includeSelectAllOption: true,
+                buttonWidth: '100%',
+                enableCaseInsensitiveFiltering: true,
+                buttonTextAlignment: 'left',
+                nonSelectedText: '--Second Priority--',
+            });
+
+            $('.thirdPriorityListBox').multiselect({
+                includeSelectAllOption: true,
+                buttonWidth: '100%',
+                enableCaseInsensitiveFiltering: true,
+                buttonTextAlignment: 'left',
+                nonSelectedText: '--Third Priority--',
+            });
+
+
+            var fromDate = $("#fromDatePicker").val();
+            var toDate = $("#toDatePicker").val();
+            var dateTextBox = $("#dateTextBox").val();
+            if (!fromDate || fromDate.startsWith("1/1/0001")) {
+                $("#fromDatePicker").val("");
+            }
+            if (!toDate || toDate.startsWith("1/1/0001")) {
+                $("#toDatePicker").val("");
+            }
+            if (!dateTextBox || dateTextBox.startsWith("1/1/0001")) {
+                $("#dateTextBox").val("");
+            }
+            var checkedProperty = $("#fromBeginning").prop('checked');
+            if (checkedProperty) {
+                $("#fromDatePicker").attr('disabled', 'disabled');
+                $("#fromDatePicker").val('');
+            }
+            else {
+                $("#fromDatePicker").removeAttr('disabled');
+            }
+        });
+
+    </script>
+
+    <script>
+
+
+        $(document).ready(function () {
+            $("th").addClass("table-header-column-style");
+            var element = $(".multiselect-filter > .fa-search");
+            element.addClass("fa");
+            var formElement = $("form");
+            formElement.attr("autocomplete", "off");
+
+        });
+
+
+        $(document).ready(function () {
+            var bodyClass = $("body").attr("class");
+            if (bodyClass.localeCompare("nav-sm") == 0) {
+                $("li > .child_menu").removeAttr("style");
+                var activeLi = $(".side-menu > li").filter(".active");
+                activeLi.removeClass("active");
+                activeLi.addClass("active-side-menu-li-style");
+            }
+        });
+
+        jQuery(document).ready(function ($) {
+            $('.myCount').counterUp({
+                delay: 10, // the delay time in ms
+                time: 1000 // the speed time in ms
+            });
+
+        });
+
+    </script>
+
+    <script type="text/javascript">
+
+        $('.input-group.date').datepicker({
+            format: 'dd/MM/yyyy',
+            autoclose: true
+        });
+
+
+    </script>
+
+
+    <script>
+
+        $(".IPAmountUpdateApprovalFormViewDetail").click(function () {
+            var $buttonClicked = $(this);
+            var id = $buttonClicked.attr('data-id');
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("ViewInvisiblePaymentPermitDetail", "Applicant")',
+                datatype: "json",
+                contentType: "application/json; charset=utf-8",
+                data: { "Id": id },
+                success: function (data) {
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        });
+
+        $(".POAmountUpdateApprovalFormViewDetail").click(function () {
+            var $buttonClicked = $(this);
+            var id = $buttonClicked.attr('data-id');
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("ViewPurchaseOrderPermitDetail", "Merchant")',
+                datatype: "json",
+                contentType: "application/json; charset=utf-8",
+                data: { "Id": id },
+                success: function (data) {
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        });
+
+        $(".ImportAmountUpdateApprovalFormViewDetail").click(function () {
+            var $buttonClicked = $(this);
+            var id = $buttonClicked.attr('data-id');
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("ViewImportPermitDetail", "Merchant")',
+                datatype: "json",
+                contentType: "application/json; charset=utf-8",
+                data: { "Id": id },
+                success: function (data) {
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        });
+
+        $(".IPPermitAmountUpdatesViewDetail").click(function () {
+            var $buttonClicked = $(this);
+            var id = $buttonClicked.attr('data-id');
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("ViewInvisiblePaymentPermitAmountUpdatesDetail", "Applicant")',
+                datatype: "json",
+                contentType: "application/json; charset=utf-8",
+                data: { "Id": id },
+                success: function (data) {
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        });
+
+        $(".MerchantViewDetail").click(function () {
+            var $buttonClicked = $(this);
+            var id = $buttonClicked.attr('data-id');
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("ViewMerchantDetail", "Merchant")',
+                datatype: "json",
+                contentType: "application/json; charset=utf-8",
+                data: { "Id": id },
+                success: function (data) {
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        });
+
+        $(".ApplicantViewDetail").click(function () {
+            var $buttonClicked = $(this);
+            var id = $buttonClicked.attr('data-id');
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("ViewApplicantDetail", "Applicant")',
+                datatype: "json",
+                contentType: "application/json; charset=utf-8",
+                data: { "Id": id },
+                success: function (data) {
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        });
+
+
+        $(".IPPermitApplicationViewDetail").click(function () {
+            var $buttonClicked = $(this);
+            var id = $buttonClicked.attr('data-id');
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("ViewInvisiblePaymentPermitApplicationDetail", "Applicant")',
+                datatype: "json",
+                contentType: "application/json; charset=utf-8",
+                data: { "Id": id },
+                success: function (data) {
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        });
+
+        $(".PermitViewDetail").click(function () {
+            var $buttonClicked = $(this);
+            var id = $buttonClicked.attr('data-id');
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("ViewPermitDetail", "Merchant")',
+                datatype: "json",
+                contentType: "application/json; charset=utf-8",
+                data: { "Id": id },
+                success: function (data) {
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        });
+
+        $(".POViewDetail").click(function () {
+            var $buttonClicked = $(this);
+            var id = $buttonClicked.attr('data-id');
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("ViewPODetail", "Merchant")',
+                datatype: "json",
+                contentType: "application/json; charset=utf-8",
+                data: { "Id": id },
+                success: function (data) {
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        });
+
+
+        $(".POPermitAmountUpdateRejectionComment").click(function () {
+            var $buttonClicked = $(this);
+            var id = $buttonClicked.attr('data-id');
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("ViewPOPermitAmountUpdateRejectionComment", "Merchant")',
+                datatype: "json",
+                contentType: "application/json; charset=utf-8",
+                data: { "Id": id },
+                success: function (data) {
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        });
+
+        $(".IPPermitAmountUpdateRejectionComment").click(function () {
+            var $buttonClicked = $(this);
+            var id = $buttonClicked.attr('data-id');
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("ViewImportPermitAmountUpdateRejectionComment", "Merchant")',
+                datatype: "json",
+                contentType: "application/json; charset=utf-8",
+                data: { "Id": id },
+                success: function (data) {
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        });
+
+        $(".InvisiblePermitPermitAmountUpdateRejectionComment").click(function () {
+            var $buttonClicked = $(this);
+            var id = $buttonClicked.attr('data-id');
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("ViewIPPermitAmountUpdateRejectionComment", "Applicant")',
+                datatype: "json",
+                contentType: "application/json; charset=utf-8",
+                data: { "Id": id },
+                success: function (data) {
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        });
+
+
+    </script>
+
+
+    <script>
+
+        $("#menu_toggle").click(function () {
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("toggleNavType", "Home")',
+                datatype: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function () {
+                },
+            //    error: function (jqXHR, textStatus, errorThrown) {
+            //    }
+            });
+        });
+
+        //$("#closebtn").on('click',function(){
+        //    $('#myModal').modal('hide');
+
+        $("#closbtn").click(function () {
+            $('#myModal').modal('hide');
+        });
+
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(":input[type='button']").button();
+            $('#AddRole').click(function () {
+                var _userId = $('#UserId').val();
+                var _id = $('#RoleId').val();
+                if (_userId == '') {
+                    return false;
+                }
+                var _parameters = { userId: _userId, id: _id };
+                $.ajax({
+                    url: '@Url.Action("AddUserRoleReturnPartialView", "Admin")',
+                    //url: "/Admin/AddUserRoleReturnPartialView",
+                    type: "GET",
+                    data: _parameters,
+                    success: function (data, textStatus, jqXHR) {
+                        $('#RolesTable').html(data);
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#AddPermission').click(function () {
+                var _permissionId = $('#PermissionId').val();
+                var _roleId = $('#RoleId').val();
+                if (_permissionId == '') {
+                    return false;
+                }
+                var _parameters = { permissionId: _permissionId, id: _roleId };
+                $.ajax({
+                    url: '@Url.Action("AddPermission2RoleReturnPartialView", "Admin")',
+                    //url: "/Admin/AddPermission2RoleReturnPartialView",
+                    type: "GET",
+                    data: _parameters,
+                    success: function (data, textStatus, jqXHR) {
+                        $('#PermissionsTable').html(data);
+                        $('#PermissionId').val("");
+                    }
+                });
+            });
+
+            $('#AddAllPermissions').click(function () {
+                var _roleId = $('#RoleId').val();
+                var _parameters = { id: _roleId };
+                $.ajax({
+                    url: '@Url.Action("AddAllPermissions2RoleReturnPartialView", "Admin")',
+                    //url: "/Admin/AddAllPermissions2RoleReturnPartialView",
+                    type: "GET",
+                    data: _parameters,
+                    success: function (data, textStatus, jqXHR) {
+                        $('#PermissionsTable').html(data);
+                        $('#PermissionId').val("");
+                    }
+                });
+            });
+        });
+    </script>
+
+    <!--For _AddRole4Permission-->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#AddPermission').click(function () {
+                var _roleId = $('#RoleId').val();
+                var _permissionId = $('#PermissionId').val();
+                if (_permissionId == '') {
+                    return false;
+                }
+                var _parameters = { permissionId: _permissionId, roleId: _roleId };
+                $.ajax({
+                    url: '@Url.Action("AddRole2PermissionReturnPartialView", "Admin")',
+                    //url: "/Admin/AddRole2PermissionReturnPartialView",
+                    type: "GET",
+                    data: _parameters,
+                    success: function (data, textStatus, jqXHR) {
+                        $('#RolesTable').html(data);
+                        $('#RoleId').val("");
+                    }
+                });
+            });
+        });
+    </script>
+
+    <!--For _AddUserToUsersTable4Role.cshtml-->
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //$('#AddUser').attr("disabled", true);
+            $('#AddUser').click(function () {
+                var _userId = $('#UserId').val();
+                var _id = $('#RoleId').val();
+                if (_userId == '') {
+                    return false;
+                }
+                var _parameters = { userId: _userId, id: _id };
+                $.ajax({
+                    url: '@Url.Action("AddUser2RoleReturnPartialView", "Admin")',
+                    //url: "/Admin/AddUser2RoleReturnPartialView",
+                    type: "GET",
+                    data: _parameters,
+                    success: function (data, textStatus, jqXHR) {
+                        $('#UsersTable').html(data);
+                        $('#UserId').val("");
+                    }
+                });
+            });
+        });
+    </script>
+
+    <!--For Index-->
+    <script>
+        $(function () {
+            $("#pbFilter").click(function () {
+                $.get("/Admin/filter4Users", { _surname: $("#SurnameId").val() }, function (data) {
+                    $("#divUsers").html(data);
+                })
+            })
+        });
+
+        $(function () {
+            $("#pbReset").click(function () {
+                $("#SurnameId").val('');
+                $.get("/Admin/filterReset", {}, function (data) {
+                    $("#divUsers").html(data);
+                })
+            })
+        });
+
+        $(document).ready(function () {
+
+            $(":input[type='button']").button();
+        });
+    </script>
+
+</body>
+
+
+</html>

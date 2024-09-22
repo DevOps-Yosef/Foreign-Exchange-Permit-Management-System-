@@ -1,0 +1,125 @@
+﻿@model PagedList.IPagedList<ZB_FEPMS.Models.AccessLog>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Access Log List";
+}
+
+<div class="panel panel-primary">
+    <div class="col-sm-12 panel-heading">Access Log Form</div>
+    <div class="panel-body">
+        @using (Html.BeginForm("AccessLogList", "Admin", FormMethod.Get))
+        {
+            <div class="panel panel-primary" style="border: solid 1px; margin-top: 40px; padding-top: 12px; margin-bottom: 30px; margin-left: 0px; margin-right: 0px; padding-bottom: 12px;">
+
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label class="control-label col-sm-4">
+                            Date From:<span class="required"></span>
+                        </label>
+                        <div class="col-sm-8">
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                @Html.TextBox("from", (object)ViewBag.from, new { @class = "form-control input-sm pull-right datepicker", @id = "datepicker" })
+                                @Html.ValidationMessage("from")
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <label class="control-label col-sm-4">
+                            Date To:<span class="required"></span>
+                        </label>
+                        <div class="col-sm-8">
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                @Html.TextBox("to", (object)ViewBag.to, new { @class = "form-control input-sm pull-right datepicker", @id = "datepicker" })
+                                @Html.ValidationMessage("to")
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <label class="control-label col-sm-4">
+                            Name:<span class="required"></span>
+                        </label>
+                        <div class="col-sm-8">
+                            @Html.TextBox("name", (object)ViewBag.name, new { @class = "form-control input-sm" })
+                            @Html.ValidationMessage("name")
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label class="control-label col-sm-4">
+                            IP:<span class="required"></span>
+                        </label>
+                        <div class="col-sm-8">
+                            @Html.TextBox("ip", (object)ViewBag.ip, new { @class = "form-control input-sm" })
+                            @Html.ValidationMessage("ip")
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <label class="control-label col-sm-5">
+                            Machine Name:<span class="required"></span>
+                        </label>
+                        <div class="col-sm-7">
+                            @Html.TextBox("machineName", (object)ViewBag.machineName, new { @class = "form-control input-sm " })
+                            @Html.ValidationMessage("machineName")
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="col-sm-offset-4 col-sm-8">
+                            <button type="submit" class="btn btn-primary fa fa-search-plus">
+                                <span class="button-icon-margin">Search</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        }
+
+        <table id="datatable" class="table table-striped table-bordered">
+            <tr>
+                <th>Date</th>
+                <th>Name</th>
+                <th>IP</th>
+                <th>Machine Name</th>
+                <th>Operation</th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.date.Value.ToString("dd-MMM-yyyy hh:mm:ss tt")</td>
+                    <td>@Html.DisplayFor(modelItem => item.user_full_name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ip_address)</td>
+                    <td>@Html.DisplayFor(modelItem => item.machine_name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.operation)</td>
+                </tr>
+            }
+        </table>
+
+        <br />
+        Showing Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount of @Model.TotalItemCount entries
+        @Html.PagedListPager(Model, page => Url.Action("AccessLogList", new { page }))
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+

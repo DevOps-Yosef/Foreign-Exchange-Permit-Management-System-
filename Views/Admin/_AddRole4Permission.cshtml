@@ -1,0 +1,13 @@
+﻿@model ZB_FEPMS.Models.PERMISSION
+
+@Html.HiddenFor(model => model.PermissionId)
+<fieldset style="padding: 1em; font: 100%; color: Black; border-color: Black; border-style: solid;
+    border-width: thin; border-color: Silver; width: 850px">
+    <legend><strong>Add Permission To Role</strong></legend>
+    <br />
+    <label>
+        Role:
+    </label>
+    @Html.DropDownList("RoleId", null, string.Empty, new { style = "width:350px" })
+    <input type="button" id="AddPermission" value="Add Permission" />    
+</fieldset>

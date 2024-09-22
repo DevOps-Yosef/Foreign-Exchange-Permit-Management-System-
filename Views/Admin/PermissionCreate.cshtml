@@ -1,0 +1,36 @@
+﻿@model ZB_FEPMS.Models.PERMISSION
+@{
+    ViewBag.Title = "Create";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div class="panel panel-primary">
+        <div class="panel-heading">Create Permission</div>
+        <div class="panel-body">
+            <div class="col-sm-12">
+                <div class="row">
+                    <label class="control-label col-sm-3">
+                        Permission Description:<span class="required">*</span>
+                    </label>
+                    <div class="col-sm-6">
+                        @Html.TextBoxFor(model => model.PermissionDescription, new { @class = "form-control input-sm" })
+                        @Html.ValidationMessageFor(model => model.PermissionDescription)
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <div class="col-sm-offset-3 col-sm-6">
+                        <button type="submit" class="btn btn-success fa fa-plus"><span class="button-icon-margin">Create</span> </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back To List", "PermissionIndex", null, new { @class = "btn btn-default fa fa-backward" })
+</div>

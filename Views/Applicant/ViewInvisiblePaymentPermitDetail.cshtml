@@ -1,0 +1,65 @@
+﻿@model ZB_FEPMS.Models.tblApplicationAmount
+
+<div class="row grid-row">
+    @Html.Label("Applicant Name:", new { @Class = "control-label col-sm-2" })
+    <div class="col-sm-3">
+        <span class="label-underline-style">
+            @Model.tblApplication.tblApplicant.ApplicantName
+        </span>
+    </div>
+    @Html.Label("CIF #:", new { @Class = "control-label col-sm-2" })
+    <div class="col-sm-4">
+        <span class="label-underline-style">
+            @Model.tblApplication.tblApplicant.CIFNumber
+        </span>
+    </div>
+</div>
+
+<div class="row grid-row">
+    @Html.Label("Date:", new { @Class = "control-label col-sm-2" })
+    <div class="col-sm-3">
+        <span class="label-underline-style">
+            @Model.CreatedDate.ToString("D")
+        </span>
+    </div>
+    @Html.Label("Amount In USD:", new { @Class = "control-label col-sm-2" })
+    <div class="col-sm-4">
+        <span class="label-underline-style">
+            @{
+                if (Model.AmountInUSD.HasValue)
+                {
+                    @Model.AmountInUSD.Value.ToString("N2");
+                }
+            }
+        </span>
+    </div>
+</div>
+
+<div class="row grid-row">
+    @Html.Label("Amount In Birr:", new { @Class = "control-label col-sm-2" })
+    <div class="col-sm-3">
+        <span class="label-underline-style">
+            @{
+                if (Model.AmountInBirr.HasValue)
+                {
+                    @Model.AmountInBirr.Value.ToString("N2");
+                }
+            }
+        </span>
+    </div>
+    @Html.Label("Prepared By:", new { @Class = "control-label col-sm-2" })
+    <div class="col-sm-4">
+        <span class="label-underline-style">
+            @ViewContext.Controller.getFullNameOfUserById(@Model.CreatedBy.ToString())
+        </span>
+    </div>
+</div>
+
+<div class="row grid-row">
+    @Html.Label("Reason:", new { @Class = "control-label col-sm-2" })
+    <div class="col-sm-3">
+        <span class="label-underline-style">
+            @Model.Reason
+        </span>
+    </div>
+</div>

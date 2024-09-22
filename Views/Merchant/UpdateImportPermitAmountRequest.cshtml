@@ -1,0 +1,718 @@
+﻿@model ZB_FEPMS.Models.tblPermitAmount
+
+@{
+    ViewBag.Title = "Import Permit";
+    Layout = "~/Views/Shared/_FEPMSLayout.cshtml";
+}
+
+@if (TempData["sErrMsg"] != null)
+{
+    <div class="alert alert-danger alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>@TempData["sErrMsg"]</strong>
+    </div>
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">Update Import Permit Amount</div>
+        <div class="panel-body">
+            @Html.HiddenFor(model => model.tblPermit.CurrencyType, new { @id = "CurrencyType" })
+            @Html.HiddenFor(model => model.PermitId)
+            @Html.HiddenFor(model => model.MerchantId)
+            @Html.HiddenFor(model => model.MethodOfPaymentId)
+            @Html.HiddenFor(model => model.MethodOfPaymentName)
+            @Html.HiddenFor(model => model.CurrencyType)
+            <div class="row">
+
+                <div class="row">
+                    @Html.Label("Permit #:", new { @Class = "control-label col-sm-2" })
+                    <div class="col-sm-9">
+                        <span class="label-permit-number-style">
+                            @Model.tblPermit.PermitNumber
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    @Html.Label("Importer Name:", new { @Class = "control-label col-sm-2" })
+                    <div class="col-sm-9">
+                        <span class="label-underline-style">
+                            @Model.tblPermit.tblMerchant.ImporterName
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    @Html.Label("Tin #:", new { @Class = "control-label col-sm-2" })
+                    <div class="col-sm-9">
+                        <span class="label-underline-style">
+                            @Model.tblPermit.tblMerchant.TinNumber
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    @Html.Label("NBE #:", new { @Class = "control-label col-sm-2" })
+                    <div class="col-sm-9">
+                        <span class="label-underline-style">
+                            @Model.tblPermit.tblMerchant.NBENumber
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    @Html.Label("Current Amount:", new { @Class = "control-label col-sm-2" })
+                    <div class="col-sm-9">
+                        <span class="label-underline-style">
+                            @Model.tblPermit.RemainingAmount.Value.ToString("N2")
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    @Html.Label("Method Of Payment:", new { @Class = "control-label col-sm-2" })
+                    <div class="col-sm-3">
+                        <span class="label-underline-style">
+                            @Model.tblPermit.tbl_lu_MethodOfPayment.name
+                        </span>
+                    </div>
+                    @Html.Label("Port Of Destination:", new { @Class = "control-label col-sm-2" })
+                    <div class="col-sm-4">
+                        @{
+                            if (Model.tblPermit.tbl_lu_PortOfDestination != null)
+                            {
+                                <span class="label-underline-style">
+                                    @string.Join(", ", Model.tblPermit.tbl_lu_PortOfDestination.Select(tlpod => tlpod.name).ToList())
+                                </span>
+                            }
+                        }
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    @Html.Label("Shipment Allowed By:", new { @Class = "control-label col-sm-2" })
+                    <div class="col-sm-3">
+                        @{
+                            if (Model.tblPermit.tbl_lu_ShipmentAllowedBy != null)
+                            {
+                                <span class="label-underline-style">
+                                    @string.Join(", ", Model.tblPermit.tbl_lu_ShipmentAllowedBy.Select(tlpod => tlpod.name).ToList())
+                                </span>
+                            }
+                        }
+                    </div>
+                    @Html.Label("Incoterm:", new { @Class = "control-label col-sm-2" })
+                    <div class="col-sm-4">
+                        @{
+                            if (Model.tblPermit.tbl_lu_Incoterm != null)
+                            {
+                                <span class="label-underline-style">
+                                    @string.Join(", ", Model.tblPermit.tbl_lu_Incoterm.Select(tlpod => tlpod.name).ToList())
+                                </span>
+                            }
+                        }
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Permit Status:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-3">
+                        <span class="label-underline-style">
+                            @Model.tblPermit.tbl_lu_Status.name
+                        </span>
+                    </div>
+                    <label class="control-label col-sm-2">
+                        Approval Status:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-4">
+                        <span class="label-underline-style">
+                            @Model.tblPermit.ApprovalStatus
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        NBE Approval Ref. #:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-3">
+                        <span class="label-underline-style">
+                            @Model.tblPermit.NBEApprovalRefNumber
+                        </span>
+                    </div>
+                    <label class="control-label col-sm-2">
+                        Own Source:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-4">
+                        <span class="label-underline-style">
+                            @Model.tblPermit.OwnSourceValue
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Round:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-3">
+                        <span class="label-underline-style">
+                            @Model.tblPermit.QueueRound
+                        </span>
+                    </div>
+                    <label class="control-label col-sm-2">
+                        Queue #:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-4">
+                        <span class="label-underline-style">
+                            @Model.tblPermit.QueueNumber
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        First Priority:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-10">
+                        @foreach (var item in Model.tblPermit.tblItemPriorities.Where(tip => tip.Priority.Equals("First Priority")))
+                        {
+                            string itemName = string.IsNullOrEmpty(@item.Name)
+                                ? @item.GroupBy
+                                : @item.GroupBy + "-" + @item.Name;
+                            <span class="label-underline-style">
+                                @itemName
+                            </span><br />
+                        }
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Second Priority:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-10">
+                        @foreach (var item in Model.tblPermit.tblItemPriorities.Where(tip => tip.Priority.Equals("Second Priority")))
+                        {
+                            string itemName = string.IsNullOrEmpty(@item.Name)
+                                ? @item.GroupBy
+                                : @item.GroupBy + "-" + @item.Name;
+                            <span class="label-underline-style">
+                                @itemName<br />
+                            </span>
+                        }
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Third Priority:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-10">
+                        @foreach (var item in Model.tblPermit.tblItemPriorities.Where(tip => tip.Priority.Equals("Third Priority")))
+                        {
+                            string itemName = string.IsNullOrEmpty(@item.Name)
+                                ? @item.GroupBy
+                                : @item.GroupBy + "-" + @item.Name;
+                            <span class="label-underline-style">
+                                @itemName<br />
+                            </span>
+                        }
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Non-Priority Items:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-4">
+                        <span class="label-underline-style">
+                            @Model.tblPermit.NonPriorityItems
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Current Expiries:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-6">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Expiry Date</th>
+                                    <th>Charge Collected</th>
+                                </tr>
+                            </thead>
+                            @foreach (var item in Model.tblPermit.tblPOPermitExpiries.OrderByDescending(tppe => tppe.ExpiryDate))
+                            {
+                                <tr>
+                                    <td>
+                                        @item.ExpiryDate.ToString("D")
+                                    </td>
+                                    <td>
+                                        @if (item.ChargeCollected.HasValue)
+                                        {
+                                            if (item.ChargeCollected.Value)
+                                            {
+                                                <span>Yes</span>
+                                            }
+                                            else
+                                            {
+                                                <span>No</span>
+                                            }
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                        <br />
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Current Updates:
+                    </label>
+                </div>
+
+                <div class="row grid-row padding-thirty-five-pixel-style">
+                    <div class="col-sm-12">
+                        <table id="datatable" class="table table-striped table-bordered">
+                            <tr>
+                                <th>Date</th>
+                                <th>Method Of Payment</th>
+                                <th>Amount</th>
+                                <th>Amount In USD</th>
+                                <th>Amount In Birr</th>
+                                <th>Prepared By</th>
+                                <th>Reason</th>
+                                <th>Status</th>
+                            </tr>
+
+                            @foreach (var item in Model.tblPermit.tblPermitAmounts)
+                            {
+                                if (item.tblPermitAmountDetails.Count() > 0)
+                                {
+                                    foreach (var itemPermitAmountDetail in item.tblPermitAmountDetails)
+                                    {
+                                        <tr>
+                                            <td>@item.CreatedDate.ToString("D")</td>
+                                            <td>@item.tblPermit.tbl_lu_MethodOfPayment.name</td>
+                                            <td>@itemPermitAmountDetail.Amount.ToString("N2")</td>
+                                            <td>
+                                                @{
+                                                    if (itemPermitAmountDetail.AmountInUSD.HasValue)
+                                                    {
+                                                        @itemPermitAmountDetail.AmountInUSD.Value.ToString("N2");
+                                                    }
+                                                }
+                                            </td>
+                                            <td>
+                                                @{
+                                                    if (itemPermitAmountDetail.AmountInBirr.HasValue)
+                                                    {
+                                                        @itemPermitAmountDetail.AmountInBirr.Value.ToString("N2");
+                                                    }
+                                                }
+                                            </td>
+                                            <td>@ViewContext.Controller.getFullNameOfUserById(item.CreatedBy.ToString())</td>
+                                            <td>@item.Reason</td>
+                                            <td>
+                                                @{
+                                                    if (item.tbl_lu_Status.name.Equals("Approved"))
+                                                    {
+                                                        <span class="label label-success">Approved</span>
+                                                    }
+                                                    else if (item.tbl_lu_Status.name.Equals("Rejected"))
+                                                    {
+                                                        <a class="IPPermitAmountUpdateRejectionComment btn btn-sm btn-danger"
+                                                           href="javascript:void(0);" data-id="@item.Id">
+                                                            <i class="glyphicon glyphicon-comment"></i>
+                                                            Comment
+                                                        </a>
+                                                    }
+                                                    else if (item.tbl_lu_Status.name.Equals("Pending"))
+                                                    {
+                                                        <span class="label label-default">Pending</span>
+                                                    }
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td>@item.CreatedDate.ToString("D")</td>
+                                        <td>@item.tblPermit.tbl_lu_MethodOfPayment.name</td>
+                                        <td>
+                                            @item.tblPOPermitAmountDetails.Sum(tpopad => tpopad.Amount).ToString("N2")
+                                        </td>
+                                        <td>
+                                            @item.tblPOPermitAmountDetails.Sum(tpopad => tpopad.AmountInUSD).Value.ToString("N2")
+                                        </td>
+                                        <td>
+                                            @item.tblPOPermitAmountDetails.Sum(tpopad => tpopad.AmountInBirr).Value.ToString("N2")
+                                        </td>
+                                        <td>@ViewContext.Controller.getFullNameOfUserById(item.CreatedBy.ToString())</td>
+                                        <td>@item.Reason</td>
+                                        <td>
+                                            @{
+                                                if (item.tbl_lu_Status.name.Equals("Approved"))
+                                                {
+                                                    <span class="label label-success">Approved</span>
+                                                }
+                                                else if (item.tbl_lu_Status.name.Equals("Rejected"))
+                                                {
+                                                    <a class="IPPermitAmountUpdateRejectionComment btn btn-sm btn-danger"
+                                                       href="javascript:void(0);" data-id="@item.Id">
+                                                        <i class="glyphicon glyphicon-comment"></i>
+                                                        Comment
+                                                    </a>
+                                                }
+                                                else if (item.tbl_lu_Status.name.Equals("Pending"))
+                                                {
+                                                    <span class="label label-default">Pending</span>
+                                                }
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Currency Type:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-3">
+                        <span class="label-underline-style">
+                            @Html.DisplayFor(model => model.tblPermit.CurrencyType)
+                        </span>
+                    </div>
+                    <label class="control-label col-sm-2">
+                        Amount:<span class="required">*</span>
+                    </label>
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => model.AmountValue,
+                       new { @class = "form-control input-sm", @onchange = "fillTheAmounts()" })
+                        @Html.ValidationMessageFor(model => model.AmountValue)
+                    </div>
+
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Rate:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-3">
+                        @Html.TextBoxFor(model => model.CurrencyRateValue,
+                       new { @class = "form-control input-sm", @readonly = "" })
+                        @Html.ValidationMessageFor(model => model.CurrencyRateValue)
+                    </div>
+                    <label class="control-label col-sm-2">
+                        In ETB:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => model.AmountInBirrValue,
+                       new { @class = "form-control input-sm", @readonly = "" })
+                        @Html.ValidationMessageFor(model => model.AmountInBirrValue)
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        USD Rate:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-3">
+                        @Html.TextBoxFor(model => model.USDRateValue,
+                       new { @class = "form-control input-sm", @readonly = "" })
+                        @Html.ValidationMessageFor(model => model.USDRateValue)
+                    </div>
+                    <label class="control-label col-sm-2">
+                        In USD:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => model.AmountInUSDValue,
+                       new { @class = "form-control input-sm", @readonly = "" })
+                        @Html.ValidationMessageFor(model => model.AmountInUSDValue)
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        PO Settlements:
+                    </label>
+                </div>
+
+                <div class="row grid-row padding-thirty-five-pixel-style">
+                    <div class="col-sm-12">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>PO #</th>
+                                    <th>Currency</th>
+                                    <th>Amount</th>
+                                    <th>Amount Before Permit</th>
+                                    <th>Amount After Permit</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            @foreach (var item in Model.tblPermit.tblPOPermitDetails1.OrderByDescending(tppd => tppd.CreatedDate))
+                            {
+                                <tr>
+                                    <td>
+                                        @item.tblPermit.PermitNumber
+                                    </td>
+                                    <td>
+                                        @item.tblPermit.CurrencyType
+                                    </td>
+                                    <td>
+                                        @{
+                                            decimal amount = item.AmountBeforePermit.Value - item.AmountAfterPermit.Value;
+                                            <span>@amount.ToString("N2")</span>
+                                        }
+                                        @{
+                                            decimal decreaseAmount = 0;
+                                            decimal increaseAmount = 0;
+                                            foreach (var itemTblPermitAmount in item.tblPermit1.tblPermitAmounts)
+                                            {
+                                                if (itemTblPermitAmount.tblPOPermitAmountDetails.Where(tppad => tppad.PermitId == item.tblPermit.Id && tppad.Amount < 0).Count() > 0)
+                                                {
+                                                    decreaseAmount += itemTblPermitAmount.tblPOPermitAmountDetails.Where(tppad => tppad.PermitId == item.tblPermit.Id && tppad.Amount < 0).Sum(tppad => tppad.Amount);
+                                                }
+                                                if (itemTblPermitAmount.tblPOPermitAmountDetails.Where(tppad => tppad.PermitId == item.tblPermit.Id && tppad.Amount > 0).Count() > 0)
+                                                {
+                                                    increaseAmount += itemTblPermitAmount.tblPOPermitAmountDetails.Where(tppad => tppad.PermitId == item.tblPermit.Id && tppad.Amount > 0).Sum(tppad => tppad.Amount);
+                                                }
+                                            }
+                                            if (decreaseAmount != 0)
+                                            {
+                                                <span style="color:red">
+                                                    | @decreaseAmount.ToString("N2")
+                                                </span>
+                                            }
+                                            if (increaseAmount != 0)
+                                            {
+                                                <span style="color:green">
+                                                    | @increaseAmount.ToString("N2")
+                                                </span>
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        @item.AmountBeforePermit.Value.ToString("N2")
+                                    </td>
+                                    <td>
+                                        @item.AmountAfterPermit.Value.ToString("N2")
+                                    </td>
+                                    <td>
+                                        @item.CreatedDate.Value.ToString("D")
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                        <br />
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Purchase Orders:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-10">
+                        @Html.ValidationMessageFor(model => model.MethodOfPaymentId, "", new { @class = "alert-danger-style" })
+                    </div>
+                </div>
+
+                <div class="row grid-row padding-thirty-five-pixel-style">
+                    <div class="col-sm-12">
+                        <table id="tblDisplay" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>PO #</th>
+                                    <th>Status</th>
+                                    <th>Currency</th>
+                                    <th>Remaining Amount</th>
+                                    <th>Expired</th>
+                                    <th>Amount</th>
+                                    <th>In ETB</th>
+                                    <th>In USD</th>
+                                </tr>
+                            </thead>
+                            @for (int i = 0; i < Model.ImportPOList.Count; i++)
+                            {
+                                @Html.HiddenFor(model => @Model.ImportPOList[i].Id)
+                                @Html.HiddenFor(model => @Model.ImportPOList[i].PermitNumber)
+                                <tr>
+                                    <td><span class="table-permit-number-style">@Model.ImportPOList[i].PermitNumber</span></td>
+                                    <td>
+                                        @Html.HiddenFor(model => @Model.ImportPOList[i].Status)
+                                        @{
+                                            var status = Model.ImportPOList[i].Status;
+                                            if (status.Equals("Active"))
+                                            {
+                                                <span class="label label-success">Active</span>
+                                            }
+                                            else if (status.Equals("Cancelled")
+                                                || status.Equals("Unutilized"))
+                                            {
+                                                <span class="label label-danger">Cancelled</span>
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        @Html.HiddenFor(model => @Model.ImportPOList[i].CurrencyType)
+                                        @Model.ImportPOList[i].CurrencyType
+                                    </td>
+                                    <td>
+                                        @Html.HiddenFor(model => @Model.ImportPOList[i].RemainingAmount)
+                                        @Model.ImportPOList[i].RemainingAmount.Value.ToString("N2")
+                                    </td>
+                                    <td>
+                                        @Html.HiddenFor(model => @Model.ImportPOList[i].ExpiredYesNo)
+                                        @{
+                                            var expired = Model.ImportPOList[i].ExpiredYesNo;
+                                            if (expired.Equals("No"))
+                                            {
+                                                <span class="label label-success">No</span>
+                                            }
+                                            else if (expired.Equals("Yes"))
+                                            {
+                                                <span class="label label-danger">Yes</span>
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(model => @Model.ImportPOList[i].AmountUpdateValue,
+                                       new
+                                       {
+                                           @class = "form-control input-sm",
+                                           @onchange = "fillTheAmountsList(this)",
+                                       })
+                                        @Html.ValidationMessageFor(model => @Model.ImportPOList[i].AmountUpdateValue)
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(model => @Model.ImportPOList[i].AmountInBirrValue,
+                                       new
+                                       {
+                                           @class = "form-control input-sm",
+                                           @readonly = "readonly",
+                                           @id = @Model.ImportPOList[i].Id.ToString()
+                                       })
+                                        @Html.ValidationMessageFor(model => @Model.ImportPOList[i].AmountInBirrValue)
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(model => @Model.ImportPOList[i].AmountInUSDValue,
+                                       new
+                                       {
+                                           @class = "form-control input-sm",
+                                           @readonly = "readonly",
+                                           @id = @Model.ImportPOList[i].Id.ToString()
+                                       })
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Reason:<span class="required">*</span>
+                    </label>
+                    <div class="col-sm-9">
+                        @Html.TextAreaFor(model => model.Reason, new { @class = "form-control input-sm" })
+                        @Html.ValidationMessageFor(model => model.Reason)
+                    </div>
+                </div>
+
+
+                <div class="row grid-row">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn fa fa-paper-plane btn-success">
+                            <span class="button-icon-margin">Submit For Approval</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back To List", "ImportPermits", new { merchantId = Model.MerchantId }, new { @class = "btn btn-default fa fa-backward" })
+</div>
+
+<script>
+
+    function fillTheAmounts()
+    {
+        $("#CurrencyRateValue").val("");
+        $("#AmountInBirrValue").val("");
+        $("#USDRateValue").val("");
+        $("#AmountInUSDValue").val("");
+        $.ajax({
+            url: '@Url.Action("fillTheAmounts", "Merchant")',
+            type: 'POST',
+            datatype: 'application/json',
+            contentType: 'application/json',
+            data: JSON.stringify({ currencyType: $("#CurrencyType").val(), amount: $("#AmountValue").val() }),
+            success: function (result) {
+                var rawAmount = $("#AmountValue").val().replace(/,/g, '');
+                var commaSepAmount = Number(rawAmount).toLocaleString('en-US', { maximumFractionDigits: 6 });
+                $("#AmountValue").val(commaSepAmount);
+                var currencyDetails = JSON.parse(result);
+                $("#CurrencyRateValue").val(currencyDetails.CurrencyRate.toLocaleString('en-US', { maximumFractionDigits: 6 }));
+                $("#AmountInBirrValue").val(currencyDetails.AmountInBirr.toLocaleString('en-US', { maximumFractionDigits: 6 }));
+                $("#USDRateValue").val(currencyDetails.USDRate.toLocaleString('en-US', { maximumFractionDigits: 6 }));
+                $("#AmountInUSDValue").val(currencyDetails.AmountInUSD.toLocaleString('en-US', { maximumFractionDigits: 6 }));
+            },
+            error: function () {
+                alert("Whooaaa! Something went wrong..")
+            },
+        });
+    }
+
+    function fillTheAmountsList(AmountValueTextField) {
+        var cell = AmountValueTextField.parentNode;
+        var row = cell.parentNode;
+        var AmountValue = row.cells[5].getElementsByTagName("input")[0];
+        var AmountInBirrValue = row.cells[6].getElementsByTagName("input")[0];
+        var AmountInUSDValue = row.cells[7].getElementsByTagName("input")[0];
+        AmountInBirrValue.value = "";
+        AmountInUSDValue.value = "";
+        $.ajax({
+            url: '@Url.Action("fillTheAmounts", "Merchant")',
+            type: 'POST',
+            datatype: 'application/json',
+            contentType: 'application/json',
+            data: JSON.stringify({ currencyType: $("#CurrencyType").val(), amount: AmountValue.value }),
+            success: function (result) {
+                if (AmountValue.value != null && AmountValue.value != '') {
+                    var rawAmount = AmountValue.value.replace(/,/g, '');
+                    var commaSepAmount = Number(rawAmount).toLocaleString('en-US', { maximumFractionDigits: 6 });
+                    AmountValue.value = commaSepAmount;
+                    var currencyDetails = JSON.parse(result);
+                    AmountInBirrValue.value = currencyDetails.AmountInBirr.toLocaleString('en-US', { maximumFractionDigits: 6 });
+                    AmountInUSDValue.value = currencyDetails.AmountInUSD.toLocaleString('en-US', { maximumFractionDigits: 6 });
+                }
+            },
+            error: function ()
+            {
+                alert("Whooaaa! Something went wrong..");
+            },
+        })
+    }
+
+</script>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d2e7aff9e7764224aa362445802c32b9" Name="Diagram1">
+        <EntityTypeShape EntityType="ZB_FEPMS_Model.AccessLog" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZB_FEPMS_Model.Login" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZB_FEPMS_Model.PERMISSION" Width="1.5" PointX="1.5" PointY="28.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZB_FEPMS_Model.ROLE" Width="1.5" PointX="1.5" PointY="24.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZB_FEPMS_Model.SETTING" Width="1.5" PointX="5.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZB_FEPMS_Model.tbl_lu_CountryOfOrigin" Width="1.5" PointX="3.75" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZB_FEPMS_Model.tbl_lu_Incoterm" Width="1.5" PointX="3.75" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZB_FEPMS_Model.tbl_lu_MethodOfPayment" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZB_FEPMS_Model.tbl_lu_PortOfDestination" Width="1.5" PointX="3.75" PointY="19.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZB_FEPMS_Model.tbl_lu_PortOfLoading" Width="1.5" PointX="3.75" PointY="21.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZB_FEPMS_Model.tbl_lu_ShipmentAllowedBy" Width="1.5" PointX="3.75" PointY="24.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZB_FEPMS_Model.tbl_lu_Status" Width="1.5" PointX="0.75" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZB_FEPMS_Model.tblApplicant" Width="1.5" PointX="0.75" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZB_FEPMS_Model.tblApplication" Width="1.5" PointX="3" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZB_FEPMS_Model.tblApplicationAmount" Width="1.5" PointX="8.25" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZB_FEPMS_Model.tblItemPriority" Width="1.5" PointX="3.75" PointY="26.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZB_FEPMS_Model.tblMerchant" Width="1.5" PointX="3.75" PointY="29.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZB_FEPMS_Model.tblPermit" Width="1.5" PointX="6" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZB_FEPMS_Model.tblPermitAmount" Width="1.5" PointX="11.25" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZB_FEPMS_Model.tblPermitAmountDetail" Width="1.5" PointX="13.5" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZB_FEPMS_Model.tblPOPermitAmountDetail" Width="1.5" PointX="16.5" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZB_FEPMS_Model.tblPOPermitDetail" Width="1.5" PointX="8.25" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZB_FEPMS_Model.tblPOPermitExpiry" Width="1.5" PointX="8.25" PointY="19.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZB_FEPMS_Model.tblSerialNumberShelf" Width="1.5" PointX="0.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZB_FEPMS_Model.USER" Width="1.5" PointX="0.75" PointY="19.75" IsExpanded="true" />
+        <AssociationConnector Association="ZB_FEPMS_Model.FK_tblMerchantPermit_tbl_lu_MethodOfPayment" ManuallyRouted="false" />
+        <AssociationConnector Association="ZB_FEPMS_Model.FK_tblApplication_tbl_lu_Status" ManuallyRouted="false" />
+        <AssociationConnector Association="ZB_FEPMS_Model.FK_tblApplicationAmount_tbl_lu_Status" ManuallyRouted="false" />
+        <AssociationConnector Association="ZB_FEPMS_Model.FK_tblMerchantPermit_tblMerchantPermit" ManuallyRouted="false" />
+        <AssociationConnector Association="ZB_FEPMS_Model.FK_tblPermitAmount_tbl_lu_Status" ManuallyRouted="false" />
+        <AssociationConnector Association="ZB_FEPMS_Model.FK_tblApplication_tblApplicant" ManuallyRouted="false" />
+        <AssociationConnector Association="ZB_FEPMS_Model.FK_tblApplication_tblSerialNumberShelf" ManuallyRouted="false" />
+        <AssociationConnector Association="ZB_FEPMS_Model.FK_tblApplication_USERS" ManuallyRouted="false" />
+        <AssociationConnector Association="ZB_FEPMS_Model.FK_tblApplicationAmount_tblApplication" ManuallyRouted="false" />
+        <AssociationConnector Association="ZB_FEPMS_Model.FK_tblApplicationAmount_USERS" ManuallyRouted="false" />
+        <AssociationConnector Association="ZB_FEPMS_Model.FK_tblApplicationAmount_USERS1" ManuallyRouted="false" />
+        <AssociationConnector Association="ZB_FEPMS_Model.FK_tblPermit_tblMerchant" ManuallyRouted="false" />
+        <AssociationConnector Association="ZB_FEPMS_Model.FK_tblPermit_tblSerialNumberShelf" ManuallyRouted="false" />
+        <AssociationConnector Association="ZB_FEPMS_Model.FK_tblPermit_USERS" ManuallyRouted="false" />
+        <AssociationConnector Association="ZB_FEPMS_Model.FK_tblPermitAmount_tblPermit" ManuallyRouted="false" />
+        <AssociationConnector Association="ZB_FEPMS_Model.FK_tblPOPermitAmountDetail_tblPermit" ManuallyRouted="false" />
+        <AssociationConnector Association="ZB_FEPMS_Model.FK_tblPOPermitDetail_tblPermit" ManuallyRouted="false" />
+        <AssociationConnector Association="ZB_FEPMS_Model.FK_tblPOPermitDetail_tblPermit1" ManuallyRouted="false" />
+        <AssociationConnector Association="ZB_FEPMS_Model.FK_tblPOPermitExpiry_tblPermit" ManuallyRouted="false" />
+        <AssociationConnector Association="ZB_FEPMS_Model.FK_tblPermitAmount_USERS" ManuallyRouted="false" />
+        <AssociationConnector Association="ZB_FEPMS_Model.FK_tblPermitAmount_USERS1" ManuallyRouted="false" />
+        <AssociationConnector Association="ZB_FEPMS_Model.FK_tblPermitAmountDetail_tblPermitAmount" ManuallyRouted="false" />
+        <AssociationConnector Association="ZB_FEPMS_Model.FK_tblPOPermitAmountDetail_tblPermitAmount" ManuallyRouted="false" />
+        <AssociationConnector Association="ZB_FEPMS_Model.LNK_ROLE_PERMISSION" ManuallyRouted="false" />
+        <AssociationConnector Association="ZB_FEPMS_Model.LNK_USER_ROLE" ManuallyRouted="false" />
+        <AssociationConnector Association="ZB_FEPMS_Model.tblPermitCountryOfOrigin" ManuallyRouted="false" />
+        <AssociationConnector Association="ZB_FEPMS_Model.tblPermitIncoterm" ManuallyRouted="false" />
+        <AssociationConnector Association="ZB_FEPMS_Model.tblPermitItemPriority" ManuallyRouted="false" />
+        <AssociationConnector Association="ZB_FEPMS_Model.tblPermitPortOfDestination" ManuallyRouted="false" />
+        <AssociationConnector Association="ZB_FEPMS_Model.tblPermitPortOfLoading" ManuallyRouted="false" />
+        <AssociationConnector Association="ZB_FEPMS_Model.tblPermitShipmentAllowedBy" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

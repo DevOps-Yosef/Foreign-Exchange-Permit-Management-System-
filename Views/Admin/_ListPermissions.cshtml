@@ -1,0 +1,66 @@
+﻿@model ZB_FEPMS.Models.ROLE
+
+@{
+    if (Model.PERMISSIONS.Count == 0)
+    {
+        <h2><font color="red">No Associated Permissions...</font></h2>
+        <br />
+    }
+    else
+    {
+        <table id="PermissionTable" style="width: 65%">
+            <thead>
+            <th style="width:90%">
+                Permission
+            </th>
+            <th>
+                Action
+            </th>
+            </thead>
+            @foreach (ZB_FEPMS.Models.PERMISSION permission in Model.PERMISSIONS.OrderBy(n => n.PermissionDescription))
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink(permission.PermissionDescription, "PermissionDetails", new { id = permission.PermissionId })
+                    </td>
+                    <td>
+                        <center>
+                            @*<a href="@Url.Action("DeletePermissionFromRoleReturnPartialView", "Admin", new { id = Model.RoleId, permissionId = permission.PermissionId })" class="deletePermission" id=@Model.RoleId >
+                                    <img src="@Url.Content("~/Content/images/bin.png")" />
+                                </a>*@
+
+
+
+                            <button type="button" data-toggle="modal" data-target="#@permission.PermissionId"><img src="@Url.Content("~/Content/images/bin.png")" style="float: center" /></button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="@permission.PermissionId" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="myModalLabel">Confirm Delete</h4>
+                                        </div>
+                                        <div class="modal-body" style="color:red">
+                                            <strong>    Warning:</strong> This will remove the selected Permission from this Role.  Removing this permission may prevent users from accessing areas in the application.  Only remove this permission if you intend to restrict application access on this role.<br /><br />Do you wish to continue?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default fa" data-dismiss="modal">No</button>
+
+                                            <a href="@Url.Action("DeletePermissionFromRoleReturnPartialView", "Admin", new { id = Model.RoleId, permissionId = permission.PermissionId })" id=@permission.PermissionId class="btn btn-danger fa fa-remove">
+                                                Yes
+                                            </a>
+                                            @*<input type="submit" value="Delete" class="btn btn-danger" />*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </center>
+                    </td>
+                </tr>
+            }
+        </table>
+        <br />
+    }
+}
+

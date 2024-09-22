@@ -1,0 +1,62 @@
+﻿@model ZB_FEPMS.Models.USER
+@{
+    ViewBag.Title = "User - " + Model.Username;
+    if ((Model.Username != null) && (Model.Username != ""))
+    {
+        ViewBag.Title = ViewBag.Title + " (" + Model.Username + ")";
+    }
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(":input[type='button']").button();
+        $(":input[type='submit']").button();
+    });
+</script>
+@using (Html.BeginForm("UserEdit", "Admin", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div class="panel panel-primary">
+        <div class="panel-heading">User Details</div>
+        <div class="panel-body">
+            <input name='UserId' id='UserId' type="hidden" value="@ViewBag.UserId" />
+            @Html.HiddenFor(model => model.Username)
+            <fieldset>
+                @Html.Partial("_userDetailsEdit", Model)
+                <br />
+            </fieldset>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="row">
+
+                        <div class="col-sm-offset-2 col-sm-6">
+                            <button type="submit" class="btn btn-success fa fa-save">
+                                <span class="button-icon-margin">Save</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12">
+                <fieldset>
+                    <legend>
+                        <h3>
+                            Roles Associated with this User
+                        </h3>
+                    </legend>
+                    <div class="panel" id="RolesTable">
+                        @Html.Partial("_ListUserRoleTable", Model)
+                    </div>
+                    @Html.Partial("_ListEditableUserRoleTable")
+                    <br />
+                </fieldset>
+            </div>
+        </div>
+    </div>
+}
+<div class="row">
+    @Html.ActionLink("Go to Roles", "RoleIndex", null, new { @class = "btn btn-default fa fa-backward" })
+    @Html.ActionLink("Go to Users", "Index", null, new { @class = "btn btn-default fa fa-backward" })
+</div>

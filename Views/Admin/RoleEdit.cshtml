@@ -1,0 +1,69 @@
+﻿@model ZB_FEPMS.Models.ROLE
+@{
+    ViewBag.Title = "Edit " + Model.RoleDescription + " Role";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.RoleId)
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">Edit Role</div>
+        <div class="panel-body">
+            <div class="col-sm-12">
+
+                <div class="row">
+                    <label class="control-label col-sm-2">
+                        Role Name:<span class="required">*</span>
+                    </label>
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => model.RoleName, new { @class = "form-control input-sm" })
+                        @Html.ValidationMessageFor(model => model.RoleName)
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Description:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-4">
+                        @Html.TextAreaFor(model => model.RoleDescription, new { @class = "form-control input-sm" })
+                        @Html.ValidationMessageFor(model => model.RoleDescription)
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <div class="col-sm-offset-2 col-sm-4">
+                        <button type="submit" class="btn btn-success fa fa-save"><span class="button-icon-margin">Save</span></button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+<fieldset>
+    <legend>
+        <h3>
+            Permissions Associated with this Role
+        </h3>
+    </legend>
+
+    <div id="PermissionsTable">
+
+        @Html.Partial("_ListPermissions", Model)
+        <br />
+    </div>
+    <div>
+        @Html.Partial("_AddPermission2PermissionsTable4Role", Model)
+    </div>
+    <br />
+</fieldset>
+
+<div>
+    @Html.ActionLink("Back To List", "PermissionIndex", null, new { @class = "btn btn-default fa fa-backward" })
+</div>
+

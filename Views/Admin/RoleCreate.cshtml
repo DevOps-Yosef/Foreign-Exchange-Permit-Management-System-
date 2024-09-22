@@ -1,0 +1,49 @@
+﻿@model ZB_FEPMS.Models.ROLE
+@{
+    ViewBag.Title = "Create Role";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">Create New Role</div>
+        <div class="panel-body">
+            <div class="col-sm-12">
+
+                <div class="row">
+                    <label class="control-label col-sm-2">
+                        Role Name:<span class="required">*</span>
+                    </label>
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => model.RoleName, new { @class = "form-control input-sm" })
+                        @Html.ValidationMessageFor(model => model.RoleName)
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Description:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-4">
+                        @Html.TextAreaFor(model => model.RoleDescription, new { @class = "form-control input-sm" })
+                        @Html.ValidationMessageFor(model => model.RoleDescription)
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <div class="col-sm-offset-2 col-sm-4">
+                        <button type="submit" class="btn btn-success fa fa-plus">Create</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+<div>
+    @Html.ActionLink("Back To List", "RoleIndex", null, new { @class = "btn btn-default fa fa-backward" })
+</div>
+

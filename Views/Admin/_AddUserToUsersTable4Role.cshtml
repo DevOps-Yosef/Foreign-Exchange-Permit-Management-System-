@@ -1,0 +1,11 @@
+﻿@model ZB_FEPMS.Models.ROLE
+
+@Html.HiddenFor(model => model.RoleId)
+<fieldset style="padding: 1em; font: 100%; color: Black; border-color: Black; border-style: solid;
+    border-width: thin; border-color: Silver; width: 650px">
+    <legend><strong>Add User To Role</strong></legend>
+    <br />
+    <label>User:  </label>
+    @Html.DropDownList("UserId", null, string.Empty, new { style = "width:250px" })
+    <input type="button" id="AddUser" value="Add User To Role" />
+</fieldset>

@@ -1,0 +1,468 @@
+﻿@model ZB_FEPMS.Models.tblPermit
+@{
+    ViewBag.Title = "Purchase Order Permit";
+    Layout = "~/Views/Shared/_FEPMSLayout.cshtml";
+}
+
+@if (TempData["sErrMsg"] != null)
+{
+    <div class="alert alert-danger alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>@TempData["sErrMsg"]</strong>
+    </div>
+}
+
+@using (Html.BeginForm("CreatePurchaseOrderPermit", "Merchant", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">Create New Purchase Order Permit</div>
+        <div class="panel-body">
+            @Html.HiddenFor(model => model.ImporterName)
+            @Html.HiddenFor(model => model.TinNumber)
+            @Html.HiddenFor(model => model.NBENumber)
+            @Html.HiddenFor(model => model.MerchantId)
+
+            <div class="row">
+                <div class="row">
+                    @Html.Label("Importer Name:", new { @Class = "control-label col-sm-2" })
+                    <div class="col-sm-4">
+                        <span class="label-underline-style">
+                            @Html.DisplayFor(model => model.ImporterName)
+                        </span>
+                    </div>
+                    @Html.Label("Tin #:", new { @Class = "control-label col-sm-1" })
+                    <div class="col-sm-2">
+                        <span class="label-underline-style">
+                            @Html.DisplayFor(model => model.TinNumber)
+                        </span>
+                    </div>
+                    @Html.Label("NBE #:", new { @Class = "control-label col-sm-1" })
+                    <div class="col-sm-2">
+                        <span class="label-underline-style">
+                            @Html.DisplayFor(model => model.NBENumber)
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Port Of Loading:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-3">
+                        @Html.ListBox("SelectedPortOfLoadingIds", null, new
+                       {
+                           @class = "selectedPortOfLoadingListBox form-control"
+                       })
+                    </div>
+                    <label class="control-label col-sm-2">
+                        Port Of Destination:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-4">
+                        @Html.ListBox("SelectedPortOfDestinationIds", null, new
+                       {
+                           @class = "selectedPortOfDestinationListBox form-control"
+                       })
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Shipment Allowed By:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-3">
+                        @Html.ListBox("SelectedShipmentAllowedByIds", null, new
+                       {
+                           @class = "selectedShipmentAllowedByListBox form-control"
+                       })
+                    </div>
+                    <label class="control-label col-sm-2">
+                        Incoterm:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-4">
+                        @Html.ListBox("SelectedIncotermIds", null, new
+                       {
+                           @class = "selectedIncotermListBox form-control"
+                       })
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Currency Type:<span class="required">*</span>
+                    </label>
+                    <div class="col-sm-3">
+                        @Html.DropDownList("CurrencyType", null, "--Currency Type--",
+                        new
+                        {
+                            @onchange = "fillCurrencyDetails(this)",
+                            @class = "form-control input-sm",
+                        })
+                        @Html.ValidationMessageFor(model => model.CurrencyType)
+                    </div>
+                    <label class="control-label col-sm-2">
+                        Amount:<span class="required">*</span>
+                    </label>
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => model.AmountValue,
+                       new { @class = "form-control input-sm", @onchange = "fillTheAmounts()" })
+                        @Html.ValidationMessageFor(model => model.AmountValue)
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Rate:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-3">
+                        @Html.TextBoxFor(model => model.CurrencyRateValue,
+                       new { @class = "form-control input-sm", @readonly = "" })
+                        @Html.ValidationMessageFor(model => model.CurrencyRateValue)
+                    </div>
+                    <label class="control-label col-sm-2">
+                        In ETB:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => model.AmountInBirrValue,
+                       new { @class = "form-control input-sm", @readonly = "" })
+                        @Html.ValidationMessageFor(model => model.AmountInBirrValue)
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        USD Rate:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-3">
+                        @Html.TextBoxFor(model => model.USDRateValue,
+                       new { @class = "form-control input-sm", @readonly = "" })
+                        @Html.ValidationMessageFor(model => model.USDRateValue)
+                    </div>
+                    <label class="control-label col-sm-2">
+                        In USD:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => model.AmountInUSDValue,
+                       new { @class = "form-control input-sm", @readonly = "" })
+                        @Html.ValidationMessageFor(model => model.AmountInUSDValue)
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        LPCO #:<span class="required">*</span>
+                    </label>
+                    <div class="col-sm-3">
+                        @Html.TextBoxFor(model => model.LPCONumber,
+                       new { @class = "form-control input-sm" })
+                        @Html.ValidationMessageFor(model => model.LPCONumber)
+                    </div>
+                    <label class="control-label col-sm-2">
+                        Country Of Origin:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-4">
+                        @Html.ListBox("SelectedCountryOfOriginIds", null, new
+                       {
+                           @class = "countryOfOriginListBox form-control"
+                       })
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Permit Status:<span class="required">*</span>
+                    </label>
+                    <div class="col-sm-3">
+                        @Html.DropDownList("PermitStatusId", null, null,
+                       new { @class = "form-control input-sm" })
+                        @Html.ValidationMessageFor(model => model.PermitStatusId)
+                    </div>
+                    <label class="control-label col-sm-2">
+                        Approval Status:<span class="required">*</span>
+                    </label>
+                    <div class="col-sm-4">
+                        @Html.DropDownList("ApprovalStatus", null, "--Approval Status--",
+                        new
+                        {
+                            @class = "form-control input-sm",
+                        })
+                        @Html.ValidationMessageFor(model => model.ApprovalStatus)
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        NBE Approval Ref. #:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-3">
+                        @Html.TextBoxFor(model => model.NBEApprovalRefNumber,
+                       new { @class = "form-control input-sm" })
+                        @Html.ValidationMessageFor(model => model.NBEApprovalRefNumber)
+                    </div>
+                    <label class="control-label col-sm-2">
+                        Own Source:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-4">
+                        @Html.DropDownList("OwnSourceValue", null, "--Own Source--",
+                        new { @class = "form-control input-sm" })
+                        @Html.ValidationMessageFor(model => model.OwnSourceValue)
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Round:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-3">
+                        @Html.TextBoxFor(model => model.QueueRound,
+                       new { @class = "form-control input-sm" })
+                        @Html.ValidationMessageFor(model => model.QueueRound)
+                    </div>
+                    <label class="control-label col-sm-2">
+                        Queue #:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => model.QueueNumber,
+                       new { @class = "form-control input-sm" })
+                        @Html.ValidationMessageFor(model => model.QueueNumber)
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        First Priority:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-5">
+                        @Html.ListBoxFor(m => m.selectedFirstPriorityTopLevels, Model.firstPriorityTopLevels,
+                      new
+                      {
+                          @onchange = "getFirstPriorityNameList()",
+                          @class = "firstPriorityListBox form-control"
+                      })
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-offset-2 col-sm-9">
+                        @Html.ListBoxFor(m => m.selectedFirstPrioritySubLevels, Model.firstPrioritySubLevels,
+                            new
+                            {
+                                @class = "form-control input-sm",
+                                     @multiple = "",
+                                     @size = "10"
+                            })
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Second Priority:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-5">
+                        @Html.ListBoxFor(m => m.selectedSecondPriorityTopLevels, Model.secondPriorityTopLevels,
+                      new
+                      {
+                          @onchange = "getSecondPriorityNameList()",
+                          @class = "secondPriorityListBox form-control"
+                      })
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-offset-2 col-sm-9">
+                        @Html.ListBoxFor(m => m.selectedSecondPrioritySubLevels, Model.secondPrioritySubLevels,
+                            new
+                            {
+                                @class = "form-control input-sm",
+                                     @multiple = "",
+                                     @size = "10"
+                            })
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Third Priority:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-5">
+                        @Html.ListBoxFor(m => m.selectedThirdPriorityTopLevels, Model.thirdPriorityTopLevels,
+                      new
+                      {
+                          @onchange = "getThirdPriorityNameList()",
+                          @class = "thirdPriorityListBox form-control"
+                      })
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-offset-2 col-sm-9">
+                        @Html.ListBoxFor(m => m.selectedThirdPrioritySubLevels, Model.thirdPrioritySubLevels,
+                    new
+                    {
+                        @class = "form-control input-sm",
+                                @multiple = "",
+                                @size = "10"
+                    })
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Non-Priority Items:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-9">
+                        @Html.TextAreaFor(model => model.NonPriorityItems, 4, 7,
+                       new { @class = "form-control input-sm" })
+                        @Html.ValidationMessageFor(model => model.NonPriorityItems)
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Expiry Days:<span class="required">*</span>
+                    </label>
+                    <div class="col-sm-3">
+                        @Html.TextBoxFor(model => model.ExpiryDays,
+                       new { @class = "form-control input-sm" })
+                        @Html.ValidationMessageFor(model => model.ExpiryDays)
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-success fa fa-floppy-o">
+                            <span class="button-icon-margin">Save</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back To List", "Index", null, new { @class = "btn btn-default fa fa-backward" })
+</div>
+
+
+<script>
+
+    function fillCurrencyDetails(CurrencyTypeValue) {
+        $("#CurrencyRateValue").val("");
+        $("#AmountInBirrValue").val("");
+        $("#USDRateValue").val("");
+        $("#AmountInUSDValue").val("");
+        var selectedCurrencyTypes = CurrencyTypeValue.options[CurrencyTypeValue.selectedIndex].text;
+        if (selectedCurrencyTypes != '--Currency Type--') {
+            $.ajax({
+                url: '@Url.Action("fillTheAmounts", "Merchant")',
+                type: 'POST',
+                datatype: 'application/json',
+                contentType: 'application/json',
+                data: JSON.stringify({ currencyType: $("#CurrencyType").val(), amount: $("#AmountValue").val() }),
+                success: function (result) {
+                    var currencyDetails = JSON.parse(result);
+                    $("#CurrencyRateValue").val(currencyDetails.CurrencyRate.toLocaleString('en-US', { maximumFractionDigits: 6 }));
+                    $("#USDRateValue").val(currencyDetails.USDRate.toLocaleString('en-US', { maximumFractionDigits: 6 }));
+                    $("#AmountInBirrValue").val(currencyDetails.AmountInBirr.toLocaleString('en-US', { maximumFractionDigits: 6 }));
+                    $("#AmountInUSDValue").val(currencyDetails.AmountInUSD.toLocaleString('en-US', { maximumFractionDigits: 6 }));
+                },
+                error: function () {
+                    alert("Whooaaa! Something went wrong..")
+                },
+            });
+        }
+    }
+
+    function fillTheAmounts()
+    {
+        $("#AmountInBirrValue").val("");
+        $("#AmountInUSDValue").val("");
+        $.ajax({
+            url: '@Url.Action("fillTheAmounts", "Merchant")',
+            type: 'POST',
+            datatype: 'application/json',
+            contentType: 'application/json',
+            data: JSON.stringify({ currencyType: $("#CurrencyType").val(), amount: $("#AmountValue").val() }),
+            success: function (result) {
+                var rawAmount = $("#AmountValue").val().replace(/,/g, '');
+                var commaSepAmount = Number(rawAmount).toLocaleString('en-US', { maximumFractionDigits: 6 });
+                $("#AmountValue").val(commaSepAmount);
+                var currencyDetails = JSON.parse(result);
+                $("#AmountInBirrValue").val(currencyDetails.AmountInBirr.toLocaleString('en-US', { maximumFractionDigits: 6 }));
+                $("#AmountInUSDValue").val(currencyDetails.AmountInUSD.toLocaleString('en-US', { maximumFractionDigits: 6 }));
+            },
+            error: function () {
+                alert("Whooaaa! Something went wrong..")
+            },
+        });
+    }
+
+    function getFirstPriorityNameList() {
+        $.ajax({
+            url: '@Url.Action("NameBySubLevel", "Merchant")',
+            type: 'POST',
+            datatype: 'application/json',
+            contentType: 'application/json',
+            data: JSON.stringify({ subLevels: $("#selectedFirstPriorityTopLevels").val() }),
+            success: function (result) {
+                $("#selectedFirstPrioritySubLevels").html("");
+                $("#selectedFirstPrioritySubLevels").append
+                $.each($.parseJSON(result), function (i, item)
+                { $("#selectedFirstPrioritySubLevels").append($('<option></option>').val(item.Value).html(item.Text)) })
+            },
+            error: function ()
+            {
+                alert("Whooaaa! Something went wrong..");
+            },
+        })
+    }
+
+    function getSecondPriorityNameList() {
+        $.ajax({
+            url: '@Url.Action("NameBySubLevel", "Merchant")',
+            type: 'POST',
+            datatype: 'application/json',
+            contentType: 'application/json',
+            data: JSON.stringify({ subLevels: $("#selectedSecondPriorityTopLevels").val() }),
+            success: function (result) {
+                $("#selectedSecondPrioritySubLevels").html("");
+                $("#selectedSecondPrioritySubLevels").append
+                $.each($.parseJSON(result), function (i, item)
+                { $("#selectedSecondPrioritySubLevels").append($('<option></option>').val(item.Value).html(item.Text)) })
+            },
+            error: function ()
+            {
+                alert("Whooaaa! Something went wrong..");
+            },
+        })
+    }
+
+    function getThirdPriorityNameList() {
+        $.ajax({
+            url: '@Url.Action("NameBySubLevel", "Merchant")',
+            type: 'POST',
+            datatype: 'application/json',
+            contentType: 'application/json',
+            data: JSON.stringify({ subLevels: $("#selectedThirdPriorityTopLevels").val() }),
+            success: function (result) {
+                $("#selectedThirdPrioritySubLevels").html("");
+                $("#selectedThirdPrioritySubLevels").append
+                $.each($.parseJSON(result), function (i, item)
+                { $("#selectedThirdPrioritySubLevels").append($('<option></option>').val(item.Value).html(item.Text)) })
+            },
+            error: function ()
+            {
+                alert("Whooaaa! Something went wrong..");
+            },
+        })
+    }
+
+</script>
+
+

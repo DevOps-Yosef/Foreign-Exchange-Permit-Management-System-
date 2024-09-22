@@ -1,0 +1,140 @@
+﻿@model ZB_FEPMS.Models.tblItemPriority
+@{
+    ViewBag.Title = "Item Priority";
+    Layout = "~/Views/Shared/_FEPMSLayout.cshtml";
+}
+
+@using (Html.BeginForm("Create", "ItemPriority", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">Create New Item Priority</div>
+        <div class="panel-body">
+
+            <div class="col-sm-12">
+
+                <div class="row">
+                    <label class="control-label col-sm-2">
+                        Priority Type:<span class="required">*</span>
+                    </label>
+                    <div class="col-sm-4">
+                        @Html.DropDownList("Priority", null, "-- Priority Type --",
+                        new
+                             {
+                                 @onchange = "getTopLevelList()",
+                                 @id = "PriorityTypeDropDown",
+                            @class = "form-control input-sm"
+                             })
+                        @Html.ValidationMessageFor(model => model.Priority)
+
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Top Level:<span class="required">*</span>
+                    </label>
+                    <div class="col-sm-4">
+                        <select id="TopLevelDropDown" class="form-control input-sm"
+                                name="GroupBy">
+                            <option value="">-- Top Level --</option>
+                        </select>
+                        @Html.ValidationMessageFor(model => model.GroupBy)
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <div class="col-sm-offset-2 col-sm-4">
+                        <label>
+                            @Html.CheckBoxFor(model => model.is_new)
+                            New Top Level:
+                        </label>
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <div class="col-sm-offset-2 col-sm-4">
+                        @Html.TextBoxFor(model => model.GroupByValue,
+                       new { @class = "form-control input-sm", @disabled = "" })
+                        @Html.ValidationMessageFor(model => model.GroupByValue)
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Sub Level:<span class="required">*</span>
+                    </label>
+                    <div class="col-sm-4">
+                        @Html.TextAreaFor(model => model.Name, 5, 10, new { @class = "form-control input-sm" })
+                        @Html.ValidationMessageFor(model => model.Name)
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-success fa fa-plus">Create</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back To List", "Index", null, new { @class = "btn btn-default fa fa-backward" })
+</div>
+
+<script>
+    function getTopLevelList() {
+        $("#TopLevelDropDown").prop("disabled", true);
+        $.ajax({
+            url: '@Url.Action("GroupByByPriority", "ItemPriority")',
+            type: 'POST',
+            datatype: 'application/json',
+            contentType: 'application/json',
+            data: JSON.stringify({ itemPriority: $("#PriorityTypeDropDown").val() }),
+            success: function (result) {
+                $("#TopLevelDropDown").html("");
+                $("#TopLevelDropDown").append
+                    ($('<option></option>').val(null).html("-- Top Level --"));
+                $.each($.parseJSON(result), function (i, item)
+                { $("#TopLevelDropDown").append($('<option></option>').val(item.Name).html(item.Value)) })
+                $("#TopLevelDropDown").prop("disabled", false);
+            },
+            error: function () { alert("Whooaaa! Something went wrong..") },
+        })
+    }
+
+    $(document).ready(function () {
+        var checkedProperty = $("#is_new").prop('checked');
+        if (checkedProperty) {
+            $("#TopLevelDropDown").attr('disabled', 'disabled');
+            $("#GroupByValue").removeAttr('disabled');
+        }
+        else {
+            $("#TopLevelDropDown").removeAttr('disabled');
+            $("#GroupByValue").attr('disabled', 'disabled');
+        }
+    });
+
+    $(document).ready(function () {
+        $("#is_new").click(function () {
+            var checkedProperty = $("#is_new").prop('checked');
+            if (checkedProperty) {
+                $("#TopLevelDropDown").attr('disabled', 'disabled');
+                $("#GroupByValue").removeAttr('disabled');
+            }
+            else {
+                $("#TopLevelDropDown").removeAttr('disabled');
+                $("#GroupByValue").attr('disabled', 'disabled');
+            }
+        });
+    });
+</script>
+
+
+
+

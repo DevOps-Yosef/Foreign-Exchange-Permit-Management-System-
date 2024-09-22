@@ -1,0 +1,139 @@
+﻿@model PagedList.IPagedList<ZB_FEPMS.Models.tblPermit>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Permits";
+    Layout = "~/Views/Shared/_FEPMSLayout.cshtml";
+}
+
+@if (TempData["sErrMsg"] != null)
+{
+    <div class="alert alert-danger alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>@TempData["sErrMsg"]</strong>
+    </div>
+}
+else if (TempData["successMsg"] != null)
+{
+    <div class="alert alert-success alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>@TempData["successMsg"]</strong>
+    </div>
+}
+
+<div class="panel panel-primary">
+    <div class="panel-heading">Import Permits Form</div>
+    <div class="panel-body">
+        <div class="row top-row-style">
+            @Html.Label("Importer Name:", new { @class = "control-label col-sm-2" })
+            <div class="col-sm-4">
+                <span class="label-permit-number-style">
+                    @ViewBag.ImporterName
+                </span>
+            </div>
+            @Html.Label("Tin #:", new { @class = "control-label col-sm-1" })
+            <div class="col-sm-1">
+                <span class="label-permit-number-style">
+                    @ViewBag.TinNumber
+                </span>
+            </div>
+            @Html.Label("NBE #:", new { @class = "control-label col-sm-1" })
+            <div class="col-sm-1">
+                <span class="label-permit-number-style">
+                    @ViewBag.NBENumber
+                </span>
+            </div>
+        </div>
+
+        <div class="col-sm-12">
+            <table id="tblDisplay" class="table table-striped table-bordered" data-page-length='5'>
+                <thead>
+                    <tr>
+                        <th>Permit #</th>
+                        <th>Status</th>
+                        <th>Currency</th>
+                        <th>Original Amount</th>
+                        <th>Amount</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td><span class="table-permit-number-style">@item.PermitNumber</span></td>
+                        <td>@item.tbl_lu_Status.name</td>
+                        <td>@item.CurrencyType</td>
+                        <td>
+                            @item.Amount.ToString("N2")
+                        </td>
+                        <td>
+                            @item.RemainingAmount.Value.ToString("N2")
+                            @{
+                                if (item.DecreasedAmount.HasValue)
+                                {
+                                    <span style="color:red">
+                                        | @item.DecreasedAmount.Value.ToString("N2")
+                                    </span>
+                                }
+                            }
+                            @{
+                                if (item.IncreasedAmount.HasValue)
+                                {
+                                    <span style="color:green">
+                                        | @item.IncreasedAmount.Value.ToString("N2")
+                                    </span>
+                                }
+                            }
+                        </td>
+                        <td>
+                            @if (ViewContext.Controller.HasRole("Officer"))
+                            {
+                                <a href="@Url.Action("EditImportPermit", "Merchant", new { Id = item.Id })">
+                                    <img src="@Url.Content("~/Content/images/pen.png")" />
+                                </a>
+                            }
+                            <a class="PermitViewDetail btn btn-sm btn-primary"
+                               href="javascript:void(0);" data-id="@item.Id">
+                                <i class="glyphicon glyphicon-zoom-in icon-white"></i>
+                                Details
+                            </a>
+
+                            @if (ViewContext.Controller.HasRole("Officer"))
+                            {
+                                <a href="@Url.Action("CreateImportPermitExpiry", "Merchant",
+                                    new { Id = item.Id })" class="btn btn-sm btn-warning">
+                                    <i class="fa fa-expand"></i>
+                                    Expiry
+                                </a>
+                            }
+
+                            @{
+                                if (item.tbl_lu_Status.name.Equals("Active")
+                                    && !item.tblPermitAmounts
+                                    .Any(taa => taa.tbl_lu_Status.name.Equals("Pending"))
+                                    && ViewContext.Controller.HasRole("Officer"))
+                                {
+                                    <a href="@Url.Action("UpdateImportPermitAmountRequest", "Merchant",
+                    new { Id = item.Id })" class="btn btn-sm btn-danger">
+                                        <i class="fa fa-dollar"></i>
+                                        Update Amount
+                                    </a>
+                                }
+                            }
+
+                        </td>
+                    </tr>
+                }
+
+            </table>
+            <br />
+            Showing Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount of @Model.TotalItemCount entries
+            @Html.PagedListPager(Model, page => Url.Action("ImportPermits", new { page, merchantId = ViewBag.merchantId }))
+
+        </div>
+    </div>
+</div>
+
+<div>
+    @Html.ActionLink("Back To List", "Index", null, new { @class = "btn btn-default fa fa-backward" })
+</div>

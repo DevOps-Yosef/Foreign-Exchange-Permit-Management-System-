@@ -1,0 +1,61 @@
+﻿@model ZB_FEPMS.Models.tblItemPriority
+
+@{
+    ViewBag.Title = "Item Priority";
+    Layout = "~/Views/Shared/_FEPMSLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">Edit Item Priority</div>
+        <div class="panel-body">
+            @Html.HiddenFor(model => model.Priority)
+            @Html.HiddenFor(model => model.GroupBy)
+            <div class="row">
+                <label class="control-label col-sm-2">
+                    Priority Type:<span class="required">*</span>
+                </label>
+                <div class="col-sm-4">
+                    <span class="label-underline-style">
+                        @Html.DisplayFor(model => model.Priority)
+                    </span>
+                </div>
+            </div>
+
+            <div class="row grid-row">
+                <label class="control-label col-sm-2">
+                    Top Level:<span class="required">*</span>
+                </label>
+                <div class="col-sm-4">
+                    <span class="label-underline-style">
+                        @Html.DisplayFor(model => model.GroupBy)
+                    </span>
+                </div>
+            </div>
+
+            <div class="row grid-row">
+                <label class="control-label col-sm-2">
+                    Sub Level:<span class="required">*</span>
+                </label>
+                <div class="col-sm-4">
+                    @Html.TextAreaFor(model => model.Name, 5, 10, new { @class = "form-control input-sm" })
+                    @Html.ValidationMessageFor(model => model.Name)
+                </div>
+            </div>
+
+            <div class="row grid-row">
+                <div class="col-sm-offset-2 col-sm-4">
+                    <button type="submit" class="btn btn-success fa fa-save"><span class="button-icon-margin">Save</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back To List", "Index", null, new { @class = "btn btn-default fa fa-backward" })
+</div>

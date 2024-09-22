@@ -1,0 +1,78 @@
+﻿@model PagedList.IPagedList<ZB_FEPMS.Models.tblApplicationAmount>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Invisible Payment Permit Amount Update Approval";
+    Layout = "~/Views/Shared/_FEPMSLayout.cshtml";
+}
+
+@if (TempData["sErrMsg"] != null)
+{
+    <div class="alert alert-danger alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>@TempData["sErrMsg"]</strong>
+    </div>
+}
+else if (TempData["successMsg"] != null)
+{
+    <div class="alert alert-success alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>@TempData["successMsg"]</strong>
+    </div>
+}
+
+<div class="panel panel-primary">
+    <div class="panel-heading">Invisible Payment Permit Amount Update Approval Form</div>
+    <div class="panel-body">
+
+        <div class="col-sm-12">
+
+            <table class="table table-striped table-bordered">
+                <tr>
+                    <th>Permit #</th>
+                    <th>Currency Type</th>
+                    <th>Current Amount</th>
+                    <th>Amount</th>
+                    <th>Actions</th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td><span class="table-permit-number-style">@Html.DisplayFor(modelItem => item.tblApplication.PermitNumber)</span></td>
+                        <td>@item.tblApplication.CurrencyType</td>
+                        <td>
+                            @{
+                                if (item.tblApplication.RemainingAmount.HasValue)
+                                {
+                                    @item.tblApplication.RemainingAmount.Value.ToString("N2");
+                                }
+                            }
+                        </td>
+                        <td>
+                            @{
+                                <span>@item.Amount.Value.ToString("N2")</span>
+                            }
+                        </td>
+                        <td>
+                            <a href="@Url.Action("ApproveInvisiblePaymentPermitAmountUpdate", "Applicant",
+                    new { Id = item.Id })" class="btn btn-sm btn-info">
+                                <i class="glyphicon glyphicon-share icon-white"></i>
+                                Action
+                            </a>
+                            <a class="IPAmountUpdateApprovalFormViewDetail btn btn-sm btn-success"
+                               href="javascript:void(0);" data-id="@item.Id">
+                                <i class="glyphicon glyphicon-zoom-in icon-white"></i>
+                                Details
+                            </a>
+                        </td>
+                    </tr>
+                }
+
+            </table>
+            <br />
+            Showing Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount of @Model.TotalItemCount entries
+            @Html.PagedListPager(Model, page => Url.Action("UpdateInvisiblePaymentPermitAmount_Auth", new { page }))
+        </div>
+    </div>
+</div>

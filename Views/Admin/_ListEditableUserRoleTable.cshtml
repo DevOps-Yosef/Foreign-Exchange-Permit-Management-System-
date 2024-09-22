@@ -1,0 +1,19 @@
+﻿<input name='UserId' id='UserId' type="hidden" value="@ViewBag.UserId" />
+<fieldset style="padding: 1em; font: 100%; color: Black; border-color: Black; border-style: solid;
+    border-width: thin; border-color: Silver; width: 650px">
+    <legend><strong>Add Role To User</strong></legend>
+    <br />
+
+    <div class="col-sm-12">
+        <div class="row">
+            <label class="control-label col-sm-1">
+                Role:
+            </label>
+            <div class="col-sm-5">
+                @Html.DropDownList("RoleId", null, string.Empty, new { @class = "form-control input-sm" })
+            </div>
+            <button type="button" id="AddRole" class="btn btn-success fa fa-plus">Add Role</button>
+        </div>
+    </div>
+
+</fieldset>

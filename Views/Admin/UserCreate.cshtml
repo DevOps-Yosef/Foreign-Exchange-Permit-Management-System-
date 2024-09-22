@@ -1,0 +1,106 @@
+﻿@model ZB_FEPMS.Models.USER
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+
+    @Html.ValidationSummary(true)
+    <div class="panel panel-primary">
+        <div class="panel-heading">Create User</div>
+        <div class="panel-body">
+
+            <div class="row">
+
+                <div class="col-sm-6">
+                    <div class="row">
+                        <label class="control-label col-sm-2">
+                            Username:<span class="required">*</span>
+                        </label>
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(model => model.Username, new { @class = "form-control input-sm" })
+                            @Html.ValidationMessageFor(model => model.Username)
+                        </div>
+                    </div>
+
+                    <div class="row grid-row">
+                        <label class="control-label col-sm-2">
+                            Firstname:<span class="required">*</span>
+                        </label>
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(model => model.Firstname, new { @class = "form-control input-sm" })
+                            @Html.ValidationMessageFor(model => model.Firstname)
+                        </div>
+                    </div>
+
+                    <div class="row grid-row">
+                        <label class="control-label col-sm-2">
+                            Lastname:<span class="required">*</span>
+                        </label>
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(model => model.Lastname, new { @class = "form-control input-sm" })
+                            @Html.ValidationMessageFor(model => model.Lastname)
+                        </div>
+                    </div>
+
+                    <div class="row grid-row">
+                        <label class="control-label col-sm-2">
+                            ID No:<span class="required">*</span>
+                        </label>
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(model => model.IDNo, new { @class = "form-control input-sm" })
+                            @Html.ValidationMessageFor(model => model.IDNo)
+                        </div>
+                    </div>
+
+                    <div class="row grid-row">
+                        <div class="col-sm-offset-2 col-sm-6">
+                            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn fa fa-remove btn-default" })
+                            <button type="submit" class="btn btn-success fa fa-plus"><span class="button-icon-margin">Create</span></button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-sm-6">
+
+                    <div class="row">
+                        <label class="control-label col-sm-2">
+                            Title:<span class="required"></span>
+                        </label>
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(model => model.Title, new { @class = "form-control input-sm" })
+                            @Html.ValidationMessageFor(model => model.Title)
+                        </div>
+                    </div>
+
+                    <div class="row grid-row">
+                        <label class="control-label col-sm-2">
+                            Initial:<span class="required"></span>
+                        </label>
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(model => model.Initial, new { @class = "form-control input-sm" })
+                            @Html.ValidationMessageFor(model => model.Initial)
+                        </div>
+                    </div>
+
+                    <div class="row grid-row">
+                        <label class="control-label col-sm-2">
+                            Email:<span class="required"></span>
+                        </label>
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(model => model.EMail, new { @class = "form-control input-sm" })
+                            @Html.ValidationMessageFor(model => model.EMail)
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+<div>
+    @Html.ActionLink("Back To List", "Index", "Admin", new { @class = "btn fa fa-backward btn-default" })
+</div>

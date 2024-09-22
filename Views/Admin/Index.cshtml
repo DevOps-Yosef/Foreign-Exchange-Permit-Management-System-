@@ -1,0 +1,78 @@
+﻿@model PagedList.IPagedList<ZB_FEPMS.Models.USER>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "RBAC Administration";
+}
+
+<div class="panel panel-primary">
+    <div class="col-sm-12 panel-heading">
+        <div class="row">
+            @using (Html.BeginForm("Index", "Admin", FormMethod.Get))
+            {
+                <div class="col-sm-5">
+                    <span class="glyphicon glyphicon-user">Users</span>
+                </div>
+                <div class="col-sm-5">
+                    @Html.TextBox("name", (object)ViewBag.name, new { @class = "form-control input-sm", @placeholder = "Search by name.." })
+                </div>
+                <div class="col-sm-2">
+                    <button type="submit" class="btn btn-sm btn-danger fa fa-search"><span class="button-icon-margin">Search</span></button>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="panel-body">
+        @using (Html.BeginForm("UserCreate", "Admin", FormMethod.Get))
+        {
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <br />
+                    <div>
+                        <button class="btn btn-primary" type="submit">
+                            <i class="glyphicon glyphicon-plus icon-white"></i>
+                            <span class="button-icon-margin">Create User</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @Html.Partial("_ListUserTable", Model)
+        <br />
+        Showing Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount of @Model.TotalItemCount entries
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+    </div>
+</div>
+
+<script>
+    function getFilteredUsers() {
+        debugger;
+        $.ajax({
+            //url: '/PurchaseRequisition/Unit',
+            url: '@Url.Action("filterUsers", "Admin")',
+            type: 'POST',
+            datatype: 'application/json',
+            contentType: 'application/json',
+            data: JSON.stringify({ name: $("#searchByName").val() }),
+            success: function (unit) {
+                //$("#txtUnit").val(unit);
+                alert(777)
+            },
+            error: function () { alert("Whooaaa! Something went wrong..") },
+        })
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+

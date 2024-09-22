@@ -1,0 +1,46 @@
+﻿@model ZB_FEPMS.Models.tblPermitAmount
+
+@{
+    ViewBag.Title = "Purchase Order Permit Amount Update Approval";
+    Layout = "~/Views/Shared/_FEPMSLayout.cshtml";
+}
+
+@if (TempData["sErrMsg"] != null)
+{
+    <div class="alert alert-danger alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>@TempData["sErrMsg"]</strong>
+    </div>
+}
+
+@using (Html.BeginForm("Reject", "Merchant",
+    new { Id = Model.Id, Remark = Model.Remark }, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div class="panel panel-primary">
+        <div class="panel-heading">Reject Purchase Order Permit Amount Update</div>
+        <div class="panel-body">
+            <div class="col-sm-12">
+                <div class="row grid-row">
+                    <label class="control-label col-sm-1">
+                        Remark:<span class="required">*</span>
+                    </label>
+                    <div class="col-sm-10">
+                        @Html.TextAreaFor(model => model.Remark, 4, 7, new { @class = "form-control input-sm" })
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <div class="col-md-offset-1 col-md-10">
+                        <button type="submit" class="btn fa fa-ban btn-danger">Reject</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back To List", "UpdatePurchaseOrderPermitAmount_Auth", null, new { @class = "btn fa fa-backward btn-default" })
+</div>

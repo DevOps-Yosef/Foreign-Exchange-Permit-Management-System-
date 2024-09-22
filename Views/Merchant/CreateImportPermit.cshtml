@@ -1,0 +1,853 @@
+﻿@model ZB_FEPMS.Models.tblPermit
+
+@{
+    ViewBag.Title = "Import Permit";
+    Layout = "~/Views/Shared/_FEPMSLayout.cshtml";
+}
+
+@if (TempData["sErrMsg"] != null)
+{
+    <div class="alert alert-danger alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>@TempData["sErrMsg"]</strong>
+    </div>
+}
+
+@using (Html.BeginForm("CreateImportPermit", "Merchant", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">Create New Import Permit</div>
+        <div class="panel-body">
+            @Html.HiddenFor(model => model.ImporterName)
+            @Html.HiddenFor(model => model.TinNumber)
+            @Html.HiddenFor(model => model.NBENumber)
+            @Html.HiddenFor(model => model.MerchantId)
+            @Html.HiddenFor(model => model.POCurrencyType)
+            @Html.HiddenFor(model => model.TypeOfImportPermit)
+            <div class="row">
+
+                <div class="row">
+                    @Html.Label("Importer Name:", new { @Class = "control-label col-sm-2" })
+                    <div class="col-sm-4">
+                        <span class="label-underline-style">
+                            @Html.DisplayFor(model => model.ImporterName)
+                        </span>
+                    </div>
+                    @Html.Label("Tin #:", new { @Class = "control-label col-sm-1" })
+                    <div class="col-sm-2">
+                        <span class="label-underline-style">
+                            @Html.DisplayFor(model => model.TinNumber)
+                        </span>
+                    </div>
+                    @Html.Label("NBE #:", new { @Class = "control-label col-sm-1" })
+                    <div class="col-sm-2">
+                        <span class="label-underline-style">
+                            @Html.DisplayFor(model => model.NBENumber)
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Purchase Orders:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-7">
+                        <div class="col-sm-8 padding-left-zero-style">
+                            @Html.ListBox("SelectedPurchaseOrderIds", null, new
+                            {
+                                @class = "selectedPurchaseOrdersListBox form-control"
+                            })
+                        </div>
+                        <div class="col-sm-4">
+                            <button type="button" value="LOAD" class="btn btn-success fa fa-long-arrow-down"
+                                    onclick="loadImportPermitDetails()">
+                                <span class="button-icon-margin">LOAD</span>
+                            </button>
+                            <button type="button" name="createImportPermitButton" value="Clear" class="btn btn-warning fa fa-eraser"
+                                    onclick="clearImportPermitDetails()">
+                                <span class="button-icon-margin">Clear</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Method Of Payment:<span class="required">*</span>
+                    </label>
+                    <div class="col-sm-3">
+                        @Html.DropDownList("MethodOfPaymentId", ViewBag.MethodOfPaymentList as SelectList, "--Method Of Payment--",
+                        new
+                        {
+                            @onchange = "setMethodOfPayment()",
+                            @class = "form-control input-sm",
+                        })
+                        @Html.ValidationMessageFor(model => model.MethodOfPaymentId)
+                    </div>
+                </div>
+
+
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Port Of Loading:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-3">
+                        @Html.ListBox("SelectedPortOfLoadingIds", null, new
+                       {
+                           @class = "selectedPortOfLoadingListBox form-control"
+                       })
+                    </div>
+                    <label class="control-label col-sm-2">
+                        Port Of Destination:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-4">
+                        @Html.ListBox("SelectedPortOfDestinationIds", null, new
+                       {
+                           @class = "selectedPortOfDestinationListBox form-control"
+                       })
+                    </div>
+                </div>
+
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Shipment Allowed By:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-3">
+                        @Html.ListBox("SelectedShipmentAllowedByIds", null, new
+                       {
+                           @class = "selectedShipmentAllowedByListBox form-control"
+                       })
+                    </div>
+                    <label class="control-label col-sm-2">
+                        Incoterm:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-4">
+                        @Html.ListBox("SelectedIncotermIds", null, new
+                       {
+                           @class = "selectedIncotermListBox form-control"
+                       })
+                    </div>
+                </div>
+
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Currency Type:<span class="required">*</span>
+                    </label>
+                    <div class="col-sm-3">
+                        @Html.DropDownList("CurrencyType", null, "--Currency Type--",
+                        new
+                        {
+                            @onchange = "fillCurrencyDetails()",
+                            @class = "form-control input-sm",
+                        })
+                        @Html.ValidationMessageFor(model => model.CurrencyType)
+                    </div>
+                    <label class="control-label col-sm-2">
+                        Amount:<span class="required">*</span>
+                    </label>
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => model.AmountValue,
+                       new { @class = "form-control input-sm", @onchange = "fillTheAmounts()" })
+                        @Html.ValidationMessageFor(model => model.AmountValue)
+                    </div>
+                </div>
+
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Rate:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-3">
+                        @Html.TextBoxFor(model => model.CurrencyRateValue,
+                       new { @class = "form-control input-sm", @readonly = "" })
+                        @Html.ValidationMessageFor(model => model.CurrencyRateValue)
+                    </div>
+                    <label class="control-label col-sm-2">
+                        In ETB:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => model.AmountInBirrValue,
+                       new { @class = "form-control input-sm", @readonly = "" })
+                        @Html.ValidationMessageFor(model => model.AmountInBirrValue)
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        USD Rate:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-3">
+                        @Html.TextBoxFor(model => model.USDRateValue,
+                       new { @class = "form-control input-sm", @readonly = "" })
+                        @Html.ValidationMessageFor(model => model.USDRateValue)
+                    </div>
+                    <label class="control-label col-sm-2">
+                        In USD:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => model.AmountInUSDValue,
+                       new { @class = "form-control input-sm", @readonly = "" })
+                        @Html.ValidationMessageFor(model => model.AmountInUSDValue)
+                    </div>
+                </div>
+
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Purchase Orders:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-4">
+                        @Html.ValidationMessageFor(model => model.MethodOfPaymentId)
+                    </div>
+                </div>
+
+                <div class="row grid-row padding-thirty-five-pixel-style">
+                    <div class="col-sm-12">
+                        <table id="tblDisplay" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Permit #</th>
+                                    <th>Status</th>
+                                    <th>Currency</th>
+                                    <th>Remaining Amount</th>
+                                    <th>Expired</th>
+                                    <th>Amount</th>
+                                    <th>In ETB</th>
+                                    <th>In USD</th>
+                                </tr>
+                            </thead>
+                            @for (int i = 0; i < Model.ImportPOList.Count; i++)
+                            {
+                                @Html.HiddenFor(model => @Model.ImportPOList[i].Id)
+                                @Html.HiddenFor(model => @Model.ImportPOList[i].PermitNumber)
+                                <tr>
+                                    <td><span class="table-permit-number-style">@Model.ImportPOList[i].PermitNumber</span></td>
+                                    <td>
+                                        @Html.HiddenFor(model => @Model.ImportPOList[i].Status)
+                                        @{
+                                            var status = Model.ImportPOList[i].Status;
+                                            if (status.Equals("Active"))
+                                            {
+                                                <span class="label label-success">Active</span>
+                                            }
+                                            else if (status.Equals("Cancelled")
+                                                || status.Equals("Unutilized"))
+                                            {
+                                                <span class="label label-danger">Cancelled</span>
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        @Html.HiddenFor(model => @Model.ImportPOList[i].CurrencyType)
+                                        @Model.ImportPOList[i].CurrencyType
+                                    </td>
+                                    <td>
+                                        @Html.HiddenFor(model => @Model.ImportPOList[i].RemainingAmount)
+                                        @Model.ImportPOList[i].RemainingAmount.Value.ToString("N2")
+                                    </td>
+                                    <td>
+                                        @Html.HiddenFor(model => @Model.ImportPOList[i].ExpiredYesNo)
+                                        @{
+                                            var expired = Model.ImportPOList[i].ExpiredYesNo;
+                                            if (expired.Equals("No"))
+                                            {
+                                                <span class="label label-success">No</span>
+                                            }
+                                            else if (expired.Equals("Yes"))
+                                            {
+                                                <span class="label label-danger">Yes</span>
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(model => @Model.ImportPOList[i].AmountValue,
+                                       new
+                                       {
+                                           @class = "form-control input-sm",
+                                           @onchange = "fillTheAmountsList(this)",
+                                       })
+                                        @Html.ValidationMessageFor(model => @Model.ImportPOList[i].AmountValue)
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(model => @Model.ImportPOList[i].AmountInBirrValue,
+                                       new
+                                       {
+                                           @class = "form-control input-sm",
+                                           @readonly = "readonly",
+                                           @id = @Model.ImportPOList[i].Id.ToString()
+                                       })
+                                        @Html.ValidationMessageFor(model => @Model.ImportPOList[i].AmountInBirrValue)
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(model => @Model.ImportPOList[i].AmountInUSDValue,
+                                       new
+                                       {
+                                           @class = "form-control input-sm",
+                                           @readonly = "readonly",
+                                           @id = @Model.ImportPOList[i].Id.ToString()
+                                       })
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        LPCO #:<span class="required">*</span>
+                    </label>
+                    <div class="col-sm-3">
+                        @Html.TextBoxFor(model => model.LPCONumber,
+                       new { @class = "form-control input-sm" })
+                        @Html.ValidationMessageFor(model => model.LPCONumber)
+                    </div>
+                    <label class="control-label col-sm-2">
+                        Country Of Origin:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-4">
+                        @Html.ListBox("SelectedCountryOfOriginIds", null, new
+                       {
+                           @class = "countryOfOriginListBox form-control"
+                       })
+                    </div>
+                </div>
+
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Permit Status:<span class="required">*</span>
+                    </label>
+                    <div class="col-sm-3">
+                        @Html.DropDownList("PermitStatusId", null, null,
+                       new { @class = "form-control input-sm" })
+                        @Html.ValidationMessageFor(model => model.PermitStatusId)
+                    </div>
+                    <label class="control-label col-sm-2">
+                        Approval Status:<span class="required">*</span>
+                    </label>
+                    <div class="col-sm-4">
+                        @Html.DropDownList("ApprovalStatus", null, "--Approval Status--",
+                        new
+                        {
+                            @class = "form-control input-sm",
+                        })
+                        @Html.ValidationMessageFor(model => model.ApprovalStatus)
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        NBE Approval Ref. #:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-3">
+                        @Html.TextBoxFor(model => model.NBEApprovalRefNumber,
+                       new { @class = "form-control input-sm" })
+                        @Html.ValidationMessageFor(model => model.NBEApprovalRefNumber)
+                    </div>
+                    <label class="control-label col-sm-2">
+                        Own Source:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-4">
+                        @Html.DropDownList("OwnSourceValue", null, "--Own Source--",
+                        new { @class = "form-control input-sm" })
+                        @Html.ValidationMessageFor(model => model.OwnSourceValue)
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Round:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-3">
+                        @Html.TextBoxFor(model => model.QueueRound,
+                       new { @class = "form-control input-sm" })
+                        @Html.ValidationMessageFor(model => model.QueueRound)
+                    </div>
+                    <label class="control-label col-sm-2">
+                        Queue #:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => model.QueueNumber,
+                       new { @class = "form-control input-sm" })
+                        @Html.ValidationMessageFor(model => model.QueueNumber)
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        First Priority:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-5">
+                        @Html.ListBoxFor(m => m.selectedFirstPriorityTopLevels, Model.firstPriorityTopLevels,
+                      new
+                      {
+                          @onchange = "getFirstPriorityNameList()",
+                          @class = "firstPriorityListBox form-control"
+                      })
+                    </div>
+                </div>
+
+
+
+                <div class="row">
+                    <div class="col-sm-offset-2 col-sm-9">
+                        @Html.ListBoxFor(m => m.selectedFirstPrioritySubLevels, Model.firstPrioritySubLevels,
+                            new
+                            {
+                                @class = "form-control input-sm",
+                                     @multiple = "",
+                                     @size = "10"
+                            })
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Second Priority:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-5">
+                        @Html.ListBoxFor(m => m.selectedSecondPriorityTopLevels, Model.secondPriorityTopLevels,
+                      new
+                      {
+                          @onchange = "getSecondPriorityNameList()",
+                          @class = "secondPriorityListBox form-control"
+                      })
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-offset-2 col-sm-9">
+                        @Html.ListBoxFor(m => m.selectedSecondPrioritySubLevels, Model.secondPrioritySubLevels,
+                            new
+                            {
+                                @class = "form-control input-sm",
+                                     @multiple = "",
+                                     @size = "10"
+                            })
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Third Priority:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-5">
+                        @Html.ListBoxFor(m => m.selectedThirdPriorityTopLevels, Model.thirdPriorityTopLevels,
+                      new
+                      {
+                          @onchange = "getThirdPriorityNameList()",
+                          @class = "thirdPriorityListBox form-control"
+                      })
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-offset-2 col-sm-9">
+                        @Html.ListBoxFor(m => m.selectedThirdPrioritySubLevels, Model.thirdPrioritySubLevels,
+                    new
+                    {
+                        @class = "form-control input-sm",
+                                @multiple = "",
+                                @size = "10"
+                    })
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Non-Priority Items:<span class="required"></span>
+                    </label>
+                    <div class="col-sm-9">
+                        @Html.TextAreaFor(model => model.NonPriorityItems, 4, 7,
+                       new { @class = "form-control input-sm" })
+                        @Html.ValidationMessageFor(model => model.NonPriorityItems)
+                    </div>
+                </div>
+
+                <div class="row grid-row">
+                    <label class="control-label col-sm-2">
+                        Expiry Days:<span class="required">*</span>
+                    </label>
+                    <div class="col-sm-3">
+                        @Html.TextBoxFor(model => model.ExpiryDays,
+                       new { @class = "form-control input-sm" })
+                        @Html.ValidationMessageFor(model => model.ExpiryDays)
+                    </div>
+                </div>
+
+
+                <div class="row grid-row">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" name="createImportPermitButton" value="Save" class="btn btn-success fa fa-floppy-o">
+                            <span class="button-icon-margin">Save</span>
+                        </button>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back To List", "Index", null, new { @class = "btn btn-default fa fa-backward" })
+</div>
+
+
+<script>
+
+    $(document).ready(function () {
+        var typeOfImportPermit = $("#TypeOfImportPermit").val();
+        if (typeOfImportPermit == null || typeOfImportPermit == '') {
+            $("#TypeOfImportPermit").val("NonPO");
+        }
+        var selectedPurchaseOrders = $("#SelectedPurchaseOrderIds").val();
+        var methodOfPayment = $("#MethodOfPaymentId").val();
+        var currencyType = $("#CurrencyType").val();
+        if ((selectedPurchaseOrders == null || selectedPurchaseOrders == '')
+            && (methodOfPayment == null || methodOfPayment == '')
+            && (currencyType == null || currencyType == '')) {
+            $('#tblDisplay tr').each(function (indexCounter) {
+                if (indexCounter != 0) {
+                    var AmountValue = $(this).children().eq(5).children("input").first();
+                    var AmountInETBValue = $(this).children().eq(6).children("input").first();
+                    var AmountInUSDValue = $(this).children().eq(7).children("input").first();
+                    AmountValue.val("");
+                    AmountInETBValue.val("");
+                    AmountInUSDValue.val("");
+                    $(this).hide();
+                }
+            });
+        }
+        else {
+            var POCurrencyType = $('#POCurrencyType').val();
+            $('#tblDisplay tr').each(function (indexCounter) {
+                if (indexCounter != 0) {
+                    var curType = $.trim($(this).children().eq(2).text());
+                    var PONumber = $.trim($(this).children().eq(0).text());
+                    var selectedTexts = [];
+                    $("#SelectedPurchaseOrderIds option:selected").each(function () {
+                        selectedTexts.push($(this).text());
+                    });
+                    var POSelected = $.inArray(PONumber, selectedTexts) > -1;
+                    if (POCurrencyType != curType || !POSelected) {
+                        var AmountValue = $(this).children().eq(5).children("input").first();
+                        var AmountInETBValue = $(this).children().eq(6).children("input").first();
+                        var AmountInUSDValue = $(this).children().eq(7).children("input").first();
+                        AmountValue.val("");
+                        AmountInETBValue.val("");
+                        AmountInUSDValue.val("");
+                        $(this).hide();
+                    }
+                }
+            });
+        }
+    });
+
+    function clearImportPermitDetails() {
+        window.location.reload();
+    }
+
+    function loadImportPermitDetails() {
+        var selectedPurchaseOrders = $("#SelectedPurchaseOrderIds").val();
+        if (selectedPurchaseOrders != null && selectedPurchaseOrders != ''
+            && selectedPurchaseOrders != '--Purchase Orders--') {
+            $("#TypeOfImportPermit").val("PO");
+            $("#MethodOfPaymentId").prop('selectedIndex', 0);
+            $("#CurrencyType").prop('selectedIndex', 0);
+            $('.selectedPortOfLoadingListBox').multiselect('deselectAll', false);
+            $('.selectedPortOfDestinationListBox').multiselect('deselectAll', false);
+            $('.selectedShipmentAllowedByListBox').multiselect('deselectAll', false);
+            $('.selectedIncotermListBox').multiselect('deselectAll', false);
+            $('.countryOfOriginListBox').multiselect('deselectAll', false);
+
+            $("#ApprovalStatus").prop('selectedIndex', 0);
+            $("#NBEApprovalRefNumber").val("");
+            $("#OwnSourceValue").prop('selectedIndex', 0);
+            $("#QueueRound").val("");
+            $("#QueueNumber").val("");
+
+            $("#CurrencyRateValue").val("");
+            $("#USDRateValue").val("");
+            $('.firstPriorityListBox').multiselect('deselectAll', false);
+            $("#selectedFirstPrioritySubLevels").prop('selectedIndex', 0);
+            $('.secondPriorityListBox').multiselect('deselectAll', false);
+            $("#selectedSecondPrioritySubLevels").prop('selectedIndex', 0);
+            $('.thirdPriorityListBox').multiselect('deselectAll', false);
+            $("#selectedThirdPrioritySubLevels").prop('selectedIndex', 0);
+            $("#NonPriorityItems").val("");
+            $('#tblDisplay tr').each(function (indexCounter) {
+                if (indexCounter != 0) {
+                    $(this).hide();
+                }
+            });
+            $('.firstPriorityListBox').multiselect('dataprovider', null);
+            $(".secondPriorityListBox").multiselect('dataprovider', null);
+            $(".thirdPriorityListBox").multiselect('dataprovider', null);
+            $("#selectedFirstPrioritySubLevels").html("");
+            $("#selectedSecondPrioritySubLevels").html("");
+            $("#selectedThirdPrioritySubLevels").html("");
+
+            var selectedPurchaseOrders = $("#SelectedPurchaseOrderIds").val();
+            if (selectedPurchaseOrders != null && selectedPurchaseOrders != ''
+                && selectedPurchaseOrders != '--Purchase Orders--') {
+                $("#MethodOfPaymentId option:contains('CAD')").prop('selected', true);
+                $("#ExpiryDays").val("29");
+            }
+            else {
+                $("#MethodOfPaymentId option:contains('CAD')").prop('selected', false);
+            }
+            $.ajax({
+                url: '@Url.Action("LoadCreateImportPermit", "Merchant")',
+                type: 'POST',
+                datatype: 'application/json',
+                contentType: 'application/json',
+                data: JSON.stringify({ permitIds: $("#SelectedPurchaseOrderIds").val(), amount: $("#AmountValue").val() }),
+                success: function (result) {
+                    var permitDetails = JSON.parse(result);
+                    $('.selectedPortOfLoadingListBox').multiselect('select', permitDetails.PortOfLoadingIds);
+                    $('.selectedPortOfDestinationListBox').multiselect('select', permitDetails.PortOfDestinationIds);
+                    $('.selectedShipmentAllowedByListBox').multiselect('select', permitDetails.ShipmentAllowedByIds);
+                    $('.selectedIncotermListBox').multiselect('select', permitDetails.IncotermIds);
+                    $("#CurrencyType option:contains('" + permitDetails.CurrencyType + "')").prop('selected', true);
+                    $("#POCurrencyType").val(permitDetails.CurrencyType);
+                    $("#CurrencyRateValue").val(permitDetails.CurrencyRate.toLocaleString('en-US', { maximumFractionDigits: 6 }));
+                    $("#AmountInBirrValue").val(permitDetails.AmountInBirr.toLocaleString('en-US', { maximumFractionDigits: 6 }));
+                    $("#USDRateValue").val(permitDetails.USDRate.toLocaleString('en-US', { maximumFractionDigits: 6 }));
+                    $("#AmountInUSDValue").val(permitDetails.AmountInUSD.toLocaleString('en-US', { maximumFractionDigits: 6 }));
+                    $('.countryOfOriginListBox').multiselect('select', permitDetails.CountryOfOriginIds);
+                    $("#ApprovalStatus option:contains('" + permitDetails.ApprovalStatus + "')").prop('selected', true);
+                    $("#NBEApprovalRefNumber").val(permitDetails.NBEApprovalRefNumber);
+                    $("#OwnSourceValue option:contains('" + permitDetails.OwnSourceValue + "')").prop('selected', true);
+                    $("#QueueRound").val(permitDetails.QueueRound);
+                    $("#QueueNumber").val(permitDetails.QueueNumber);
+                    $('.firstPriorityListBox').multiselect('dataprovider', permitDetails.FirstPriorityTopLevels);
+                    $('.secondPriorityListBox').multiselect('dataprovider', permitDetails.SecondPriorityTopLevels);
+                    $('.thirdPriorityListBox').multiselect('dataprovider', permitDetails.ThirdPriorityTopLevels);
+                    $("#selectedFirstPrioritySubLevels").html("");
+                    $("#selectedFirstPrioritySubLevels").append
+                    $.each(permitDetails.FirstPrioritySubLevels, function (i, item) {
+                        $("#selectedFirstPrioritySubLevels").append($('<option></option>').prop({
+                            "selected": item.Selected,
+                            "value": item.Value,
+                            "label": item.Text
+                        }));
+                    });
+                    //*****
+                    $('.secondPriorityListBox').multiselect('select', permitDetails.SecondPriorityTopLevels);
+                    $("#selectedSecondPrioritySubLevels").html("");
+                    $("#selectedSecondPrioritySubLevels").append
+                    $.each(permitDetails.SecondPrioritySubLevels, function (i, item) {
+                        $("#selectedSecondPrioritySubLevels").append($('<option></option>').prop({
+                            "selected": item.Selected,
+                            "value": item.Value,
+                            "label": item.Text
+                        }));
+                    });
+                    //*****
+                    $('.thirdPriorityListBox').multiselect('select', permitDetails.ThirdPriorityTopLevels);
+                    $("#selectedThirdPrioritySubLevels").html("");
+                    $("#selectedThirdPrioritySubLevels").append
+                    $.each(permitDetails.ThirdPrioritySubLevels, function (i, item) {
+                        $("#selectedThirdPrioritySubLevels").append($('<option></option>').prop({
+                            "selected": item.Selected,
+                            "value": item.Value,
+                            "label": item.Text
+                        }));
+                    });
+                    $("#NonPriorityItems").val(permitDetails.NonPriorityItems);
+                    var permitNumbers = permitDetails.PermitNumbers;
+                    $('#tblDisplay tr').each(function (indexCounter) {
+                        if (indexCounter != 0) {
+                           $(this).show();
+                        }
+                    });
+                    $('#tblDisplay tr').each(function (indexCounter) {
+                        if (indexCounter != 0) {
+                            var PONumber = $.trim($(this).children().first().text());
+                            var POSelected = $.inArray(PONumber, permitNumbers) > -1;
+                            if (!POSelected) {
+                                $(this).hide();
+                            }
+                        }
+                    });
+                },
+                error: function ()
+                {
+                    alert("Whooaaa! Something went wrong..");
+                },
+            })
+        }
+    }
+
+    function setMethodOfPayment() {
+        var methodOfPayment = document.getElementById("MethodOfPaymentId");
+        var methodOfPaymentValue = methodOfPayment.options[methodOfPayment.selectedIndex].text;
+        if (methodOfPaymentValue == 'L/C') {
+            $("#ExpiryDays").val("119");
+        }
+        else if (methodOfPaymentValue == 'CAD') {
+            $("#ExpiryDays").val("29");
+        }
+        else if (methodOfPaymentValue == 'TT') {
+            $("#ExpiryDays").val("29");
+        }
+        else if (methodOfPaymentValue == 'S/Credit') {
+            $("#ExpiryDays").val("29");
+        }
+
+    }
+
+    function fillCurrencyDetails() {
+        $("#CurrencyRateValue").val("");
+        $("#AmountInBirrValue").val("");
+        $("#USDRateValue").val("");
+        $("#AmountInUSDValue").val("");
+        $.ajax({
+            url: '@Url.Action("fillTheAmounts", "Merchant")',
+            type: 'POST',
+            datatype: 'application/json',
+            contentType: 'application/json',
+            data: JSON.stringify({ currencyType: $("#CurrencyType").val(), amount: $("#AmountValue").val() }),
+            success: function (result) {
+                var currencyDetails = JSON.parse(result);
+                $("#CurrencyRateValue").val(currencyDetails.CurrencyRate.toLocaleString('en-US', { maximumFractionDigits: 6 }));
+                $("#USDRateValue").val(currencyDetails.USDRate.toLocaleString('en-US', { maximumFractionDigits: 6 }));
+                $("#AmountInBirrValue").val(currencyDetails.AmountInBirr.toLocaleString('en-US', { maximumFractionDigits: 6 }));
+                $("#AmountInUSDValue").val(currencyDetails.AmountInUSD.toLocaleString('en-US', { maximumFractionDigits: 6 }));
+            },
+            error: function () {
+                alert("Whooaaa! Something went wrong..")
+            },
+        });
+    }
+
+    function fillTheAmounts()
+    {
+        $("#AmountInBirrValue").val("");
+        $("#AmountInUSDValue").val("");
+        $.ajax({
+            url: '@Url.Action("fillTheAmounts", "Merchant")',
+            type: 'POST',
+            datatype: 'application/json',
+            contentType: 'application/json',
+            data: JSON.stringify({ currencyType: $("#CurrencyType").val(), amount: $("#AmountValue").val() }),
+            success: function (result) {
+                var rawAmount = $("#AmountValue").val().replace(/,/g, '');
+                var commaSepAmount = Number(rawAmount).toLocaleString('en-US', { maximumFractionDigits: 6 });
+                $("#AmountValue").val(commaSepAmount);
+                var currencyDetails = JSON.parse(result);
+                $("#AmountInBirrValue").val(currencyDetails.AmountInBirr.toLocaleString('en-US', { maximumFractionDigits: 6 }));
+                $("#AmountInUSDValue").val(currencyDetails.AmountInUSD.toLocaleString('en-US', { maximumFractionDigits: 6 }));
+            },
+            error: function () {
+                alert("Whooaaa! Something went wrong..")
+            },
+        });
+    }
+
+    function fillTheAmountsList(AmountValueTextField) {
+        var cell = AmountValueTextField.parentNode;
+        var row = cell.parentNode;
+        var AmountValue = row.cells[5].getElementsByTagName("input")[0];
+        var AmountInBirrValue = row.cells[6].getElementsByTagName("input")[0];
+        var AmountInUSDValue = row.cells[7].getElementsByTagName("input")[0];
+        //**
+        AmountInBirrValue.value = "";
+        AmountInUSDValue.value = "";
+        $.ajax({
+            url: '@Url.Action("fillTheAmounts", "Merchant")',
+            type: 'POST',
+            datatype: 'application/json',
+            contentType: 'application/json',
+            data: JSON.stringify({ currencyType: $("#CurrencyType").val(), amount: AmountValue.value }),
+            success: function (result) {
+                if (AmountValue.value != null && AmountValue.value != '') {
+                   var rawAmount = AmountValue.value.replace(/,/g, '');
+                    var commaSepAmount = Number(rawAmount).toLocaleString('en-US', { maximumFractionDigits: 6 });
+                    AmountValue.value = commaSepAmount;
+                    var currencyDetails = JSON.parse(result);
+                    AmountInBirrValue.value = currencyDetails.AmountInBirr.toLocaleString('en-US', { maximumFractionDigits: 6 });
+                    AmountInUSDValue.value = currencyDetails.AmountInUSD.toLocaleString('en-US', { maximumFractionDigits: 6 });
+                }
+            },
+            error: function ()
+            {
+                alert("Whooaaa! Something went wrong..");
+            },
+        })
+    }
+
+
+    function getFirstPriorityNameList() {
+        $.ajax({
+            url: '@Url.Action("NameBySubLevel", "Merchant")',
+            type: 'POST',
+            datatype: 'application/json',
+            contentType: 'application/json',
+            data: JSON.stringify({ subLevels: $("#selectedFirstPriorityTopLevels").val() }),
+            success: function (result) {
+                $("#selectedFirstPrioritySubLevels").html("");
+                $("#selectedFirstPrioritySubLevels").append
+                $.each($.parseJSON(result), function (i, item)
+                { $("#selectedFirstPrioritySubLevels").append($('<option></option>').val(item.Value).html(item.Text)) })
+            },
+            error: function ()
+            {
+                alert("Whooaaa! Something went wrong..");
+            },
+        })
+    }
+
+    function getSecondPriorityNameList() {
+        $.ajax({
+            url: '@Url.Action("NameBySubLevel", "Merchant")',
+            type: 'POST',
+            datatype: 'application/json',
+            contentType: 'application/json',
+            data: JSON.stringify({ subLevels: $("#selectedSecondPriorityTopLevels").val() }),
+            success: function (result) {
+                $("#selectedSecondPrioritySubLevels").html("");
+                $("#selectedSecondPrioritySubLevels").append
+                $.each($.parseJSON(result), function (i, item)
+                { $("#selectedSecondPrioritySubLevels").append($('<option></option>').val(item.Value).html(item.Text)) })
+            },
+            error: function ()
+            {
+                alert("Whooaaa! Something went wrong..");
+            },
+        })
+    }
+
+    function getThirdPriorityNameList() {
+        $.ajax({
+            url: '@Url.Action("NameBySubLevel", "Merchant")',
+            type: 'POST',
+            datatype: 'application/json',
+            contentType: 'application/json',
+            data: JSON.stringify({ subLevels: $("#selectedThirdPriorityTopLevels").val() }),
+            success: function (result) {
+                $("#selectedThirdPrioritySubLevels").html("");
+                $("#selectedThirdPrioritySubLevels").append
+                $.each($.parseJSON(result), function (i, item)
+                { $("#selectedThirdPrioritySubLevels").append($('<option></option>').val(item.Value).html(item.Text)) })
+            },
+            error: function ()
+            {
+                alert("Whooaaa! Something went wrong..");
+            },
+        })
+    }
+
+</script>
+
+

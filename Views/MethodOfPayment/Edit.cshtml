@@ -1,0 +1,50 @@
+﻿@model ZB_FEPMS.Models.tbl_lu_MethodOfPayment
+
+@{
+    ViewBag.Title = "Method Of Payment";
+    Layout = "~/Views/Shared/_FEPMSLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">Edit Method Of Payment</div>
+        <div class="panel-body">
+
+            <div class="row">
+                <label class="control-label col-sm-2">
+                    Name:<span class="required">*</span>
+                </label>
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(model => model.name,
+                   new { @class = "form-control input-sm" })
+                    @Html.ValidationMessageFor(model => model.name)
+                </div>
+            </div>
+
+            <div class="row grid-row">
+                <label class="control-label col-sm-2">
+                    Description:<span class="required"></span>
+                </label>
+                <div class="col-sm-4">
+                    @Html.TextAreaFor(model => model.description, new { @class = "form-control input-sm" })
+                    @Html.ValidationMessageFor(model => model.description)
+                </div>
+            </div>
+
+
+            <div class="row grid-row">
+                <div class="col-sm-offset-2 col-sm-4">
+                    <button type="submit" class="btn btn-success fa fa-save"><span class="button-icon-margin">Save</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back To List", "Index", null, new { @class = "btn btn-default fa fa-backward" })
+</div>

@@ -1,0 +1,823 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\NUnit.3.12.0\build\NUnit.props" Condition="Exists('..\packages\NUnit.3.12.0\build\NUnit.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{30180C18-CF3E-4DEA-A292-290F7BB8AC1D}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ZB_FEPMS</RootNamespace>
+    <AssemblyName>ZB_FEPMS</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <NuGetPackageImportStamp>fa9007bc</NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>1</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ClosedXML, Version=0.94.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClosedXML.0.94.2\lib\net40\ClosedXML.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\CrystalDecisions.CrystalReports.Engine.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.ClientDoc, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>bin\CrystalDecisions.ReportAppServer.ClientDoc.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.CommLayer, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>bin\CrystalDecisions.ReportAppServer.CommLayer.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.CommonControls, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>bin\CrystalDecisions.ReportAppServer.CommonControls.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.CommonObjectModel, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>bin\CrystalDecisions.ReportAppServer.CommonObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.Controllers, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>bin\CrystalDecisions.ReportAppServer.Controllers.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.CubeDefModel, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>bin\CrystalDecisions.ReportAppServer.CubeDefModel.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.DataDefModel, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>bin\CrystalDecisions.ReportAppServer.DataDefModel.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.DataSetConversion, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\CrystalDecisions.ReportAppServer.DataSetConversion.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.ObjectFactory, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>bin\CrystalDecisions.ReportAppServer.ObjectFactory.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.Prompting, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>bin\CrystalDecisions.ReportAppServer.Prompting.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.ReportDefModel, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>bin\CrystalDecisions.ReportAppServer.ReportDefModel.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.XmlSerialize, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>bin\CrystalDecisions.ReportAppServer.XmlSerialize.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\CrystalDecisions.ReportSource.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\CrystalDecisions.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.Web, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\CrystalDecisions.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.7.2.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.7.2\lib\net40\DocumentFormat.OpenXml.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelNumberFormat, Version=1.0.3.0, Culture=neutral, PublicKeyToken=23c6f5d73be07eca, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelNumberFormat.1.0.3\lib\net20\ExcelNumberFormat.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FastMember, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FastMember.1.3.0\lib\net45\FastMember.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Highcharts.Web.Mvc, Version=6.2.0.0, Culture=neutral, PublicKeyToken=90b74bd27a557bd3, processorArchitecture=MSIL">
+      <HintPath>..\packages\Highsoft.Highcharts.6.2.0.73\lib\net40\Highcharts.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.2\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb, Version=2.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.2.2\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.IdentityModel.Abstractions, Version=6.26.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Abstractions.6.26.1\lib\net45\Microsoft.IdentityModel.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=6.26.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.JsonWebTokens.6.26.1\lib\net45\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Logging, Version=6.26.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Logging.6.26.1\lib\net45\Microsoft.IdentityModel.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Protocols, Version=6.26.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Protocols.6.26.1\lib\net45\Microsoft.IdentityModel.Protocols.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect, Version=6.26.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Protocols.OpenIdConnect.6.26.1\lib\net45\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Tokens, Version=6.26.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Tokens.6.26.1\lib\net45\Microsoft.IdentityModel.Tokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=4.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.4.2.2\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=4.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.4.2.2\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=4.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.4.2.2\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=4.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.4.2.2\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OpenIdConnect, Version=4.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OpenIdConnect.4.2.2\lib\net45\Microsoft.Owin.Security.OpenIdConnect.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.ProcessingObjectModel.DLL</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.WebForms.DLL</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="nunit.framework, Version=3.12.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.12.0\lib\net45\nunit.framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.122.19.1, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <HintPath>..\packages\Oracle.ManagedDataAccess.19.17.0\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=6.26.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.6.26.1\lib\net45\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.0\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.0\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.0\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.0\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.0\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.1\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Content\themes\base\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="build\**\*" />
+    <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\images\ajax-loader.gif" />
+    <Content Include="Content\images\ajax-loader.png" />
+    <Content Include="Content\images\img1.png" />
+    <Content Include="Content\images\img2.jpg" />
+    <Content Include="Content\images\img3.jpg" />
+    <Content Include="Content\images\img4.jpg" />
+    <Content Include="Content\images\logo.jpg" />
+    <Content Include="Content\images\logo.png" />
+    <Content Include="Content\Scripts\bootstrap-multiselect.js" />
+    <Content Include="Content\Scripts\bootstrap-multiselect.min.js" />
+    <Content Include="Content\Styles\bootstrap-multiselect.css" />
+    <Content Include="Content\Styles\bootstrap-multiselect.min.css" />
+    <Content Include="Content\Styles\PagedList.css" />
+    <Content Include="Content\Scripts\bootstrap-datepicker.js" />
+    <Content Include="Content\Scripts\bootstrap-progressbar.js" />
+    <Content Include="Content\Scripts\bootstrap.js" />
+    <Content Include="Content\Scripts\custom.js" />
+    <Content Include="Content\Scripts\date.js" />
+    <Content Include="Content\Scripts\daterangepicker.js" />
+    <Content Include="Content\Scripts\jquery-3.1.1.js" />
+    <Content Include="Content\Scripts\jquery.counterup.min.js" />
+    <Content Include="Content\Scripts\jquery.inputmask.date.extensions.js" />
+    <Content Include="Content\Scripts\jquery.inputmask.js" />
+    <Content Include="Content\Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Content\Scripts\moment.js" />
+    <Content Include="Content\Scripts\pwdwidget.js" />
+    <Content Include="Content\Scripts\respond.js" />
+    <Content Include="Content\Styles\animate.css" />
+    <Content Include="Content\Styles\animations.css" />
+    <Content Include="Content\Styles\bootstrap-progressbar-3.3.4.css" />
+    <Content Include="Content\Styles\bootstrap.css" />
+    <Content Include="Content\Styles\custom.css" />
+    <Content Include="Content\Styles\datepicker3.css" />
+    <Content Include="Content\Styles\daterangepicker.css" />
+    <Content Include="Content\Styles\feedback-left.css" />
+    <Content Include="Content\Styles\font-awesome.css" />
+    <Content Include="Content\Styles\jqvmap.css" />
+    <Content Include="Content\Styles\nprogress.css" />
+    <Content Include="Content\Styles\pwdwidget.css" />
+    <Content Include="Content\Styles\Site.css" />
+    <Content Include="Helpers\**\*" />
+    <Content Include="images\ajax-loader.gif" />
+    <Content Include="images\img.jpg" />
+    <Content Include="images\IMS-Banner2.jpg" />
+    <Content Include="images\IMS5.jpg" />
+    <Content Include="images\IMS_Banner.jpg" />
+    <Content Include="images\IMS_Banner2 %282%29.jpg" />
+    <Content Include="images\IMS_Banner2.jpg" />
+    <Content Include="images\Login.png" />
+    <Content Include="images\Login1.png" />
+    <Content Include="images\logo.jpg" />
+    <Content Include="images\test4.png" />
+    <Content Include="images\test6.jpg" />
+    <Content Include="images\test7.jpg" />
+    <Content Include="images\user.png" />
+    <Content Include="images\Z-logo-aj.jpg" />
+    <Content Include="images\Z-logo-cur.jpg" />
+    <Content Include="images\Z-logo-fadr.jpg" />
+    <Content Include="images\Z-logo-far.jpg" />
+    <Content Include="images\Z-logo-farr.jpg" />
+    <Content Include="images\Z-logo-fatr.jpg" />
+    <Content Include="images\Z-logo-isr.jpg" />
+    <Content Include="images\Z-logo-jr.jpg" />
+    <Content Include="images\Z-logo-lr.jpg" />
+    <Content Include="images\Z-logo-mr.jpg" />
+    <Content Include="images\Z-logo-smr.jpg" />
+    <Content Include="images\Z-logo-ssr.jpg" />
+    <Content Include="images\Z-logo-swr.jpg" />
+    <Content Include="images\Z-logo-yr.jpg" />
+    <Content Include="images\Z-logo.jpg" />
+    <Content Include="images\ZB_IMS3.jpg" />
+    <Content Include="images\Zemen.ico" />
+    <Content Include="images\Zemen.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controllers\PermitReportController.cs" />
+    <Compile Include="Controllers\MerchantController.cs" />
+    <Compile Include="Controllers\ItemPriorityController.cs" />
+    <Compile Include="Controllers\ApplicantController.cs" />
+    <Compile Include="Controllers\PortOfLoadingController.cs" />
+    <Compile Include="Controllers\StatusController.cs" />
+    <Compile Include="Controllers\ShipmentAllowedByController.cs" />
+    <Compile Include="Controllers\PortOfDestinationController.cs" />
+    <Compile Include="Controllers\IncotermController.cs" />
+    <Compile Include="Controllers\MethodOfPaymentController.cs" />
+    <Compile Include="Helpers\ClsInterceptorModule.cs" />
+    <Compile Include="Action Filters\NoCacheAttribute .cs" />
+    <Compile Include="Action Filters\RBACAttribute.cs" />
+    <Compile Include="Action Filters\RBACUser.cs" />
+    <Compile Include="Action Filters\RBAC_ExtendedMethods.cs" />
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\DashBoardsController.cs" />
+    <Compile Include="Controllers\CountryOfOriginController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\AlertHelpers.cs" />
+    <Compile Include="Helpers\BaseController.cs" />
+    <Compile Include="Hubs\Startup.cs" />
+    <Compile Include="Models\AccessLog.cs">
+      <DependentUpon>ZB_FEPMS_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Login.cs">
+      <DependentUpon>ZB_FEPMS_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ManagerDashboardDetails.cs" />
+    <Compile Include="Models\MessageVM.cs" />
+    <Compile Include="Models\ImportPermitMasterReport.cs" />
+    <Compile Include="Models\PERMISSION.cs">
+      <DependentUpon>ZB_FEPMS_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PurchaseOrderPermitMasterReport.cs" />
+    <Compile Include="Models\NBEReport.cs" />
+    <Compile Include="Models\ImportPermitMasterReportForm.cs" />
+    <Compile Include="Models\PurchaseOrderPermitMasterReportForm.cs" />
+    <Compile Include="Models\NBEReportForm.cs" />
+    <Compile Include="Models\MultiSelectOption.cs" />
+    <Compile Include="Models\PermitDetails.cs" />
+    <Compile Include="Models\CurrencyDetails.cs" />
+    <Compile Include="Models\InvisiblePaymentMasterReport.cs" />
+    <Compile Include="Models\InvisiblePaymentMasterReportForm.cs" />
+    <Compile Include="Models\IdValuePair.cs" />
+    <Compile Include="Models\NameValuePair.cs" />
+    <Compile Include="Models\ROLE.cs">
+      <DependentUpon>ZB_FEPMS_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SETTING.cs">
+      <DependentUpon>ZB_FEPMS_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblApplicant.cs">
+      <DependentUpon>ZB_FEPMS_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblApplication.cs">
+      <DependentUpon>ZB_FEPMS_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblApplicationAmount.cs">
+      <DependentUpon>ZB_FEPMS_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblItemPriority.cs">
+      <DependentUpon>ZB_FEPMS_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblMerchant.cs">
+      <DependentUpon>ZB_FEPMS_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblPermit.cs">
+      <DependentUpon>ZB_FEPMS_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblPermitAmount.cs">
+      <DependentUpon>ZB_FEPMS_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblPermitAmountDetail.cs">
+      <DependentUpon>ZB_FEPMS_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblPOPermitAmountDetail.cs">
+      <DependentUpon>ZB_FEPMS_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblPOPermitDetail.cs">
+      <DependentUpon>ZB_FEPMS_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblPOPermitExpiry.cs">
+      <DependentUpon>ZB_FEPMS_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblSerialNumberShelf.cs">
+      <DependentUpon>ZB_FEPMS_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_lu_CountryOfOrigin.cs">
+      <DependentUpon>ZB_FEPMS_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_lu_Incoterm.cs">
+      <DependentUpon>ZB_FEPMS_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_lu_MethodOfPayment.cs">
+      <DependentUpon>ZB_FEPMS_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_lu_PortOfDestination.cs">
+      <DependentUpon>ZB_FEPMS_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_lu_PortOfLoading.cs">
+      <DependentUpon>ZB_FEPMS_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_lu_ShipmentAllowedBy.cs">
+      <DependentUpon>ZB_FEPMS_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_lu_Status.cs">
+      <DependentUpon>ZB_FEPMS_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\USER.cs">
+      <DependentUpon>ZB_FEPMS_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserInfo.cs" />
+    <Compile Include="Models\ZB_FEPMS_Model.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ZB_FEPMS_Model.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ZB_FEPMS_Model.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ZB_FEPMS_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ZB_FEPMS_Model.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ZB_FEPMS_Model.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ImportPermitMasterReport.cs">
+      <DependentUpon>ImportPermitMasterReport.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Reports\InvisiblePaymentMasterReport.cs">
+      <DependentUpon>InvisiblePaymentMasterReport.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Reports\PurchaseOrderPermitMasterReport.cs">
+      <DependentUpon>PurchaseOrderPermitMasterReport.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Reports\NBEReport.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NBEReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\images\arrow.gif" />
+    <Content Include="Content\images\bin.png" />
+    <Content Include="Content\images\padlock.jpg" />
+    <Content Include="Content\images\pen.png" />
+    <Content Include="Content\images\toolbox.png" />
+    <Content Include="Content\images\Zemen.ico" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\fonts\FontAwesome.otf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Foreign Exchange Permit Management System User Guide.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <EntityDeploy Include="Models\ZB_FEPMS_Model.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ZB_FEPMS_Model.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\ZB_FEPMS_Model.edmx.diagram">
+      <DependentUpon>ZB_FEPMS_Model.edmx</DependentUpon>
+    </Content>
+    <None Include="Properties\PublishProfiles\ZB-IMS.pubxml" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Models\ZB_FEPMS_Model.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ZB_FEPMS_Model.edmx</DependentUpon>
+      <LastGenOutput>ZB_FEPMS_Model.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\ZB_FEPMS_Model.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ZB_FEPMS_Model.edmx</DependentUpon>
+      <LastGenOutput>ZB_FEPMS_Model.cs</LastGenOutput>
+    </Content>
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\_FEPMSLayout.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\PermissionCreate.cshtml" />
+    <Content Include="Views\Admin\PermissionDetails.cshtml" />
+    <Content Include="Views\Admin\PermissionEdit.cshtml" />
+    <Content Include="Views\Admin\PermissionIndex.cshtml" />
+    <Content Include="Views\Admin\RoleCreate.cshtml" />
+    <Content Include="Views\Admin\RoleEdit.cshtml" />
+    <Content Include="Views\Admin\RoleIndex.cshtml" />
+    <Content Include="Views\Admin\UserCreate.cshtml" />
+    <Content Include="Views\Admin\UserDetails.cshtml" />
+    <Content Include="Views\Admin\UserEdit.cshtml" />
+    <Content Include="Views\Admin\_AddPermission2PermissionsTable4Role.cshtml" />
+    <Content Include="Views\Admin\_AddRole4Permission.cshtml" />
+    <Content Include="Views\Admin\_AddUserToUsersTable4Role.cshtml" />
+    <Content Include="Views\Admin\_ListEditableUserRoleTable.cshtml" />
+    <Content Include="Views\Admin\_ListPermissions.cshtml" />
+    <Content Include="Views\Admin\_ListRolesTable4Permission.cshtml" />
+    <Content Include="Views\Admin\_ListUserRoleTable.cshtml" />
+    <Content Include="Views\Admin\_ListUsersTable4Role.cshtml" />
+    <Content Include="Views\Admin\_ListUserTable.cshtml" />
+    <Content Include="Views\Admin\_userDetails.cshtml" />
+    <Content Include="Views\Admin\_userDetailsEdit.cshtml" />
+    <Content Include="Views\CountryOfOrigin\Edit.cshtml" />
+    <Content Include="Views\CountryOfOrigin\Index.cshtml" />
+    <Content Include="Views\Admin\AccessLogList.cshtml" />
+    <Content Include="Views\DashBoards\OfficerDashboard.cshtml" />
+    <Content Include="Views\Home\Unauthorised.cshtml" />
+    <Content Include="Views\CountryOfOrigin\Create.cshtml" />
+    <Content Include="Views\DashBoards\ManagerDashboard.cshtml" />
+    <Content Include="Views\MethodOfPayment\Create.cshtml" />
+    <Content Include="Views\MethodOfPayment\Edit.cshtml" />
+    <Content Include="Views\MethodOfPayment\Index.cshtml" />
+    <Content Include="Views\Incoterm\Create.cshtml" />
+    <Content Include="Views\Incoterm\Edit.cshtml" />
+    <Content Include="Views\Incoterm\Index.cshtml" />
+    <Content Include="Views\PortOfDestination\Create.cshtml" />
+    <Content Include="Views\PortOfDestination\Edit.cshtml" />
+    <Content Include="Views\PortOfDestination\Index.cshtml" />
+    <Content Include="Views\ShipmentAllowedBy\Create.cshtml" />
+    <Content Include="Views\ShipmentAllowedBy\Edit.cshtml" />
+    <Content Include="Views\ShipmentAllowedBy\Index.cshtml" />
+    <Content Include="Views\Status\Create.cshtml" />
+    <Content Include="Views\Status\Edit.cshtml" />
+    <Content Include="Views\Status\Index.cshtml" />
+    <Content Include="Views\ItemPriority\Create.cshtml" />
+    <Content Include="Views\ItemPriority\Edit.cshtml" />
+    <Content Include="Views\ItemPriority\Index.cshtml" />
+    <Content Include="Views\Applicant\Create.cshtml" />
+    <Content Include="Views\Applicant\Edit.cshtml" />
+    <Content Include="Views\Applicant\Index.cshtml" />
+    <Content Include="Views\Applicant\CreateInvisiblePaymentPermit.cshtml" />
+    <Content Include="Web.config" />
+    <Content Include="Views\Applicant\InvisiblePaymentPermitConfirmation.cshtml" />
+    <Content Include="Views\Applicant\InvisiblePaymentPermits.cshtml" />
+    <Content Include="Views\Applicant\EditInvisiblePaymentPermit.cshtml" />
+    <Content Include="Views\Applicant\UpdateInvisiblePaymentPermitAmountRequest.cshtml" />
+    <Content Include="Views\Applicant\UpdateInvisiblePaymentPermitAmount_Auth.cshtml" />
+    <Content Include="Views\Applicant\ApproveInvisiblePaymentPermitAmountUpdate.cshtml" />
+    <Content Include="Views\Applicant\ViewInvisiblePaymentPermitDetail.cshtml" />
+    <Content Include="Views\Applicant\Reject.cshtml" />
+    <Content Include="Views\Applicant\ViewInvisiblePaymentPermitAmountUpdatesDetail.cshtml" />
+    <Content Include="Views\Merchant\ViewPermitDetail.cshtml" />
+    <Content Include="Views\Merchant\ApprovePurchaseOrderPermitAmountUpdate.cshtml" />
+    <Content Include="Views\Merchant\Create.cshtml" />
+    <Content Include="Views\Merchant\CreatePurchaseOrderPermit.cshtml" />
+    <Content Include="Views\Merchant\Edit.cshtml" />
+    <Content Include="Views\Merchant\Index.cshtml" />
+    <Content Include="Views\Merchant\PurchaseOrderPermitConfirmation.cshtml" />
+    <Content Include="Views\Merchant\PurchaseOrderPermits.cshtml" />
+    <Content Include="Views\Merchant\Reject.cshtml" />
+    <Content Include="Views\Merchant\UpdatePurchaseOrderPermitAmount_Auth.cshtml" />
+    <Content Include="Views\Merchant\UpdatePurchaseOrderPermitAmountRequest.cshtml" />
+    <Content Include="Views\Merchant\ViewMerchantDetail.cshtml" />
+    <Content Include="Views\Merchant\EditPurchaseOrderPermit.cshtml" />
+    <Content Include="Views\Applicant\ViewInvisiblePaymentPermitApplicationDetail.cshtml" />
+    <Content Include="Views\Merchant\CreatePOPermitExpiry.cshtml" />
+    <Content Include="Views\Merchant\ViewPurchaseOrderPermitDetail.cshtml" />
+    <Content Include="Views\Merchant\CreateImportPermit.cshtml" />
+    <Content Include="Views\Merchant\ImportPermitConfirmation.cshtml" />
+    <Content Include="Views\Merchant\ImportPermits.cshtml" />
+    <Content Include="Views\Merchant\EditImportPermit.cshtml" />
+    <Content Include="Views\Merchant\UpdateImportPermitAmountRequest.cshtml" />
+    <Content Include="Views\Merchant\UpdateImportPermitAmount_Auth.cshtml" />
+    <Content Include="Views\Merchant\ApproveImportPermitAmountUpdate.cshtml" />
+    <Content Include="Views\Merchant\ViewImportPermitDetail.cshtml" />
+    <Content Include="Views\Merchant\ViewPOPermitAmountUpdateRejectionComment.cshtml" />
+    <Content Include="Views\Merchant\RejectIPAmountUpdate.cshtml" />
+    <Content Include="Views\Merchant\ViewImportPermitAmountUpdateRejectionComment.cshtml" />
+    <Content Include="Views\Applicant\ViewIPPermitAmountUpdateRejectionComment.cshtml" />
+    <Content Include="Views\PermitReport\InvisiblePaymentMasterReport.cshtml" />
+    <Content Include="Views\PortOfLoading\Create.cshtml" />
+    <Content Include="Views\PortOfLoading\Edit.cshtml" />
+    <Content Include="Views\PortOfLoading\Index.cshtml" />
+    <Content Include="Views\Merchant\ViewPODetail.cshtml" />
+    <Content Include="Views\Applicant\ViewApplicantDetail.cshtml" />
+    <Content Include="Views\PermitReport\NBEReport.cshtml" />
+    <Content Include="Views\PermitReport\PurchaseOrderPermitMasterReport.cshtml" />
+    <Content Include="Views\PermitReport\ImportPermitMasterReport.cshtml" />
+    <Content Include="Views\Merchant\CreateImportPermitExpiry.cshtml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+    <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>8</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Excel">
+      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>9</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="stdole">
+      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Reports\NBEReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>NBEReport.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Reports\PurchaseOrderPermitMasterReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>PurchaseOrderPermitMasterReport.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Reports\ImportPermitMasterReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ImportPermitMasterReport.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Reports\InvisiblePaymentMasterReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>InvisiblePaymentMasterReport.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>1922</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:1926/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\NUnit.3.12.0\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit.3.12.0\build\NUnit.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

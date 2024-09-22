@@ -1,0 +1,27 @@
+﻿@model ZB_FEPMS.Models.ROLE
+
+@Html.HiddenFor(model => model.RoleId)
+<fieldset style="padding: 1em; font: 100%; border-color: Black; border-style: solid;
+    border-width: thin; border-color: Silver; width: 740px">
+    <legend><strong>Add Permission To Role</strong></legend>
+    <br />
+
+    <div class="row grid-row">
+        <label class="control-label col-sm-2">
+            Permission:<span class="required"></span>
+        </label>
+        <div class="col-sm-5">
+            @Html.DropDownList("PermissionId", null, "--Select Permission--", new { @class = "form-control input-sm" })
+            @Html.ValidationMessage("PermissionId")
+        </div>
+        <div class="col-sm">
+            <button type="submit" id="AddPermission" class="btn btn-success fa">
+                <span class="button-icon-margin">Add Permission</span>
+            </button>
+            <button type="submit" id="AddAllPermissions" class="btn btn-success fa">
+                <span class="button-icon-margin">Add All Permissions</span>
+            </button>
+        </div>
+    </div>
+
+</fieldset>

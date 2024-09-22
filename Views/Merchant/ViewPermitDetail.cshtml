@@ -1,0 +1,435 @@
+﻿@model ZB_FEPMS.Models.tblPermit
+
+<div class="row grid-row">
+    @Html.Label("Permit #:", new { @Class = "control-label col-sm-2" })
+    <div class="col-sm-9">
+        <span class="label-permit-number-style">
+            @Model.PermitNumber
+        </span>
+    </div>
+</div>
+
+<div class="row grid-row">
+    @Html.Label("Date:", new { @Class = "control-label col-sm-2" })
+    <div class="col-sm-3">
+        <span class="label-underline-style">
+            @Model.Date.Value.ToString("D")
+        </span>
+    </div>
+</div>
+
+<div class="row grid-row">
+    @Html.Label("Importer Name:", new { @Class = "control-label col-sm-2" })
+    <div class="col-sm-4">
+        <span class="label-underline-style">
+            @Model.tblMerchant.ImporterName
+        </span>
+    </div>
+    @Html.Label("Tin #:", new { @Class = "control-label col-sm-1" })
+    <div class="col-sm-2">
+        <span class="label-underline-style">
+            @Model.tblMerchant.TinNumber
+        </span>
+    </div>
+    @Html.Label("NBE #:", new { @Class = "control-label col-sm-1" })
+    <div class="col-sm-2">
+        <span class="label-underline-style">
+            @Model.tblMerchant.NBENumber
+        </span>
+    </div>
+</div>
+
+<div class="row grid-row">
+    @Html.Label("Current Amount:", new { @Class = "control-label col-sm-2" })
+    <div class="col-sm-3">
+        <span class="label-underline-style">
+            @Model.RemainingAmount.Value.ToString("N2") (@Model.CurrencyType)
+        </span>
+    </div>
+    @Html.Label("Port Of Loading:", new { @Class = "control-label col-sm-2" })
+    <div class="col-sm-4">
+        @{
+            if (Model.tbl_lu_PortOfLoading != null)
+            {
+                <span class="label-underline-style">
+                    @string.Join(", ", Model.tbl_lu_PortOfLoading.Select(tlpod => tlpod.name).ToList())
+                </span>
+            }
+        }
+    </div>
+
+</div>
+
+<div class="row grid-row">
+    @Html.Label("Port Of Destination:", new { @Class = "control-label col-sm-2" })
+    <div class="col-sm-3">
+        @{
+            if (Model.tbl_lu_PortOfDestination != null)
+            {
+                <span class="label-underline-style">
+                    @string.Join(", ", Model.tbl_lu_PortOfDestination.Select(tlpod => tlpod.name).ToList())
+                </span>
+            }
+        }
+    </div>
+    <label class="control-label col-sm-2">
+        Ship. Allowed By:<span class="required"></span>
+    </label>
+    <div class="col-sm-4">
+        @{
+            if (Model.tbl_lu_ShipmentAllowedBy != null)
+            {
+                <span class="label-underline-style">
+                    @string.Join(", ", Model.tbl_lu_ShipmentAllowedBy.Select(tlpod => tlpod.name).ToList())
+                </span>
+            }
+        }
+    </div>
+</div>
+
+<div class="row grid-row">
+    @Html.Label("Incoterm:", new { @Class = "control-label col-sm-2" })
+    <div class="col-sm-3">
+        @{
+            if (Model.tbl_lu_Incoterm != null)
+            {
+                <span class="label-underline-style">
+                    @string.Join(", ", Model.tbl_lu_Incoterm.Select(tli => tli.name).ToList())
+                </span>
+            }
+        }
+    </div>
+    <label class="control-label col-sm-2">
+        LPCO #:<span class="required"></span>
+    </label>
+    <div class="col-sm-4">
+        <span class="label-underline-style">
+            @Model.LPCONumber
+        </span>
+    </div>
+
+</div>
+
+<div class="row grid-row">
+    <label class="control-label col-sm-2">
+        Country Of Origin:<span class="required"></span>
+    </label>
+    <div class="col-sm-3">
+        @{
+            if (Model.tbl_lu_CountryOfOrigin != null)
+            {
+                <span class="label-underline-style">
+                    @string.Join(", ", Model.tbl_lu_CountryOfOrigin.Select(tlpod => tlpod.name).ToList())
+                </span>
+            }
+        }
+    </div>
+    <label class="control-label col-sm-2">
+        Permit Status:<span class="required"></span>
+    </label>
+    <div class="col-sm-4">
+        <span class="label-underline-style">
+            @Model.tbl_lu_Status.name
+        </span>
+    </div>
+</div>
+
+<div class="row grid-row">
+    <label class="control-label col-sm-2">
+        First Priority:<span class="required"></span>
+    </label>
+    <div class="col-sm-10">
+        @foreach (var item in Model.tblItemPriorities.Where(tip => tip.Priority.Equals("First Priority")))
+        {
+            string itemName = string.IsNullOrEmpty(@item.Name)
+                ? @item.GroupBy
+                : @item.GroupBy + "-" + @item.Name;
+            <span class="label-underline-style">
+                @itemName
+            </span><br />
+        }
+    </div>
+</div>
+
+<div class="row grid-row">
+    <label class="control-label col-sm-2">
+        Second Priority:<span class="required"></span>
+    </label>
+    <div class="col-sm-10">
+        @foreach (var item in Model.tblItemPriorities.Where(tip => tip.Priority.Equals("Second Priority")))
+        {
+            string itemName = string.IsNullOrEmpty(@item.Name)
+                ? @item.GroupBy
+                : @item.GroupBy + "-" + @item.Name;
+            <span class="label-underline-style">
+                @itemName<br />
+            </span>
+        }
+    </div>
+</div>
+
+<div class="row grid-row">
+    <label class="control-label col-sm-2">
+        Third Priority:<span class="required"></span>
+    </label>
+    <div class="col-sm-10">
+        @foreach (var item in Model.tblItemPriorities.Where(tip => tip.Priority.Equals("Third Priority")))
+        {
+            string itemName = string.IsNullOrEmpty(@item.Name)
+                ? @item.GroupBy
+                : @item.GroupBy + "-" + @item.Name;
+            <span class="label-underline-style">
+                @itemName<br />
+            </span>
+        }
+    </div>
+</div>
+
+
+<div class="row grid-row">
+    <label class="control-label col-sm-2">
+        Non-Priority Items:<span class="required"></span>
+    </label>
+    <div class="col-sm-4">
+        <span class="label-underline-style">
+            @Model.NonPriorityItems
+        </span>
+    </div>
+</div>
+
+@* ################################################################### *@
+
+<div class="row grid-row">
+    <label class="control-label col-sm-2">
+        Current Expiries:<span class="required"></span>
+    </label>
+    <div class="col-sm-6">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Expiry Date</th>
+                    <th>Charge Collected</th>
+                </tr>
+            </thead>
+            @foreach (var item in Model.tblPOPermitExpiries.OrderByDescending(tppe => tppe.ExpiryDate))
+            {
+                <tr>
+                    <td>
+                        @item.ExpiryDate.ToString("D")
+                    </td>
+                    <td>
+                        @if (item.ChargeCollected.HasValue)
+                        {
+                            if (item.ChargeCollected.Value)
+                            {
+                                <span>Yes</span>
+                            }
+                            else
+                            {
+                                <span>No</span>
+                            }
+                        }
+                    </td>
+                </tr>
+            }
+        </table>
+        <br />
+    </div>
+</div>
+
+
+<div class="row grid-row">
+    <label class="control-label col-sm-2">
+        Current Updates:
+    </label>
+</div>
+
+<div class="row grid-row">
+    <div class="col-sm-12 padding-thirty-five-pixel-style">
+        <table id="datatable" class="table table-striped table-bordered">
+            <tr>
+                <th>Date</th>
+                <th>Method Of Payment</th>
+                <th>Amount</th>
+                <th>Amount In USD</th>
+                <th>Amount In Birr</th>
+                <th>Prepared By</th>
+                <th>Reason</th>
+                <th>Status</th>
+            </tr>
+
+            @foreach (var item in Model.tblPermitAmounts)
+            {
+                if (item.tblPermitAmountDetails.Count() > 0)
+                {
+                    foreach (var itemPermitAmountDetail in item.tblPermitAmountDetails)
+                    {
+                        <tr>
+                            <td>@item.CreatedDate.ToString("D")</td>
+                            <td>@item.tblPermit.tbl_lu_MethodOfPayment.name</td>
+                            <td>@itemPermitAmountDetail.Amount.ToString("N2")</td>
+                            <td>
+                                @{
+                                    if (itemPermitAmountDetail.AmountInUSD.HasValue)
+                                    {
+                                        @itemPermitAmountDetail.AmountInUSD.Value.ToString("N2");
+                                    }
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    if (itemPermitAmountDetail.AmountInBirr.HasValue)
+                                    {
+                                        @itemPermitAmountDetail.AmountInBirr.Value.ToString("N2");
+                                    }
+                                }
+                            </td>
+                            <td>@ViewContext.Controller.getFullNameOfUserById(item.CreatedBy.ToString())</td>
+                            <td>@item.Reason</td>
+                            <td>
+                                @{
+                                    if (item.tbl_lu_Status.name.Equals("Approved"))
+                                    {
+                                        <span class="label label-success">Approved</span>
+                                    }
+                                    else if (item.tbl_lu_Status.name.Equals("Rejected"))
+                                    {
+                                        <button type="button" class="btn btn-sm btn-danger fa fa-comment" data-toggle="collapse" data-target="#nonCADComment">
+                                            Comment
+                                        </button>
+                                        <div id="nonCADComment" class="collapse">
+                                            @item.Remark
+                                        </div>
+                                    }
+                                    else if (item.tbl_lu_Status.name.Equals("Pending"))
+                                    {
+                                        <span class="label label-default">Pending</span>
+                                    }
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td>@item.CreatedDate.ToString("D")</td>
+                        <td>@item.tblPermit.tbl_lu_MethodOfPayment.name</td>
+                        <td>
+                            @item.tblPOPermitAmountDetails.Sum(tpopad => tpopad.Amount).ToString("N2")
+                        </td>
+                        <td>
+                            @item.tblPOPermitAmountDetails.Sum(tpopad => tpopad.AmountInUSD).Value.ToString("N2")
+                        </td>
+                        <td>
+                            @item.tblPOPermitAmountDetails.Sum(tpopad => tpopad.AmountInBirr).Value.ToString("N2")
+                        </td>
+                        <td>@ViewContext.Controller.getFullNameOfUserById(item.CreatedBy.ToString())</td>
+                        <td>@item.Reason</td>
+                        <td>
+                            @{
+                                if (item.tbl_lu_Status.name.Equals("Approved"))
+                                {
+                                    <span class="label label-success">Approved</span>
+                                }
+                                else if (item.tbl_lu_Status.name.Equals("Rejected"))
+                                {
+                                    <button type="button" class="btn btn-sm btn-danger fa fa-comment" data-toggle="collapse" data-target="#CADComment">
+                                        Comment
+                                    </button>
+                                    <div id="CADComment" class="collapse">
+                                        @item.Remark
+                                    </div>
+                                }
+                                else if (item.tbl_lu_Status.name.Equals("Pending"))
+                                {
+                                    <span class="label label-default">Pending</span>
+                                }
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+
+        </table>
+    </div>
+</div>
+
+@* $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ *@
+
+<div class="row grid-row">
+    <label class="control-label col-sm-2">
+        PO Settlements:
+    </label>
+</div>
+
+<div class="row grid-row padding-thirty-five-pixel-style">
+    <div class="col-sm-12">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>PO #</th>
+                    <th>Currency</th>
+                    <th>Amount</th>
+                    <th>Amount Before Permit</th>
+                    <th>Amount After Permit</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            @foreach (var item in Model.tblPOPermitDetails1.OrderByDescending(tppd => tppd.CreatedDate))
+            {
+                <tr>
+                    <td>
+                        @item.tblPermit.PermitNumber
+                    </td>
+                    <td>
+                        @item.tblPermit.CurrencyType
+                    </td>
+                    <td>
+                        @{
+                            decimal amount = item.AmountBeforePermit.Value - item.AmountAfterPermit.Value;
+                            <span>@amount.ToString("N2")</span>
+                        }
+                        @{
+                            decimal decreaseAmount = 0;
+                            decimal increaseAmount = 0;
+                            foreach (var itemTblPermitAmount in item.tblPermit1.tblPermitAmounts)
+                            {
+                                if (itemTblPermitAmount.tblPOPermitAmountDetails.Where(tppad => tppad.PermitId == item.tblPermit.Id && tppad.Amount < 0).Count() > 0)
+                                {
+                                    decreaseAmount += itemTblPermitAmount.tblPOPermitAmountDetails.Where(tppad => tppad.PermitId == item.tblPermit.Id && tppad.Amount < 0).Sum(tppad => tppad.Amount);
+                                }
+                                if (itemTblPermitAmount.tblPOPermitAmountDetails.Where(tppad => tppad.PermitId == item.tblPermit.Id && tppad.Amount > 0).Count() > 0)
+                                {
+                                    increaseAmount += itemTblPermitAmount.tblPOPermitAmountDetails.Where(tppad => tppad.PermitId == item.tblPermit.Id && tppad.Amount > 0).Sum(tppad => tppad.Amount);
+                                }
+                            }
+                            if (decreaseAmount != 0)
+                            {
+                                <span style="color:red">
+                                    | @decreaseAmount.ToString("N2")
+                                </span>
+                            }
+                            if (increaseAmount != 0)
+                            {
+                                <span style="color:green">
+                                    | @increaseAmount.ToString("N2")
+                                </span>
+                            }
+                        }
+                    </td>
+                    <td>
+                        @item.AmountBeforePermit.Value.ToString("N2")
+                    </td>
+                    <td>
+                        @item.AmountAfterPermit.Value.ToString("N2")
+                    </td>
+                    <td>
+                        @item.CreatedDate.Value.ToString("D")
+                    </td>
+                </tr>
+            }
+        </table>
+        <br />
+    </div>
+</div>
