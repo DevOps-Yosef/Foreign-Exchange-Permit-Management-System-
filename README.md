@@ -19,6 +19,10 @@ Receive updates on the status of your application.
 ### Reporting: 
 Generate detailed reports on permit applications and approvals.
 
+## Technology
+
+### ASP.Net MVC with Keycloak SSO integration 
+
 ![Foreign Exchange Permit Management System](https://github.com/user-attachments/assets/841bbfe2-d6aa-4532-90f9-7c97fc1bbf1d)
 
 
